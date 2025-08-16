@@ -2,102 +2,32 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>La Saga de LIA</title>
-  <meta name="description" content="Página oficial de la saga de LIA: descubre los cuatro libros, sus historias y recursos para lectores.">
-  <link rel="icon" href="favicon.ico">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #151617;
-      color: #e0e0e0;
-    }
-    header {
-      background-color: #1a1a1a;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-    }
-    header h1 {
-      margin: 0;
-      color: #00e6e6;
-      font-size: 2em;
-    }
-    main {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 20px;
-      background: #1d1f21;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
-    }
-    h2 {
-      color: #00e6e6;
-      border-bottom: 2px solid #00e6e6;
-      padding-bottom: 6px;
-      margin-top: 30px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    li {
-      background: #3b3b3b;
-      padding: 12px;
-      margin: 12px 0;
-      border-radius: 8px;
-    }
-    a {
-      color: #00ffff;
-      font-weight: bold;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .quote {
-      text-align: center;
-      font-style: italic;
-      font-weight: bold;
-      font-size: 1.2em;
-      margin-top: 30px;
-    }
-    @media (max-width: 600px) {
-      main {
-        padding: 15px;
-        margin: 20px 10px;
-      }
-      header h1 {
-        font-size: 1.6em;
-      }
-      .quote {
-        font-size: 1em;
-      }
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guardianes de LIA</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
-    <h1>La Saga de LIA</h1>
+    <h1>🌌 Guardianes de LIA</h1>
+    <p>Elige una puerta y atraviesa el umbral</p>
   </header>
 
-  <main>
-    <section>
-      <h2>Historias publicadas</h2>
-      <ul>
-        <!-- Aquí irán tus libros cuando los crees en GitHub -->
-      </ul>
-    </section>
+  <main class="portal-grid">
+    <a href="libro1.html" class="portal">
+      <img src="img/libro1.jpg" alt="Libro 1">
+      <span class="verso">"El inicio del viaje"</span>
+    </a>
 
-    <hr>
+    <a href="libro2.html" class="portal">
+      <img src="img/libro2.jpg" alt="Libro 2">
+      <span class="verso">"Donde las sombras hablan"</span>
+    </a>
 
-    <p class="quote">
-      “Si alguien pudo hacerlo, yo también.<br>
-      Y si nadie lo hizo aún… yo seré el primero.”<br><br>
-      — x-zero
-    </p>
+    <a href="libro3.html" class="portal">
+      <img src="img/libro3.jpg" alt="Libro 3">
+      <span class="verso">"La guardia eterna"</span>
+    </a>
   </main>
 </body>
 </html>
+
