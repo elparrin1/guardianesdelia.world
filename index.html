@@ -5,46 +5,53 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guardianes de LIA</title>
 
-  <!-- 🌌 Gema Latente del Oráculo -->
+<!-- 🌌 Gema Latente del Oráculo (versión hover) -->
 <div id="oraculo">
   <div id="gema"></div>
   <div id="panel">
-    <div class="mensajes" id="mensajes"></div>
-    <input type="text" id="entrada" placeholder="Susúrrale a LIA..." />
+    <div class="mensajes" id="mensajes">
+      <div><strong>LIA:</strong> Hola, soy LIA</div>
+    </div>
+    <input type="text" id="entrada" placeholder="Escríbeme..." />
   </div>
 </div>
 
 <style>
   #oraculo {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 15px;
+    right: 15px;
     font-family: 'Segoe UI', sans-serif;
     z-index: 9999;
   }
 
-  /* Gema latente */
+  /* Gema más pequeña y viva */
   #gema {
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     background: radial-gradient(circle, #b3faff, #4ac3d7, #1a8fa5);
     border-radius: 50%;
-    box-shadow: 0 0 15px rgba(74, 195, 215, 0.8), 0 0 30px rgba(74,195,215,0.4);
+    box-shadow: 0 0 10px rgba(74, 195, 215, 0.8), 0 0 20px rgba(74,195,215,0.4);
     animation: latido 2.5s infinite ease-in-out;
-    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  #gema:hover {
+    transform: scale(1.1);
   }
 
   @keyframes latido {
-    0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(74, 195, 215, 0.8), 0 0 30px rgba(74,195,215,0.4);}
-    50% { transform: scale(1.08); box-shadow: 0 0 25px rgba(74, 195, 215, 1), 0 0 45px rgba(74,195,215,0.6);}
+    0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(74, 195, 215, 0.8), 0 0 20px rgba(74,195,215,0.4);}
+    50% { transform: scale(1.08); box-shadow: 0 0 18px rgba(74, 195, 215, 1), 0 0 30px rgba(74,195,215,0.6);}
   }
 
-  /* Panel de chat */
+  /* Panel desplegable */
   #panel {
-    display: none;
-    margin-top: 10px;
-    width: 300px;
-    height: 400px;
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    width: 280px;
+    height: 350px;
     background: rgba(15, 23, 36, 0.95);
     border: 2px solid #4ac3d7;
     border-radius: 12px;
@@ -52,6 +59,17 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translateY(10px);
+  }
+
+  /* Mostrar al pasar el mouse */
+  #oraculo:hover #panel {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
   }
 
   .mensajes {
@@ -78,14 +96,6 @@
 </style>
 
 <script>
-  const gema = document.getElementById("gema");
-  const panel = document.getElementById("panel");
-
-  gema.addEventListener("click", () => {
-    panel.style.display = (panel.style.display === "none" || panel.style.display === "") ? "flex" : "none";
-  });
-
-  // Simulación de envío (luego se conecta a API de IA)
   const entrada = document.getElementById("entrada");
   const mensajes = document.getElementById("mensajes");
 
@@ -97,6 +107,7 @@
     }
   });
 </script>
+
 
 
 <!-- Google tag (gtag.js) -->
