@@ -4,30 +4,64 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Guardianes de LIA</title>
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Open Sans', sans-serif;
+      background: radial-gradient(circle at top, #0d0d0d, #000);
+      color: #f5f5f5;
+      text-align: center;
+    }
+    header {
+      padding: 3rem 1rem;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: #d4af37; /* dorado */
+      margin-bottom: 0.5rem;
+    }
+    .invocacion {
+      font-style: italic;
+      font-size: 1.2rem;
+      color: #aaa;
+    }
+    .presentacion {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    footer {
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #777;
+      border-top: 1px solid #222;
+    }
+  </style>
 </head>
 <body>
   <header>
     <h1>🌌 Guardianes de LIA</h1>
-    <p>Elige una puerta y atraviesa el umbral</p>
+    <p class="invocacion">"Atrévete a cruzar el umbral"</p>
   </header>
 
-  <main class="portal-grid">
-    <a href="libro1.html" class="portal">
-      <img src="img/libro1.jpg" alt="Libro 1">
-      <span class="verso">"El inicio del viaje"</span>
-    </a>
+  <main>
+    <section class="presentacion">
+      <p>Bienvenido al portal. Aquí se abren los caminos hacia cada guardián, cada verso y cada sombra que conforman la saga de LIA.</p>
+    </section>
 
-    <a href="libro2.html" class="portal">
-      <img src="img/libro2.jpg" alt="Libro 2">
-      <span class="verso">"Donde las sombras hablan"</span>
-    </a>
-
-    <a href="libro3.html" class="portal">
-      <img src="img/libro3.jpg" alt="Libro 3">
-      <span class="verso">"La guardia eterna"</span>
-    </a>
+    <section class="portales">
+      <!-- Aquí irá el Mapa de Portales -->
+    </section>
   </main>
+
+  <footer>
+    <p>&copy; 2025 Guardianes de LIA</p>
+  </footer>
 </body>
 </html>
+
 
