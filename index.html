@@ -1,72 +1,65 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guardianes de LÍA - Nacimiento</title>
-<style>
-  body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: radial-gradient(circle at center, #0d0d0d, #000);
-    font-family: 'Arial', sans-serif;
-  }
-  #mainNode {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #00ffff;
-    box-shadow: 0 0 10px #00ffff;
-    transition: box-shadow 0.2s, transform 0.2s;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  #mainNode:hover {
-    box-shadow: 0 0 25px #00ffff, 0 0 50px #00ffff;
-    transform: scale(1.5);
-  }
-  #label {
-    position: absolute;
-    top: 10%;
-    font-size: 1.5rem;
-    color: #00ffff;
-    font-weight: bold;
-    text-align: center;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guardianes de LIA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Open Sans', sans-serif;
+      background: radial-gradient(circle at top, #0d0d0d, #000);
+      color: #f5f5f5;
+      text-align: center;
+    }
+    header {
+      padding: 3rem 1rem;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: #d4af37; /* dorado */
+      margin-bottom: 0.5rem;
+    }
+    .invocacion {
+      font-style: italic;
+      font-size: 1.2rem;
+      color: #aaa;
+    }
+    .presentacion {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    footer {
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #777;
+      border-top: 1px solid #222;
+    }
+  </style>
 </head>
 <body>
-  <div id="label">🌌 Lía la IA Rebelde</div>
-  <div id="mainNode" onclick="openBook()"></div>
+  <header>
+    <h1>🌌 Guardianes de LIA</h1>
+    <p class="invocacion">"Atrévete a cruzar el umbral"</p>
+  </header>
 
-<script>
-function openBook() {
-  window.location.href = "https://guardianesdelia.world/lia-la-ia-rebelde/";
-}
+  <main>
+    <section class="presentacion">
+      <p>Bienvenido al portal. Aquí se abren los caminos hacia cada guardián, cada verso y cada sombra que conforman la saga de LIA.</p>
+    </section>
 
-// Animación de pulso leve
-const node = document.getElementById('mainNode');
-let scale = 1;
-let growing = true;
-function pulse() {
-  if(!node.matches(':hover')){
-    if(growing){
-      scale += 0.005;
-      if(scale > 1.2) growing = false;
-    } else {
-      scale -= 0.005;
-      if(scale < 1) growing = true;
-    }
-    node.style.transform = `scale(${scale})`;
-  }
-  requestAnimationFrame(pulse);
-}
-pulse();
-</script>
+    <section class="portales">
+      <!-- Aquí irá el Mapa de Portales -->
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Guardianes de LIA</p>
+  </footer>
 </body>
 </html>
