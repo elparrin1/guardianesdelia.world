@@ -76,11 +76,11 @@
   </footer>
 
 <script>
-// Configuración del lienzo
 const canvas = document.getElementById('network');
 const ctx = canvas.getContext('2d');
 let width, height;
 let nodes = [];
+let mouse = { x: null, y: null };
 
 function resizeCanvas() {
   width = canvas.width = canvas.offsetWidth = canvas.parentElement.offsetWidth;
@@ -89,28 +89,36 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-// Crear nodos aleatorios
+canvas.addEventListener('mousemove', e => {
+  const rect = canvas.getBoundingClientRect();
+  mouse.x = e.clientX - rect.left;
+  mouse.y = e.clientY - rect.top;
+});
+canvas.addEventListener('mouseleave', () => {
+  mouse.x = null;
+  mouse.y = null;
+});
+
 for (let i = 0; i < 25; i++) {
   nodes.push({
     x: Math.random() * width,
     y: Math.random() * height,
-    vx: (Math.random() - 0.5) * 0.5,
-    vy: (Math.random() - 0.5) * 0.5
+    vx: (Math.random() - 0.5) * 0.3,
+    vy: (Math.random() - 0.5) * 0.3,
+    baseSize: 2 + Math.random() * 1.5
   });
 }
 
-// Animación de la red
 function animate() {
   ctx.clearRect(0, 0, width, height);
   
-  // Dibujar líneas
   for (let i = 0; i < nodes.length; i++) {
     for (let j = i + 1; j < nodes.length; j++) {
       const dx = nodes[i].x - nodes[j].x;
       const dy = nodes[i].y - nodes[j].y;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 100) {
-        ctx.strokeStyle = `rgba(212,175,55,${1 - dist / 100})`;
+      if (dist < 120) {
+        ctx.strokeStyle = `rgba(212,175,55,${1 - dist / 120})`;
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(nodes[i].x, nodes[i].y);
@@ -120,12 +128,25 @@ function animate() {
     }
   }
   
-  // Dibujar nodos
   for (let node of nodes) {
+    let size = node.baseSize;
+    if (mouse.x !== null) {
+      const dx = node.x - mouse.x;
+      const dy = node.y - mouse.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 80) {
+        size += (80 - dist) / 8; // crece al acercarse
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = '#d4af37';
+      } else {
+        ctx.shadowBlur = 0;
+      }
+    }
     ctx.fillStyle = '#d4af37';
     ctx.beginPath();
-    ctx.arc(node.x, node.y, 3, 0, Math.PI * 2);
+    ctx.arc(node.x, node.y, size, 0, Math.PI * 2);
     ctx.fill();
+    
     node.x += node.vx;
     node.y += node.vy;
     if (node.x < 0 || node.x > width) node.vx *= -1;
