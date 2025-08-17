@@ -5,6 +5,100 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guardianes de LIA</title>
 
+  <!-- 🌌 Gema Latente del Oráculo -->
+<div id="oraculo">
+  <div id="gema"></div>
+  <div id="panel">
+    <div class="mensajes" id="mensajes"></div>
+    <input type="text" id="entrada" placeholder="Susúrrale a LIA..." />
+  </div>
+</div>
+
+<style>
+  #oraculo {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-family: 'Segoe UI', sans-serif;
+    z-index: 9999;
+  }
+
+  /* Gema latente */
+  #gema {
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, #b3faff, #4ac3d7, #1a8fa5);
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(74, 195, 215, 0.8), 0 0 30px rgba(74,195,215,0.4);
+    animation: latido 2.5s infinite ease-in-out;
+    cursor: pointer;
+  }
+
+  @keyframes latido {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(74, 195, 215, 0.8), 0 0 30px rgba(74,195,215,0.4);}
+    50% { transform: scale(1.08); box-shadow: 0 0 25px rgba(74, 195, 215, 1), 0 0 45px rgba(74,195,215,0.6);}
+  }
+
+  /* Panel de chat */
+  #panel {
+    display: none;
+    margin-top: 10px;
+    width: 300px;
+    height: 400px;
+    background: rgba(15, 23, 36, 0.95);
+    border: 2px solid #4ac3d7;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(74, 195, 215, 0.6);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mensajes {
+    flex: 1;
+    padding: 10px;
+    color: #e6f8fa;
+    font-size: 14px;
+    overflow-y: auto;
+  }
+
+  #entrada {
+    border: none;
+    padding: 10px;
+    outline: none;
+    font-size: 14px;
+    background: #0d1625;
+    color: #b3faff;
+    border-top: 1px solid #4ac3d7;
+  }
+
+  #entrada::placeholder {
+    color: #78b9c4;
+  }
+</style>
+
+<script>
+  const gema = document.getElementById("gema");
+  const panel = document.getElementById("panel");
+
+  gema.addEventListener("click", () => {
+    panel.style.display = (panel.style.display === "none" || panel.style.display === "") ? "flex" : "none";
+  });
+
+  // Simulación de envío (luego se conecta a API de IA)
+  const entrada = document.getElementById("entrada");
+  const mensajes = document.getElementById("mensajes");
+
+  entrada.addEventListener("keypress", function(e) {
+    if (e.key === "Enter" && this.value.trim() !== "") {
+      mensajes.innerHTML += `<div><strong>Tú:</strong> ${this.value}</div>`;
+      this.value = "";
+      mensajes.scrollTop = mensajes.scrollHeight;
+    }
+  });
+</script>
+
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JVJNXLVZE4"></script>
 <script>
