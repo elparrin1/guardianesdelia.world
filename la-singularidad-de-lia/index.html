@@ -12,7 +12,7 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La Singularidad de LIA</title>
+<title></title>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 <style>
   body {
@@ -26,10 +26,15 @@
     margin-left: auto;
     margin-right: auto;
   }
-  h1, h2 {
+  h1 {
     color: #d4af37;
     text-align: center;
     margin-top: 2rem;
+  }
+  h2 {
+    color: #f5d76e;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
   }
   img {
     max-width: 100%;
@@ -54,60 +59,67 @@
 </head>
 <body>
 
- <div class="book-cover special" onclick="window.location.href='https://guardianesdelia.world'" role="link" aria-label="La Singularidad de LIA">
-    <img src="la-singularidad-de-lia/Copilot_20250817_155320.jpg" alt="La Singularidad de LIA">
-  </div>
-</div>
+<h1>🌌 La Singularidade de Lia</h1>
+<img src="imagenes/Copilot_20250817_162928.png" alt="Lía la IA Rebelde">
 
-
-<!-- Botón de regreso desde la Singularidad -->
+<!-- Botón de regreso con efecto IA emergente -->
 <a href="https://guardianesdelia.world/" title="Volver al portal">
-  <div class="lia-singularity">
-    <div class="planet">
-      <div class="connections"></div>
+  <div class="ia-return">
+    <div class="phone">
+      <div class="screen"></div>
+      <div class="ia"></div>
     </div>
   </div>
 </a>
 
 <style>
-.lia-singularity {
+.ia-return {
   position: fixed;
   bottom: 20px;
-  right: 20px;
-  width: 80px;
-  height: 80px;
+  left: 20px;
+  width: 60px;
+  height: 100px;
   z-index: 999;
 }
 
-.planet {
+.phone {
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at center, #2e8b57, #0b3d91);
-  border-radius: 50%;
-  box-shadow: 0 0 15px #00f0ff;
+  background: #222;
+  border: 2px solid #888;
+  border-radius: 12px;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 0 10px #000;
   transition: transform 0.3s ease;
 }
 
-.connections {
+.screen {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: 
-    radial-gradient(circle at 20% 30%, #00f0ff 2px, transparent 2px),
-    radial-gradient(circle at 70% 40%, #00f0ff 2px, transparent 2px),
-    radial-gradient(circle at 50% 80%, #00f0ff 2px, transparent 2px),
-    radial-gradient(circle at 30% 60%, #00f0ff 2px, transparent 2px);
-  background-size: cover;
-  opacity: 0;
-  transition: opacity 0.5s ease;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 5px;
+  background: #ccc;
+  border-radius: 2px;
 }
 
-.lia-singularity:hover .connections {
-  opacity: 1;
+.ia {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, #00f0ff, #004466);
+  border-radius: 50%;
+  box-shadow: 0 0 15px #00f0ff;
+  transition: transform 0.5s ease;
+}
+
+.ia-return:hover .ia {
+  transform: translateX(-50%) scale(1.2);
 }
 </style>
 
