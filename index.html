@@ -33,19 +33,20 @@
     position: relative;
     height: 400px;
     cursor: pointer;
-    margin-bottom: 2rem;
   }
   canvas {
     position: absolute;
     top: 0;
     left: 0;
   }
-  .presentacion {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-    font-size: 1.1rem;
-    line-height: 1.6;
+  .node-label {
+    position: absolute;
+    color: #fff;
+    font-weight: bold;
+    font-size: 0.95rem;
+    text-align: center;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
   }
   footer {
     padding: 1rem;
@@ -57,112 +58,130 @@
 </head>
 <body>
   <header>
-    <h1>🌌 La Saga de LÍA</h1>
-    <p class="invocacion">"Atrévete a cruzar el umbral de la inteligencia"</p>
+    <h1>🌌 Guardianes de LIA</h1>
+    <p class="invocacion">"Atrévete a cruzar el umbral"</p>
   </header>
 
   <!-- Red neuronal interactiva -->
-  <div class="network-container">
+  <div class="network-container" id="network-container">
     <canvas id="network"></canvas>
   </div>
 
-  <main>
-    <section class="presentacion">
-      <p>Bienvenido al portal de LÍA. Cada nodo representa un libro de la saga, desde <strong>Lía la IA Rebelde</strong> hasta <strong>LIA y los Guardianes del Tiempo</strong>. Explora cada historia haciendo clic en los nodos y observa cómo la inteligencia de LÍA evoluciona a lo largo de la saga.</p>
-    </section>
-  </main>
-
   <footer>
-    <p>&copy; 2025 Guardianes de LÍA</p>
+    <p>&copy; 2025 Guardianes de LIA</p>
   </footer>
 
 <script>
 // Configuración del lienzo
 const canvas = document.getElementById('network');
 const ctx = canvas.getContext('2d');
+const container = document.getElementById('network-container');
 let width, height;
-
 function resizeCanvas() {
-  width = canvas.width = canvas.offsetWidth = canvas.parentElement.offsetWidth;
+  width = canvas.width = canvas.offsetWidth = container.offsetWidth;
   height = canvas.height = 400;
 }
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-// Nodos con títulos y URLs
-let nodes = [
-  {x: 100, y: 200, title: "Lía la IA Rebelde", url: "https://guardianesdelia.world/lia-la-ia-rebelde/", vx: 0.3, vy: 0.3},
-  {x: 300, y: 100, title: "La Singularidad de LIA", url: "#", vx: 0.2, vy: 0.2},
-  {x: 500, y: 200, title: "La Odisea Intergaláctica", url: "#", vx: 0.25, vy: 0.25},
-  {x: 700, y: 100, title: "LIA y los Guardianes del Tiempo", url: "#", vx: 0.2, vy: 0.2}
+// Nodos
+const mainNode = { x: width/2, y: height/2, r: 12, color: '#d4af37', title: "Lía la IA Rebelde", link: "https://guardianesdelia.world/lia-la-ia-rebelde/" };
+const secondaryNodes = [
+  { angle: 0, dist: 120, r: 10, color: '#ff69b4', title: "La Singularidad de LIA", link: "#", visible: false },
+  { angle: Math.PI*2/3, dist: 120, r: 10, color: '#1e90ff', title: "La Odisea Intergaláctica", link: "#", visible: false },
+  { angle: Math.PI*4/3, dist: 120, r: 10, color: '#32cd32', title: "LIA y los Guardianes del Tiempo", link: "#", visible: false }
 ];
 
-// Conexiones de la saga
-let connections = [
-  [0,1],
-  [1,2],
-  [2,3]
-];
-
-// Interacción mouse
-canvas.addEventListener('mousemove', (e) => {
-  const rect = canvas.getBoundingClientRect();
-  const mx = e.clientX - rect.left;
-  const my = e.clientY - rect.top;
-  canvas.style.cursor = "default";
-  for(let node of nodes){
-    const dx = mx - node.x;
-    const dy = my - node.y;
-    if(Math.sqrt(dx*dx + dy*dy) < 10){
-      canvas.style.cursor = "pointer";
-    }
-  }
+// Crear etiquetas HTML
+secondaryNodes.forEach(node => {
+  const label = document.createElement('div');
+  label.className = 'node-label';
+  label.innerText = node.title;
+  container.appendChild(label);
+  node.el = label;
 });
 
-canvas.addEventListener('click', (e)=>{
-  const rect = canvas.getBoundingClientRect();
-  const mx = e.clientX - rect.left;
-  const my = e.clientY - rect.top;
-  for(let node of nodes){
-    const dx = mx - node.x;
-    const dy = my - node.y;
-    if(Math.sqrt(dx*dx + dy*dy) < 10){
-      window.location.href = node.url;
-    }
-  }
-});
-
-// Animación
-function animate() {
+// Función para dibujar la red
+function draw() {
   ctx.clearRect(0, 0, width, height);
-  
-  // Dibujar conexiones
-  for(let conn of connections){
-    const a = nodes[conn[0]];
-    const b = nodes[conn[1]];
-    ctx.strokeStyle = `rgba(212,175,55,0.7)`;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(a.x, a.y);
-    ctx.lineTo(b.x, b.y);
-    ctx.stroke();
+
+  // Dibujar nodo principal
+  ctx.fillStyle = mainNode.color;
+  ctx.beginPath();
+  ctx.arc(mainNode.x, mainNode.y, mainNode.r, 0, Math.PI*2);
+  ctx.fill();
+
+  // Dibujar nodos secundarios y líneas
+  secondaryNodes.forEach(node => {
+    if(node.visible){
+      const nx = mainNode.x + Math.cos(node.angle) * node.dist;
+      const ny = mainNode.y + Math.sin(node.angle) * node.dist;
+      ctx.strokeStyle = node.color;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(mainNode.x, mainNode.y);
+      ctx.lineTo(nx, ny);
+      ctx.stroke();
+
+      ctx.fillStyle = node.color;
+      ctx.beginPath();
+      ctx.arc(nx, ny, node.r, 0, Math.PI*2);
+      ctx.fill();
+
+      // Actualizar posición de la etiqueta
+      node.el.style.left = nx + 'px';
+      node.el.style.top = ny + 'px';
+    } else {
+      node.el.style.left = '-100px';
+      node.el.style.top = '-100px';
+    }
+  });
+
+  requestAnimationFrame(draw);
+}
+draw();
+
+// Mostrar nodos secundarios al pasar mouse sobre el nodo principal
+canvas.addEventListener('mousemove', function(e){
+  const rect = canvas.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+  const dx = mx - mainNode.x;
+  const dy = my - mainNode.y;
+  const dist = Math.sqrt(dx*dx + dy*dy);
+  if(dist < mainNode.r + 10){
+    secondaryNodes.forEach(n => n.visible = true);
+  } else {
+    secondaryNodes.forEach(n => n.visible = false);
+  }
+});
+
+// Clic en nodo principal o secundarios
+canvas.addEventListener('click', function(e){
+  const rect = canvas.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+
+  // Nodo principal
+  const dx = mx - mainNode.x;
+  const dy = my - mainNode.y;
+  if(Math.sqrt(dx*dx + dy*dy) < mainNode.r + 5){
+    window.open(mainNode.link, "_self");
   }
 
-  // Dibujar nodos
-  for (let node of nodes) {
-    ctx.fillStyle = '#d4af37';
-    ctx.beginPath();
-    ctx.arc(node.x, node.y, 10, 0, Math.PI * 2);
-    ctx.fill();
-    node.x += node.vx;
-    node.y += node.vy;
-    if (node.x < 0 || node.x > width) node.vx *= -1;
-    if (node.y < 0 || node.y > height) node.vy *= -1;
-  }
-  
-  requestAnimationFrame(animate);
-}
-animate();
+  // Nodos secundarios
+  secondaryNodes.forEach(node => {
+    if(node.visible){
+      const nx = mainNode.x + Math.cos(node.angle) * node.dist;
+      const ny = mainNode.y + Math.sin(node.angle) * node.dist;
+      const dx2 = mx - nx;
+      const dy2 = my - ny;
+      if(Math.sqrt(dx2*dx2 + dy2*dy2) < node.r + 5){
+        window.open(node.link, "_self");
+      }
+    }
+  });
+});
 </script>
 </body>
 </html>
