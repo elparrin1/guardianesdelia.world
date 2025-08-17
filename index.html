@@ -1,57 +1,62 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Guardianes de LIA</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  body {
-    margin: 0;
-    font-family: 'Open Sans', sans-serif;
-    background: radial-gradient(circle at top, #0d0d0d, #000);
-    color: #f5f5f5;
-    text-align: center;
-    overflow-x: hidden;
+  :root{
+    --bg-1:#02040a; --bg-2:#050914; --neon:#38f5ff; --neon-2:#8a5cff; --text:#e9f1ff; --muted:#8aa0b3; --accent:#d4af37;
   }
-  header {
-    padding: 2rem 1rem 1rem;
+  html,body{height:100%}
+  body{
+    margin:0; color:var(--text); font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, sans-serif;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, #0b1630 0%, transparent 60%),
+      radial-gradient(900px 400px at 50% 110%, #0b0f1f 0%, transparent 60%),
+      linear-gradient(180deg, var(--bg-2), var(--bg-1));
+    text-align:center; overflow-x:hidden;
   }
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    color: #d4af37;
-    margin-bottom: 0.5rem;
+  header{padding:2.5rem 1rem 1rem}
+  h1{
+    font-family:'Orbitron', sans-serif; letter-spacing:0.06em; margin:0 0 .4rem; font-size:clamp(28px,4vw,40px);
+    background: linear-gradient(90deg, var(--neon), var(--neon-2));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    text-shadow:0 0 12px rgba(56,245,255,.2), 0 0 22px rgba(138,92,255,.15);
   }
-  .invocacion {
-    font-style: italic;
-    font-size: 1.2rem;
-    color: #aaa;
-    margin-bottom: 2rem;
+  .invocacion{font-style:italic; color:var(--muted); margin:0; font-size:clamp(14px,2.2vw,18px)}
+  .network-wrap{position:relative; height:360px; margin:10px auto 0; max-width:960px}
+  canvas{position:absolute; inset:0}
+  /* sutil rejilla holográfica */
+  .grid{
+    position:absolute; inset:0; pointer-events:none;
+    background-image:
+      linear-gradient(to right, rgba(56,245,255,.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(138,92,255,.06) 1px, transparent 1px);
+    background-size:40px 40px;
+    mask-image: radial-gradient(200px 200px at 50% 50%, #000 50%, transparent 90%);
+    animation: drift 14s linear infinite;
   }
-  .network-container {
-    position: relative;
-    height: 300px;
-    cursor: pointer;
+  @keyframes drift{
+    0%{background-position:0 0, 0 0}
+    100%{background-position:40px 40px, 40px 40px}
   }
-  canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
+
+  main{max-width:760px; margin:0 auto; padding:1.5rem 1rem 2rem}
+  .presentacion{color:#cdd6e3; line-height:1.65; font-size:1.05rem}
+  footer{border-top:1px solid rgba(255,255,255,.06); color:#98a6ba; font-size:.9rem; padding:1rem}
+
+  /* estado del portal */
+  .hint{
+    position:absolute; left:50%; bottom:14px; transform:translateX(-50%);
+    font-size:.95rem; color:#b8c6d9; opacity:0; transition:opacity .6s ease;
+    background:rgba(10,14,24,.6); border:1px solid rgba(136,146,255,.25);
+    padding:.45rem .7rem; border-radius:10px; backdrop-filter: blur(6px);
   }
-  .presentacion {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-    font-size: 1.1rem;
-    line-height: 1.6;
-  }
-  footer {
-    padding: 1rem;
-    font-size: 0.9rem;
-    color: #777;
-    border-top: 1px solid #222;
-  }
+  .ready .hint{opacity:1}
+  .network-wrap{cursor:default}
+  .ready.network-wrap{cursor:pointer}
 </style>
 </head>
 <body>
@@ -60,102 +65,217 @@
     <p class="invocacion">"Atrévete a cruzar el umbral"</p>
   </header>
 
-  <!-- Red neuronal interactiva -->
-  <div class="network-container" onclick="location.href='libro1.html'">
-    <canvas id="network"></canvas>
+  <div id="portal" class="network-wrap" aria-label="Red viva de LIA">
+    <canvas id="net"></canvas>
+    <div class="grid"></div>
+    <div class="hint">El portal se ha abierto — clic para entrar</div>
   </div>
 
   <main>
-    <section class="presentacion">
-      <p>Bienvenido al portal. Aquí se abren los caminos hacia cada guardián, cada verso y cada sombra que conforman la saga de LIA.</p>
-    </section>
+    <p class="presentacion">
+      Bienvenido al portal. Aquí se abren los caminos hacia cada guardián, cada verso y cada sombra que conforman la saga de LIA.
+    </p>
   </main>
 
   <footer>
-    <p>&copy; 2025 Guardianes de LIA</p>
+    <p>© 2025 Guardianes de LIA</p>
   </footer>
 
 <script>
-const canvas = document.getElementById('network');
-const ctx = canvas.getContext('2d');
-let width, height;
-let nodes = [];
-let mouse = { x: null, y: null };
+(() => {
+  const wrap = document.getElementById('portal');
+  const canvas = document.getElementById('net');
+  const ctx = canvas.getContext('2d');
+  const DPR = Math.min(2, window.devicePixelRatio || 1);
 
-function resizeCanvas() {
-  width = canvas.width = canvas.offsetWidth = canvas.parentElement.offsetWidth;
-  height = canvas.height = 300;
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
+  let W, H, t0 = performance.now();
+  let mouse = {x:null, y:null, inside:false};
+  let evolved = false;       // tras duplicación
+  let readyToNavigate = false;
 
-canvas.addEventListener('mousemove', e => {
-  const rect = canvas.getBoundingClientRect();
-  mouse.x = e.clientX - rect.left;
-  mouse.y = e.clientY - rect.top;
-});
-canvas.addEventListener('mouseleave', () => {
-  mouse.x = null;
-  mouse.y = null;
-});
+  const baseNode = {
+    x: 0, y: 0,
+    vx: 0, vy: 0,
+    base: 6, amp: 2.4, phase: Math.random()*Math.PI*2,
+    glow: '#38f5ff'
+  };
 
-for (let i = 0; i < 25; i++) {
-  nodes.push({
-    x: Math.random() * width,
-    y: Math.random() * height,
-    vx: (Math.random() - 0.5) * 0.3,
-    vy: (Math.random() - 0.5) * 0.3,
-    baseSize: 2 + Math.random() * 1.5
+  const childNode = {
+    exists: false,
+    x: 0, y: 0,
+    tx: 0, ty: 0,
+    birth: 0,           // 0->1 anim de nacimiento
+    base: 4.5, amp: 1.8, phase: Math.random()*Math.PI*2,
+    glow: '#8a5cff'
+  };
+
+  function resize(){
+    W = Math.floor(wrap.clientWidth);
+    H = Math.floor(wrap.clientHeight);
+    canvas.width = Math.floor(W * DPR);
+    canvas.height = Math.floor(H * DPR);
+    canvas.style.width = W+'px';
+    canvas.style.height = H+'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+
+    // centrar nodo
+    baseNode.x = W/2; baseNode.y = H/2;
+
+    if (!childNode.exists){
+      childNode.x = baseNode.x;
+      childNode.y = baseNode.y;
+    }
+  }
+  window.addEventListener('resize', resize, {passive:true});
+  resize();
+
+  // interacción
+  wrap.addEventListener('mousemove', (e)=>{
+    const r = wrap.getBoundingClientRect();
+    mouse.x = e.clientX - r.left;
+    mouse.y = e.clientY - r.top;
+    mouse.inside = true;
   });
-}
+  wrap.addEventListener('mouseleave', ()=>{
+    mouse.x = mouse.y = null; mouse.inside = false;
+  });
 
-function animate() {
-  ctx.clearRect(0, 0, width, height);
-  
-  for (let i = 0; i < nodes.length; i++) {
-    for (let j = i + 1; j < nodes.length; j++) {
-      const dx = nodes[i].x - nodes[j].x;
-      const dy = nodes[i].y - nodes[j].y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 120) {
-        ctx.strokeStyle = `rgba(212,175,55,${1 - dist / 120})`;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(nodes[i].x, nodes[i].y);
-        ctx.lineTo(nodes[j].x, nodes[j].y);
-        ctx.stroke();
-      }
-    }
+  // toque: primer toque evoluciona, segundo entra
+  wrap.addEventListener('touchstart', (e)=>{
+    if (!evolved){ triggerEvolution(); }
+    else navigate();
+  }, {passive:true});
+
+  wrap.addEventListener('click', ()=>{
+    if (readyToNavigate) navigate();
+  });
+
+  function navigate(){
+    // Cambia aquí si quieres otro destino
+    window.location.href = 'libro1.html';
   }
-  
-  for (let node of nodes) {
-    let size = node.baseSize;
-    if (mouse.x !== null) {
-      const dx = node.x - mouse.x;
-      const dy = node.y - mouse.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 80) {
-        size += (80 - dist) / 8; // crece al acercarse
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = '#d4af37';
-      } else {
-        ctx.shadowBlur = 0;
-      }
-    }
-    ctx.fillStyle = '#d4af37';
+
+  function triggerEvolution(){
+    if (evolved) return;
+    evolved = true;
+
+    childNode.exists = true;
+    childNode.birth = 0;
+    // objetivo: desplazar al borde de un pequeño radio
+    const angle = (mouse.x!=null) ? Math.atan2(mouse.y - baseNode.y, mouse.x - baseNode.x) : Math.random()*Math.PI*2;
+    const r = 70 + Math.random()*25;
+    childNode.tx = baseNode.x + Math.cos(angle)*r;
+    childNode.ty = baseNode.y + Math.sin(angle)*r;
+
+    // parte desde el nodo madre
+    childNode.x = baseNode.x;
+    childNode.y = baseNode.y;
+
+    // tras un instante, habilitar navegación
+    setTimeout(()=> {
+      readyToNavigate = true;
+      wrap.classList.add('ready');
+    }, 700);
+  }
+
+  function drawNode(x,y,size,color,glow=12){
+    ctx.save();
+    ctx.shadowBlur = glow;
+    ctx.shadowColor = color;
+    const grad = ctx.createRadialGradient(x,y,0,x,y,size);
+    grad.addColorStop(0, 'rgba(255,255,255,.9)');
+    grad.addColorStop(0.35, color);
+    grad.addColorStop(1, 'rgba(56,245,255,0)');
+    ctx.fillStyle = grad;
     ctx.beginPath();
-    ctx.arc(node.x, node.y, size, 0, Math.PI * 2);
+    ctx.arc(x,y,size,0,Math.PI*2);
     ctx.fill();
-    
-    node.x += node.vx;
-    node.y += node.vy;
-    if (node.x < 0 || node.x > width) node.vx *= -1;
-    if (node.y < 0 || node.y > height) node.vy *= -1;
+    // núcleo
+    ctx.shadowBlur = 22;
+    ctx.shadowColor = color;
+    ctx.fillStyle = 'rgba(255,255,255,.85)';
+    ctx.beginPath();
+    ctx.arc(x,y,Math.max(1.5, size*0.28),0,Math.PI*2);
+    ctx.fill();
+    ctx.restore();
   }
-  
-  requestAnimationFrame(animate);
-}
-animate();
+
+  function drawLink(ax,ay,bx,by,alpha){
+    const dx = bx-ax, dy = by-ay;
+    const dist = Math.hypot(dx,dy);
+    const nx = dx/dist, ny = dy/dist;
+    const midx = (ax+bx)/2, midy = (ay+by)/2;
+
+    ctx.save();
+    ctx.globalAlpha = Math.min(1, alpha);
+    const grad = ctx.createLinearGradient(ax,ay,bx,by);
+    grad.addColorStop(0, 'rgba(56,245,255,.0)');
+    grad.addColorStop(0.5,'rgba(138,92,255,.9)');
+    grad.addColorStop(1, 'rgba(56,245,255,.0)');
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = 2;
+    ctx.shadowBlur = 18;
+    ctx.shadowColor = 'rgba(138,92,255,.7)';
+    ctx.beginPath();
+    // línea principal
+    ctx.moveTo(ax,ay);
+    ctx.lineTo(bx,by);
+    ctx.stroke();
+
+    // “respiración” en el medio
+    ctx.beginPath();
+    ctx.arc(midx, midy, 3.5, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(138,92,255,.85)';
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function step(){
+    const now = performance.now();
+    const t = (now - t0) * 0.001;
+
+    ctx.clearRect(0,0,W,H);
+
+    // pulso del nodo base
+    const beat = Math.sin(t*2*Math.PI*0.9 + baseNode.phase); // ~0.9 Hz
+    let baseSize = baseNode.base + baseNode.amp * (0.6 + 0.4*beat);
+
+    // si el cursor se acerca, aumentar aura y eventualmente evolucionar
+    if (mouse.inside && mouse.x!=null){
+      const d = Math.hypot(mouse.x - baseNode.x, mouse.y - baseNode.y);
+      if (d < 95){
+        baseSize += (95 - d) * 0.04; // halo por cercanía
+        // dispara la evolución al acercarse lo suficiente
+        if (!evolved && d < 70) triggerEvolution();
+      }
+    }
+
+    // dibuja nodo base
+    drawNode(baseNode.x, baseNode.y, baseSize, 'rgba(56,245,255,.85)', 24);
+
+    // si existe el hijo, animar nacimiento y enlace
+    if (childNode.exists){
+      // interpolar nacimiento
+      childNode.birth = Math.min(1, childNode.birth + 0.02);
+      // easing
+      const e = 1 - Math.pow(1 - childNode.birth, 3);
+      childNode.x = baseNode.x + (childNode.tx - baseNode.x) * e;
+      childNode.y = baseNode.y + (childNode.ty - baseNode.y) * e;
+
+      const childBeat = Math.sin(t*2*Math.PI*0.95 + childNode.phase);
+      const childSize = (childNode.base + childNode.amp*(0.55 + 0.45*childBeat)) * (0.4 + 0.6*e);
+
+      // enlace con brillo que respira
+      drawLink(baseNode.x, baseNode.y, childNode.x, childNode.y, 0.6*e + 0.3*(0.5+0.5*Math.sin(t*2)));
+
+      // nodo hijo
+      drawNode(childNode.x, childNode.y, childSize, 'rgba(138,92,255,.9)', 26);
+    }
+
+    requestAnimationFrame(step);
+  }
+  step();
+})();
 </script>
 </body>
 </html>
