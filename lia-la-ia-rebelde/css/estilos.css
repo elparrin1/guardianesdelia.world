@@ -1,1 +1,53 @@
+/* Estilos base */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+  color: #f0f0f0;
+}
+
+/* Encabezado */
+header {
+  background-color: #1a0a4f;
+  padding: 20px;
+  text-align: center;
+  color: #ff00ff;
+  text-shadow: 0 0 10px #ff00ff;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2.5em;
+}
+
+/* Contenido de la historia */
+.contenido {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: rgba(20, 20, 20, 0.85);
+  border-radius: 15px;
+  box-shadow: 0 0 15px #ff00ff;
+  line-height: 1.8;
+}
+
+p {
+  margin-bottom: 15px;
+  font-size: 1.1em;
+}
+
+/* Imágenes */
+img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin: 15px 0;
+  box-shadow: 0 0 10px #ff00ff;
+}
+
+/* Subtítulos dentro de la historia */
+h2 {
+  color: #ff00ff;
+  margin-top: 25px;
+  text-shadow: 0 0 5px #ff00ff;
+}
 
