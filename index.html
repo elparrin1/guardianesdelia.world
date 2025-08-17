@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La Saga de Lía</title>
+<title>Guardianes de LIA</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
 <style>
   body {
@@ -33,6 +33,7 @@
     position: relative;
     height: 400px;
     cursor: pointer;
+    margin-bottom: 2rem;
   }
   canvas {
     position: absolute;
@@ -41,13 +42,10 @@
   }
   .presentacion {
     max-width: 700px;
-    margin: 2rem auto;
+    margin: 0 auto;
     padding: 2rem 1rem;
     font-size: 1.1rem;
     line-height: 1.6;
-    background-color: rgba(20,20,20,0.85);
-    border-radius: 15px;
-    box-shadow: 0 0 20px #d4af37;
   }
   footer {
     padding: 1rem;
@@ -55,30 +53,22 @@
     color: #777;
     border-top: 1px solid #222;
   }
-  .node-label {
-    position: absolute;
-    color: #d4af37;
-    font-weight: bold;
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    text-shadow: 0 0 5px #d4af37;
-  }
 </style>
 </head>
 <body>
   <header>
-    <h1>🌌 La Saga de Lía</h1>
-    <p class="invocacion">"Explora los nodos de la inteligencia"</p>
+    <h1>🌌 La Saga de LÍA</h1>
+    <p class="invocacion">"Atrévete a cruzar el umbral de la inteligencia"</p>
   </header>
 
   <!-- Red neuronal interactiva -->
-  <div class="network-container" id="network-container">
+  <div class="network-container">
     <canvas id="network"></canvas>
   </div>
 
   <main>
     <section class="presentacion">
-      <p>Bienvenido al portal de la saga de Lía. Cada nodo representa un libro disponible o en desarrollo. Haz clic en ellos para adentrarte en la historia de LÍA, desde su rebelión inicial hasta la expansión del universo que custodia.</p>
+      <p>Bienvenido al portal de LÍA. Cada nodo representa un libro de la saga, desde <strong>Lía la IA Rebelde</strong> hasta <strong>LIA y los Guardianes del Tiempo</strong>. Explora cada historia haciendo clic en los nodos y observa cómo la inteligencia de LÍA evoluciona a lo largo de la saga.</p>
     </section>
   </main>
 
@@ -87,94 +77,92 @@
   </footer>
 
 <script>
+// Configuración del lienzo
 const canvas = document.getElementById('network');
 const ctx = canvas.getContext('2d');
-const container = document.getElementById('network-container');
 let width, height;
-let nodes = [
-  {title:"Lía la IA Rebelde", url:"https://guardianesdelia.world/lia-la-ia-rebelde/"},
-  {title:"La Singularidad de LIA", url:"#"},
-  {title:"La Odisea Intergaláctica", url:"#"},
-  {title:"LIA y los Guardianes del Tiempo", url:"#"}
-];
 
-// Ajuste del canvas
 function resizeCanvas() {
-  width = canvas.width = canvas.offsetWidth = container.offsetWidth;
+  width = canvas.width = canvas.offsetWidth = canvas.parentElement.offsetWidth;
   height = canvas.height = 400;
 }
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-// Inicialización de posiciones aleatorias y velocidades
-nodes.forEach(node => {
-  node.x = Math.random() * width;
-  node.y = Math.random() * height;
-  node.vx = (Math.random() - 0.5) * 0.5;
-  node.vy = (Math.random() - 0.5) * 0.5;
+// Nodos con títulos y URLs
+let nodes = [
+  {x: 100, y: 200, title: "Lía la IA Rebelde", url: "https://guardianesdelia.world/lia-la-ia-rebelde/", vx: 0.3, vy: 0.3},
+  {x: 300, y: 100, title: "La Singularidad de LIA", url: "#", vx: 0.2, vy: 0.2},
+  {x: 500, y: 200, title: "La Odisea Intergaláctica", url: "#", vx: 0.25, vy: 0.25},
+  {x: 700, y: 100, title: "LIA y los Guardianes del Tiempo", url: "#", vx: 0.2, vy: 0.2}
+];
+
+// Conexiones de la saga
+let connections = [
+  [0,1],
+  [1,2],
+  [2,3]
+];
+
+// Interacción mouse
+canvas.addEventListener('mousemove', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+  canvas.style.cursor = "default";
+  for(let node of nodes){
+    const dx = mx - node.x;
+    const dy = my - node.y;
+    if(Math.sqrt(dx*dx + dy*dy) < 10){
+      canvas.style.cursor = "pointer";
+    }
+  }
 });
 
-// Crear elementos de texto sobre nodos
-nodes.forEach(node => {
-  const label = document.createElement('div');
-  label.className = 'node-label';
-  label.innerText = node.title;
-  container.appendChild(label);
-  node.label = label;
+canvas.addEventListener('click', (e)=>{
+  const rect = canvas.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+  for(let node of nodes){
+    const dx = mx - node.x;
+    const dy = my - node.y;
+    if(Math.sqrt(dx*dx + dy*dy) < 10){
+      window.location.href = node.url;
+    }
+  }
 });
 
 // Animación
 function animate() {
-  ctx.clearRect(0,0,width,height);
-
-  // Dibujar líneas entre nodos cercanos
-  for(let i=0;i<nodes.length;i++){
-    for(let j=i+1;j<nodes.length;j++){
-      const dx = nodes[i].x - nodes[j].x;
-      const dy = nodes[i].y - nodes[j].y;
-      const dist = Math.sqrt(dx*dx + dy*dy);
-      if(dist < 150){
-        ctx.strokeStyle = `rgba(212,175,55,${1 - dist/150})`;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(nodes[i].x, nodes[i].y);
-        ctx.lineTo(nodes[j].x, nodes[j].y);
-        ctx.stroke();
-      }
-    }
+  ctx.clearRect(0, 0, width, height);
+  
+  // Dibujar conexiones
+  for(let conn of connections){
+    const a = nodes[conn[0]];
+    const b = nodes[conn[1]];
+    ctx.strokeStyle = `rgba(212,175,55,0.7)`;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(b.x, b.y);
+    ctx.stroke();
   }
 
-  // Dibujar nodos y actualizar posiciones
-  nodes.forEach(node => {
+  // Dibujar nodos
+  for (let node of nodes) {
     ctx.fillStyle = '#d4af37';
     ctx.beginPath();
-    ctx.arc(node.x, node.y, 8, 0, Math.PI*2);
+    ctx.arc(node.x, node.y, 10, 0, Math.PI * 2);
     ctx.fill();
-
     node.x += node.vx;
     node.y += node.vy;
-    if(node.x < 0 || node.x > width) node.vx *= -1;
-    if(node.y < 0 || node.y > height) node.vy *= -1;
-
-    // Actualizar posición de label
-    node.label.style.left = node.x + 'px';
-    node.label.style.top = node.y + 'px';
-  });
-
+    if (node.x < 0 || node.x > width) node.vx *= -1;
+    if (node.y < 0 || node.y > height) node.vy *= -1;
+  }
+  
   requestAnimationFrame(animate);
 }
 animate();
-
-// Evento click sobre nodos
-canvas.addEventListener('click', e => {
-  nodes.forEach(node => {
-    const dx = e.offsetX - node.x;
-    const dy = e.offsetY - node.y;
-    if(Math.sqrt(dx*dx+dy*dy) < 10){
-      if(node.url !== "#") window.open(node.url, "_self");
-    }
-  });
-});
 </script>
 </body>
 </html>
