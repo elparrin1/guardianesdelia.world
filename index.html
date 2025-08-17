@@ -57,6 +57,19 @@
   .ready .hint{opacity:1}
   .network-wrap{cursor:default}
   .ready.network-wrap{cursor:pointer}
+
+  /* botón de acceso directo */
+  .boton{
+    display:inline-block; margin-top:1.2rem; padding:.75rem 1.2rem;
+    border:1px solid var(--accent); border-radius:10px; color:var(--accent);
+    text-decoration:none; font-family:'Orbitron', sans-serif; letter-spacing:.02em;
+    transition: background .3s, color .3s, box-shadow .3s;
+    box-shadow: 0 0 0 rgba(212,175,55,0);
+  }
+  .boton:hover{
+    background:var(--accent); color:#000;
+    box-shadow: 0 0 18px rgba(212,175,55,.35);
+  }
 </style>
 </head>
 <body>
@@ -65,7 +78,7 @@
     <p class="invocacion">"Atrévete a cruzar el umbral"</p>
   </header>
 
-  <div id="portal" class="network-wrap" aria-label="Red viva de LIA">
+  <div id="portal" class="network-wrap" aria-label="Red viva de LIA" tabindex="0">
     <canvas id="net"></canvas>
     <div class="grid"></div>
     <div class="hint">El portal se ha abierto — clic para entrar</div>
@@ -75,6 +88,17 @@
     <p class="presentacion">
       Bienvenido al portal. Aquí se abren los caminos hacia cada guardián, cada verso y cada sombra que conforman la saga de LIA.
     </p>
+
+    <!-- Acceso directo visible -->
+    <a href="https://guardianesdelia.world/Lia:%20La%20IA%20rebelde.html" class="boton">📖 Entrar al Libro de LIA</a>
+
+    <!-- Fallback si JS está deshabilitado -->
+    <noscript>
+      <p>
+        JavaScript está deshabilitado. Entra aquí: 
+        <a href="https://guardianesdelia.world/Lia:%20La%20IA%20rebelde.html">Libro de LIA</a>
+      </p>
+    </noscript>
   </main>
 
   <footer>
@@ -146,13 +170,23 @@
     else navigate();
   }, {passive:true});
 
+  // clic: cuando el portal esté listo, entrar
   wrap.addEventListener('click', ()=>{
     if (readyToNavigate) navigate();
   });
 
+  // teclado: Enter para evolucionar/entrar
+  wrap.addEventListener('keydown', (e)=>{
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      if (!evolved) triggerEvolution();
+      else if (readyToNavigate) navigate();
+    }
+  });
+
   function navigate(){
-    // Cambia aquí si quieres otro destino
-    window.location.href = 'libro1.html';
+    // Destino: Libro de LIA (URL pública)
+    window.location.href = 'https://guardianesdelia.world/Lia:%20La%20IA%20rebelde.html';
   }
 
   function triggerEvolution(){
