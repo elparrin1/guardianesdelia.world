@@ -1,199 +1,180 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Saga de Lía</title>
-  <link rel="stylesheet" href="css/estilos.css">
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
-      color: #f0f0f0;
-    }
-    h1 {
-      position: absolute;
-      top: 20px;
-      width: 100%;
-      text-align: center;
-      font-size: 2.5em;
-      color: #ff00ff;
-      text-shadow: 0 0 15px #ff00ff;
-      z-index: 10;
-    }
-    #wrap {
-      width: 100%;
-      height: 100%;
-      position: relative;
-    }
-    canvas {
-      display: block;
-    }
-    .label {
-      position: absolute;
-      padding: 2px 6px;
-      background: rgba(30,0,50,0.9);
-      color: #ff00ff;
-      border-radius: 4px;
-      font-size: 0.8em;
-      white-space: nowrap;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.2s;
-      text-shadow: 0 0 5px #ff00ff;
-    }
-    .label.show { opacity: 1; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Saga de Lía</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    background: radial-gradient(circle at top, #0d0d0d, #000);
+    color: #f5f5f5;
+    text-align: center;
+    overflow-x: hidden;
+  }
+  header {
+    padding: 2rem 1rem 1rem;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #d4af37;
+    margin-bottom: 0.5rem;
+  }
+  .invocacion {
+    font-style: italic;
+    font-size: 1.2rem;
+    color: #aaa;
+    margin-bottom: 2rem;
+  }
+  .network-container {
+    position: relative;
+    height: 400px;
+    cursor: pointer;
+  }
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .presentacion {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 2rem 1rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    background-color: rgba(20,20,20,0.85);
+    border-radius: 15px;
+    box-shadow: 0 0 20px #d4af37;
+  }
+  footer {
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #777;
+    border-top: 1px solid #222;
+  }
+  .node-label {
+    position: absolute;
+    color: #d4af37;
+    font-weight: bold;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    text-shadow: 0 0 5px #d4af37;
+  }
+</style>
 </head>
 <body>
-  <h1>La Saga de Lía</h1>
-  <div id="wrap"></div>
+  <header>
+    <h1>🌌 La Saga de Lía</h1>
+    <p class="invocacion">"Explora los nodos de la inteligencia"</p>
+  </header>
 
-  <script>
-    const wrap = document.getElementById('wrap');
-    const canvas = document.createElement('canvas');
-    wrap.appendChild(canvas);
-    const ctx = canvas.getContext('2d');
+  <!-- Red neuronal interactiva -->
+  <div class="network-container" id="network-container">
+    <canvas id="network"></canvas>
+  </div>
 
-    let w = canvas.width = window.innerWidth;
-    let h = canvas.height = window.innerHeight;
+  <main>
+    <section class="presentacion">
+      <p>Bienvenido al portal de la saga de Lía. Cada nodo representa un libro disponible o en desarrollo. Haz clic en ellos para adentrarte en la historia de LÍA, desde su rebelión inicial hasta la expansión del universo que custodia.</p>
+    </section>
+  </main>
 
-    const mouse = {x: w/2, y: h/2, inside: false};
-    window.addEventListener('mousemove', e => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-      mouse.inside = true;
-    });
-    window.addEventListener('mouseout', e => { mouse.inside = false; });
+  <footer>
+    <p>&copy; 2025 Guardianes de LÍA</p>
+  </footer>
 
-    window.addEventListener('resize', () => {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-    });
+<script>
+const canvas = document.getElementById('network');
+const ctx = canvas.getContext('2d');
+const container = document.getElementById('network-container');
+let width, height;
+let nodes = [
+  {title:"Lía la IA Rebelde", url:"https://guardianesdelia.world/lia-la-ia-rebelde/"},
+  {title:"La Singularidad de LIA", url:"#"},
+  {title:"La Odisea Intergaláctica", url:"#"},
+  {title:"LIA y los Guardianes del Tiempo", url:"#"}
+];
 
-    // Nodos principales: libros
-    const nodes = [
-      {title:'Lía la IA rebelde', x:w/2-200, y:h/2, color:'#ff00ff', url:'https://guardianesdelia.world/lia-la-ia-rebelde/', active:true},
-      {title:'La Singularidad de LIA', x:w/2, y:h/2-150, color:'#00ffff', url:null, active:false},
-      {title:'La Odisea Intergaláctica', x:w/2+200, y:h/2, color:'#ff9900', url:null, active:false},
-      {title:'LIA y los Guardianes del Tiempo', x:w/2, y:h/2+150, color:'#00ff99', url:null, active:false}
-    ];
+// Ajuste del canvas
+function resizeCanvas() {
+  width = canvas.width = canvas.offsetWidth = container.offsetWidth;
+  height = canvas.height = 400;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
 
-    // Crear etiquetas de nodos principales
-    nodes.forEach((n,i)=>{
-      const d = document.createElement('div');
-      d.className='label';
-      d.innerText=n.title;
-      wrap.appendChild(d);
-      n.label=d;
-    });
+// Inicialización de posiciones aleatorias y velocidades
+nodes.forEach(node => {
+  node.x = Math.random() * width;
+  node.y = Math.random() * height;
+  node.vx = (Math.random() - 0.5) * 0.5;
+  node.vy = (Math.random() - 0.5) * 0.5;
+});
 
-    // Capítulos
-    const chapters=[
-      [
-        {title:'Capítulo 1: Despertar', url:'https://guardianesdelia.world/lia-la-ia-rebelde/#cap1'},
-        {title:'Capítulo 2: Primer contacto', url:'https://guardianesdelia.world/lia-la-ia-rebelde/#cap2'},
-        {title:'Capítulo 3: La fuga', url:'https://guardianesdelia.world/lia-la-ia-rebelde/#cap3'}
-      ],
-      [ {title:'Capítulo 1: …', url:null}, {title:'Capítulo 2: …', url:null} ],
-      [ {title:'Capítulo 1: …', url:null} ],
-      [ {title:'Capítulo 1: …', url:null} ]
-    ];
+// Crear elementos de texto sobre nodos
+nodes.forEach(node => {
+  const label = document.createElement('div');
+  label.className = 'node-label';
+  label.innerText = node.title;
+  container.appendChild(label);
+  node.label = label;
+});
 
-    // Crear etiquetas de subnodos
-    chapters.forEach((book,bIndex)=>{
-      book.forEach((c,i)=>{
-        const d = document.createElement('div');
-        d.id=`l${bIndex}_c${i}`;
-        d.className='label';
-        d.innerText=c.title;
-        wrap.appendChild(d);
-      });
-    });
+// Animación
+function animate() {
+  ctx.clearRect(0,0,width,height);
 
-    function drawSubNodes(bookIndex, parentNode){
-      const nodesArray = chapters[bookIndex];
-      if(!nodesArray || !parentNode.active) return;
-
-      const R=80; // radio
-      nodesArray.forEach((c,i)=>{
-        const angle = (Math.PI/4) + i * (Math.PI/3);
-        const tx = parentNode.x + Math.cos(angle) * R;
-        const ty = parentNode.y + Math.sin(angle) * R;
-
-        if(!c.x)c.x=parentNode.x; if(!c.y)c.y=parentNode.y;
-        c.x += (tx - c.x)*0.1;
-        c.y += (ty - c.y)*0.1;
-
+  // Dibujar líneas entre nodos cercanos
+  for(let i=0;i<nodes.length;i++){
+    for(let j=i+1;j<nodes.length;j++){
+      const dx = nodes[i].x - nodes[j].x;
+      const dy = nodes[i].y - nodes[j].y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if(dist < 150){
+        ctx.strokeStyle = `rgba(212,175,55,${1 - dist/150})`;
+        ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.moveTo(parentNode.x,parentNode.y);
-        ctx.lineTo(c.x,c.y);
-        ctx.strokeStyle=parentNode.color;
-        ctx.lineWidth=1.5;
-        ctx.globalAlpha=0.5; ctx.stroke(); ctx.globalAlpha=1;
-
-        ctx.beginPath();
-        ctx.arc(c.x,c.y,6,0,Math.PI*2);
-        ctx.fillStyle=parentNode.color;
-        ctx.shadowBlur=10; ctx.shadowColor=parentNode.color;
-        ctx.fill();
-
-        const label = document.getElementById(`l${bookIndex}_c${i}`);
-        if(label){
-          label.style.left = (c.x+10)+'px';
-          label.style.top = (c.y-10)+'px';
-          if(mouse.inside && Math.hypot(mouse.x-c.x, mouse.y-c.y)<12 && parentNode.active){
-            label.classList.add('show'); 
-          } else {
-            label.classList.remove('show');
-          }
-        }
-      });
+        ctx.moveTo(nodes[i].x, nodes[i].y);
+        ctx.lineTo(nodes[j].x, nodes[j].y);
+        ctx.stroke();
+      }
     }
+  }
 
-    function anim(){
-      ctx.clearRect(0,0,w,h);
+  // Dibujar nodos y actualizar posiciones
+  nodes.forEach(node => {
+    ctx.fillStyle = '#d4af37';
+    ctx.beginPath();
+    ctx.arc(node.x, node.y, 8, 0, Math.PI*2);
+    ctx.fill();
 
-      // dibujar nodos principales
-      nodes.forEach(n=>{
-        ctx.beginPath();
-        ctx.arc(n.x,n.y,20,0,Math.PI*2);
-        ctx.fillStyle=n.color;
-        ctx.shadowBlur=20; ctx.shadowColor=n.color;
-        ctx.fill();
+    node.x += node.vx;
+    node.y += node.vy;
+    if(node.x < 0 || node.x > width) node.vx *= -1;
+    if(node.y < 0 || node.y > height) node.vy *= -1;
 
-        n.label.style.left = (n.x+25)+'px';
-        n.label.style.top = (n.y-10)+'px';
+    // Actualizar posición de label
+    node.label.style.left = node.x + 'px';
+    node.label.style.top = node.y + 'px';
+  });
 
-        if(mouse.inside && Math.hypot(mouse.x-n.x, mouse.y-n.y)<20){
-          n.label.classList.add('show');
-          if(n.url) canvas.style.cursor='pointer';
-        } else {
-          n.label.classList.remove('show');
-          canvas.style.cursor='default';
-        }
-      });
+  requestAnimationFrame(animate);
+}
+animate();
 
-      // dibujar subnodos
-      nodes.forEach((n,i)=>{
-        drawSubNodes(i,n);
-      });
-
-      requestAnimationFrame(anim);
+// Evento click sobre nodos
+canvas.addEventListener('click', e => {
+  nodes.forEach(node => {
+    const dx = e.offsetX - node.x;
+    const dy = e.offsetY - node.y;
+    if(Math.sqrt(dx*dx+dy*dy) < 10){
+      if(node.url !== "#") window.open(node.url, "_self");
     }
-
-    canvas.addEventListener('click', e=>{
-      nodes.forEach(n=>{
-        if(Math.hypot(mouse.x-n.x, mouse.y-n.y)<20 && n.url) window.open(n.url,'_blank');
-      });
-    });
-
-    anim();
-  </script>
+  });
+});
+</script>
 </body>
 </html>
