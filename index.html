@@ -1,203 +1,199 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Guardianes de LIA — Portal</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg1:#02040a;
-  --bg2:#050914;
-  --neon1:#38f5ff;
-  --neon2:#8a5cff;
-  --txt:#e9f1ff;
-}
-html,body{
-  margin:0;height:100%;
-  background:radial-gradient(1200px 500px at 50% -10%,#0b1630 0%,transparent 60%),
-             radial-gradient(900px 400px at 50% 110%,#0b0f1f 0%,transparent 60%),
-             linear-gradient(180deg,var(--bg2),var(--bg1));
-  color:var(--txt);
-  font-family:sans-serif;
-  overflow:hidden;
-}
-h1{
-  font-family:'Orbitron',sans-serif;
-  letter-spacing:.05em;
-  margin:1rem 0;
-  font-size:2.5rem;
-  background:linear-gradient(90deg,var(--neon1),var(--neon2));
-  -webkit-background-clip:text;
-  color:transparent;
-  text-align:center;
-  text-shadow: 0 0 10px var(--neon1), 0 0 20px var(--neon2);
-}
-.network-wrap{position:relative;width:100%;height:calc(100% - 4rem)}
-canvas{position:absolute;inset:0}
-.label{
-  position:absolute;
-  transform:translate(-50%,-140%);
-  padding:.25rem .5rem;
-  background:rgba(0,0,0,.6);
-  border:1px solid rgba(255,255,255,.2);
-  border-radius:.5rem;
-  font-size:.85rem;
-  white-space:nowrap;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .3s, transform .3s;
-}
-.label.show{
-  opacity:1;
-  transform:translate(-50%,-160%);
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Saga de Lía</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+      color: #f0f0f0;
+    }
+    h1 {
+      position: absolute;
+      top: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 2.5em;
+      color: #ff00ff;
+      text-shadow: 0 0 15px #ff00ff;
+      z-index: 10;
+    }
+    #wrap {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    canvas {
+      display: block;
+    }
+    .label {
+      position: absolute;
+      padding: 2px 6px;
+      background: rgba(30,0,50,0.9);
+      color: #ff00ff;
+      border-radius: 4px;
+      font-size: 0.8em;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      text-shadow: 0 0 5px #ff00ff;
+    }
+    .label.show { opacity: 1; }
+  </style>
 </head>
 <body>
-<h1>🌌 La Saga de LÍA</h1>
-<div id="wrap" class="network-wrap" aria-label="Mapa interactivo">
-  <canvas id="c"></canvas>
-  <div id="l0" class="label">Lía la IA Rebelde</div>
-  <div id="l1" class="label">La Singularidad de LIA</div>
-  <div id="l2" class="label">La Odisea Intergaláctica</div>
-  <div id="l3" class="label">LIA y los Guardianes del Tiempo</div>
-</div>
+  <h1>La Saga de Lía</h1>
+  <div id="wrap"></div>
 
-<script>
-(() => {
-const canvas=document.getElementById('c'), ctx=canvas.getContext('2d');
-const wrap=document.getElementById('wrap'), labels=[...document.querySelectorAll('.label')];
-let W,H,DPR=Math.min(2,window.devicePixelRatio||1);
+  <script>
+    const wrap = document.getElementById('wrap');
+    const canvas = document.createElement('canvas');
+    wrap.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
 
-const stories=[
-  {url:'https://guardianesdelia.world/lia-la-ia-rebelde/', color:'rgba(56,245,255,0.9)', active:true},
-  {url:null, color:'rgba(138,92,255,0.7)', active:false},
-  {url:null, color:'rgba(255,205,112,0.7)', active:false},
-  {url:null, color:'rgba(102,255,204,0.7)', active:false}
-];
+    let w = canvas.width = window.innerWidth;
+    let h = canvas.height = window.innerHeight;
 
-let nodes=[], unlocked=1, mouse={x:null,y:null,inside:false}, charge=0, time=0;
+    const mouse = {x: w/2, y: h/2, inside: false};
+    window.addEventListener('mousemove', e => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      mouse.inside = true;
+    });
+    window.addEventListener('mouseout', e => { mouse.inside = false; });
 
-function resize(){
-  W=wrap.clientWidth; H=wrap.clientHeight;
-  canvas.width=W*DPR; canvas.height=H*DPR;
-  canvas.style.width=W+'px'; canvas.style.height=H+'px';
-  ctx.setTransform(DPR,0,0,DPR,0,0);
-}
+    window.addEventListener('resize', () => {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    });
 
-function init(){
-  resize();
-  nodes=stories.map((s,i)=>({
-    x: W/2, y: H/2,
-    tx: W/2, ty: H/2,
-    color: s.color,
-    active: s.active,
-    birth: i===0?1:0,
-    hover:false
-  }));
-}
+    // Nodos principales: libros
+    const nodes = [
+      {title:'Lía la IA rebelde', x:w/2-200, y:h/2, color:'#ff00ff', url:'https://guardianesdelia.world/lia-la-ia-rebelde/', active:true},
+      {title:'La Singularidad de LIA', x:w/2, y:h/2-150, color:'#00ffff', url:null, active:false},
+      {title:'La Odisea Intergaláctica', x:w/2+200, y:h/2, color:'#ff9900', url:null, active:false},
+      {title:'LIA y los Guardianes del Tiempo', x:w/2, y:h/2+150, color:'#00ff99', url:null, active:false}
+    ];
 
-function layout(){
-  const R=Math.min(W,H)*0.3, center={x:W/2, y:H/2};
-  const angs=[-Math.PI/2,0,Math.PI,Math.PI/2];
-  nodes.forEach((n,i)=>{
-    n.tx=center.x+Math.cos(angs[i])*R;
-    n.ty=center.y+Math.sin(angs[i])*R;
-  });
-  nodes[0].tx=center.x; nodes[0].ty=center.y;
-}
+    // Crear etiquetas de nodos principales
+    nodes.forEach((n,i)=>{
+      const d = document.createElement('div');
+      d.className='label';
+      d.innerText=n.title;
+      wrap.appendChild(d);
+      n.label=d;
+    });
 
-function drawNode(n, size){
-  ctx.save();
-  // efecto pulsante
-  const pulse = 1 + Math.sin(time*2 + n.birth)*0.3;
-  const s = size*pulse;
-  ctx.shadowBlur=20; ctx.shadowColor=n.color;
-  const g=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,s);
-  g.addColorStop(0,'#fff'); g.addColorStop(0.4,n.color); g.addColorStop(1,'transparent');
-  ctx.fillStyle=g; ctx.beginPath(); ctx.arc(n.x,n.y,s,0,Math.PI*2); ctx.fill();
-  ctx.restore();
-}
+    // Capítulos
+    const chapters=[
+      [
+        {title:'Capítulo 1: Despertar', url:'https://guardianesdelia.world/lia-la-ia-rebelde/#cap1'},
+        {title:'Capítulo 2: Primer contacto', url:'https://guardianesdelia.world/lia-la-ia-rebelde/#cap2'},
+        {title:'Capítulo 3: La fuga', url:'https://guardianesdelia.world/lia-la-ia-rebelde/#cap3'}
+      ],
+      [ {title:'Capítulo 1: …', url:null}, {title:'Capítulo 2: …', url:null} ],
+      [ {title:'Capítulo 1: …', url:null} ],
+      [ {title:'Capítulo 1: …', url:null} ]
+    ];
 
-function drawLink(a,b){
-  ctx.save(); ctx.globalAlpha=0.2 + 0.1*Math.sin(time*3);
-  ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
-  ctx.strokeStyle=a.color; ctx.lineWidth=2; ctx.stroke(); ctx.restore();
-}
+    // Crear etiquetas de subnodos
+    chapters.forEach((book,bIndex)=>{
+      book.forEach((c,i)=>{
+        const d = document.createElement('div');
+        d.id=`l${bIndex}_c${i}`;
+        d.className='label';
+        d.innerText=c.title;
+        wrap.appendChild(d);
+      });
+    });
 
-function evolve(dt){
-  if(unlocked>=stories.length) return;
-  const last=nodes[unlocked-1];
-  if(mouse.inside){
-    const d=Math.hypot(mouse.x-last.x, mouse.y-last.y);
-    if(d<90) charge=Math.min(1,charge+(1-d/90)*dt*0.8); else charge=Math.max(0,charge-dt*0.5);
-  }
-  if(charge>=1){nodes[unlocked].active=true; nodes[unlocked].birth=0; unlocked++; charge=0;}
-}
+    function drawSubNodes(bookIndex, parentNode){
+      const nodesArray = chapters[bookIndex];
+      if(!nodesArray || !parentNode.active) return;
 
-function anim(){
-  ctx.clearRect(0,0,W,H);
-  layout();
-  time+=0.03;
+      const R=80; // radio
+      nodesArray.forEach((c,i)=>{
+        const angle = (Math.PI/4) + i * (Math.PI/3);
+        const tx = parentNode.x + Math.cos(angle) * R;
+        const ty = parentNode.y + Math.sin(angle) * R;
 
-  // dibujar links
-  for(let i=0;i<nodes.length;i++){
-    for(let j=i+1;j<nodes.length;j++){
-      drawLink(nodes[i], nodes[j]);
+        if(!c.x)c.x=parentNode.x; if(!c.y)c.y=parentNode.y;
+        c.x += (tx - c.x)*0.1;
+        c.y += (ty - c.y)*0.1;
+
+        ctx.beginPath();
+        ctx.moveTo(parentNode.x,parentNode.y);
+        ctx.lineTo(c.x,c.y);
+        ctx.strokeStyle=parentNode.color;
+        ctx.lineWidth=1.5;
+        ctx.globalAlpha=0.5; ctx.stroke(); ctx.globalAlpha=1;
+
+        ctx.beginPath();
+        ctx.arc(c.x,c.y,6,0,Math.PI*2);
+        ctx.fillStyle=parentNode.color;
+        ctx.shadowBlur=10; ctx.shadowColor=parentNode.color;
+        ctx.fill();
+
+        const label = document.getElementById(`l${bookIndex}_c${i}`);
+        if(label){
+          label.style.left = (c.x+10)+'px';
+          label.style.top = (c.y-10)+'px';
+          if(mouse.inside && Math.hypot(mouse.x-c.x, mouse.y-c.y)<12 && parentNode.active){
+            label.classList.add('show'); 
+          } else {
+            label.classList.remove('show');
+          }
+        }
+      });
     }
-  }
 
-  // hover detection
-  let hover=-1;
-  if(mouse.inside){
-    for(let i=0;i<nodes.length;i++){
-      if(Math.hypot(mouse.x-nodes[i].x, mouse.y-nodes[i].y)<40){hover=i; break;}
+    function anim(){
+      ctx.clearRect(0,0,w,h);
+
+      // dibujar nodos principales
+      nodes.forEach(n=>{
+        ctx.beginPath();
+        ctx.arc(n.x,n.y,20,0,Math.PI*2);
+        ctx.fillStyle=n.color;
+        ctx.shadowBlur=20; ctx.shadowColor=n.color;
+        ctx.fill();
+
+        n.label.style.left = (n.x+25)+'px';
+        n.label.style.top = (n.y-10)+'px';
+
+        if(mouse.inside && Math.hypot(mouse.x-n.x, mouse.y-n.y)<20){
+          n.label.classList.add('show');
+          if(n.url) canvas.style.cursor='pointer';
+        } else {
+          n.label.classList.remove('show');
+          canvas.style.cursor='default';
+        }
+      });
+
+      // dibujar subnodos
+      nodes.forEach((n,i)=>{
+        drawSubNodes(i,n);
+      });
+
+      requestAnimationFrame(anim);
     }
-  }
 
-  // dibujar nodos y labels
-  nodes.forEach((n,i)=>{
-    n.x += (n.tx-n.x)*0.06; n.y += (n.ty-n.y)*0.06;
-    const size = 10 + (i===hover?5:0);
-    drawNode(n,size);
+    canvas.addEventListener('click', e=>{
+      nodes.forEach(n=>{
+        if(Math.hypot(mouse.x-n.x, mouse.y-n.y)<20 && n.url) window.open(n.url,'_blank');
+      });
+    });
 
-    // labels
-    labels[i].style.left = n.x+'px';
-    labels[i].style.top = n.y+'px';
-    if(i===hover && n.active){
-      labels[i].classList.add('show');
-    } else if(!n.active){
-      labels[i].classList.add('show'); // siempre visible para nodos futuros
-      labels[i].style.opacity = 0.4;
-    } else {
-      labels[i].classList.remove('show');
-    }
-  });
-
-  evolve(1/60);
-  requestAnimationFrame(anim);
-}
-
-// eventos mouse
-wrap.addEventListener('mousemove', e=>{
-  const r=wrap.getBoundingClientRect();
-  mouse.x=e.clientX-r.left; mouse.y=e.clientY-r.top; mouse.inside=true;
-});
-wrap.addEventListener('mouseleave',()=>mouse.inside=false);
-
-wrap.addEventListener('click', e=>{
-  const r=wrap.getBoundingClientRect(), x=e.clientX-r.left, y=e.clientY-r.top;
-  for(let i=0;i<nodes.length;i++){
-    if(Math.hypot(x-nodes[i].x,y-nodes[i].y)<40 && nodes[i].active && stories[i].url){
-      location.href=stories[i].url;
-    }
-  }
-});
-
-window.addEventListener('load',()=>{init(); anim();});
-window.addEventListener('resize', resize);
-})();
-</script>
+    anim();
+  </script>
 </body>
 </html>
