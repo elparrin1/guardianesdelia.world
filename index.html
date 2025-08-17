@@ -6,101 +6,197 @@
 <title>Guardianes de LIA — Portal</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg1:#02040a;--bg2:#050914;--neon1:#38f5ff;--neon2:#8a5cff;--txt:#e9f1ff;}
-html,body{margin:0;height:100%;background:
-radial-gradient(1200px 500px at 50% -10%,#0b1630 0%,transparent 60%),
-radial-gradient(900px 400px at 50% 110%,#0b0f1f 0%,transparent 60%),
-linear-gradient(180deg,var(--bg2),var(--bg1));color:var(--txt);font-family:sans-serif;overflow:hidden}
-h1{font-family:'Orbitron',sans-serif;letter-spacing:.05em;margin:1rem 0;font-size:2rem;
-background:linear-gradient(90deg,var(--neon1),var(--neon2));-webkit-background-clip:text;color:transparent;text-align:center}
+:root{
+  --bg1:#02040a;
+  --bg2:#050914;
+  --neon1:#38f5ff;
+  --neon2:#8a5cff;
+  --txt:#e9f1ff;
+}
+html,body{
+  margin:0;height:100%;
+  background:radial-gradient(1200px 500px at 50% -10%,#0b1630 0%,transparent 60%),
+             radial-gradient(900px 400px at 50% 110%,#0b0f1f 0%,transparent 60%),
+             linear-gradient(180deg,var(--bg2),var(--bg1));
+  color:var(--txt);
+  font-family:sans-serif;
+  overflow:hidden;
+}
+h1{
+  font-family:'Orbitron',sans-serif;
+  letter-spacing:.05em;
+  margin:1rem 0;
+  font-size:2.5rem;
+  background:linear-gradient(90deg,var(--neon1),var(--neon2));
+  -webkit-background-clip:text;
+  color:transparent;
+  text-align:center;
+  text-shadow: 0 0 10px var(--neon1), 0 0 20px var(--neon2);
+}
 .network-wrap{position:relative;width:100%;height:calc(100% - 4rem)}
 canvas{position:absolute;inset:0}
-.label{position:absolute;transform:translate(-50%,-140%);padding:.25rem .5rem;background:rgba(0,0,0,.6);
-border:1px solid rgba(255,255,255,.2);border-radius:.5rem;font-size:.85rem;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s}
-.label.show{opacity:1}
+.label{
+  position:absolute;
+  transform:translate(-50%,-140%);
+  padding:.25rem .5rem;
+  background:rgba(0,0,0,.6);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:.5rem;
+  font-size:.85rem;
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .3s, transform .3s;
+}
+.label.show{
+  opacity:1;
+  transform:translate(-50%,-160%);
+}
 </style>
 </head>
 <body>
-<h1>🌌 Guardianes de LIA</h1>
+<h1>🌌 La Saga de LÍA</h1>
 <div id="wrap" class="network-wrap" aria-label="Mapa interactivo">
   <canvas id="c"></canvas>
-  <div id="l0" class="label">Lía la IA rebelde</div>
+  <div id="l0" class="label">Lía la IA Rebelde</div>
   <div id="l1" class="label">La Singularidad de LIA</div>
   <div id="l2" class="label">La Odisea Intergaláctica</div>
   <div id="l3" class="label">LIA y los Guardianes del Tiempo</div>
 </div>
+
 <script>
 (() => {
-const canvas=document.getElementById('c'),ctx=canvas.getContext('2d');
-const wrap=document.getElementById('wrap'),labels=[...document.querySelectorAll('.label')];
+const canvas=document.getElementById('c'), ctx=canvas.getContext('2d');
+const wrap=document.getElementById('wrap'), labels=[...document.querySelectorAll('.label')];
 let W,H,DPR=Math.min(2,window.devicePixelRatio||1);
+
 const stories=[
- {url:'https://guardianesdelia.world/lia-la-ia-rebelde/',color:'rgba(56,245,255,0.9)'},
- {url:null,color:'rgba(138,92,255,0.95)'},
- {url:null,color:'rgba(255,205,112,0.95)'},
- {url:null,color:'rgba(102,255,204,0.95)'}
+  {url:'https://guardianesdelia.world/lia-la-ia-rebelde/', color:'rgba(56,245,255,0.9)', active:true},
+  {url:null, color:'rgba(138,92,255,0.7)', active:false},
+  {url:null, color:'rgba(255,205,112,0.7)', active:false},
+  {url:null, color:'rgba(102,255,204,0.7)', active:false}
 ];
-let nodes=[],unlocked=1,mouse={x:null,y:null,inside:false},charge=0;
+
+let nodes=[], unlocked=1, mouse={x:null,y:null,inside:false}, charge=0, time=0;
+
 function resize(){
-  W=wrap.clientWidth;H=wrap.clientHeight;
-  canvas.width=W*DPR;canvas.height=H*DPR;canvas.style.width=W+'px';canvas.style.height=H+'px';
+  W=wrap.clientWidth; H=wrap.clientHeight;
+  canvas.width=W*DPR; canvas.height=H*DPR;
+  canvas.style.width=W+'px'; canvas.style.height=H+'px';
   ctx.setTransform(DPR,0,0,DPR,0,0);
 }
+
 function init(){
   resize();
-  nodes=stories.map((s,i)=>({x:W/2,y:H/2,tx:W/2,ty:H/2,color:s.color,unlocked:i===0,birth:i===0?1:0}));
+  nodes=stories.map((s,i)=>({
+    x: W/2, y: H/2,
+    tx: W/2, ty: H/2,
+    color: s.color,
+    active: s.active,
+    birth: i===0?1:0,
+    hover:false
+  }));
 }
+
 function layout(){
-  const R=Math.min(W,H)*0.3,center={x:W/2,y:H/2};
+  const R=Math.min(W,H)*0.3, center={x:W/2, y:H/2};
   const angs=[-Math.PI/2,0,Math.PI,Math.PI/2];
-  nodes.forEach((n,i)=>{n.tx=center.x+Math.cos(angs[i])*R;n.ty=center.y+Math.sin(angs[i])*R});
-  nodes[0].tx=center.x;nodes[0].ty=center.y;
+  nodes.forEach((n,i)=>{
+    n.tx=center.x+Math.cos(angs[i])*R;
+    n.ty=center.y+Math.sin(angs[i])*R;
+  });
+  nodes[0].tx=center.x; nodes[0].ty=center.y;
 }
-function drawNode(n,size){
-  ctx.save();ctx.shadowBlur=20;ctx.shadowColor=n.color;
-  const g=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,size);
-  g.addColorStop(0,'#fff');g.addColorStop(0.4,n.color);g.addColorStop(1,'transparent');
-  ctx.fillStyle=g;ctx.beginPath();ctx.arc(n.x,n.y,size,0,Math.PI*2);ctx.fill();ctx.restore();
+
+function drawNode(n, size){
+  ctx.save();
+  // efecto pulsante
+  const pulse = 1 + Math.sin(time*2 + n.birth)*0.3;
+  const s = size*pulse;
+  ctx.shadowBlur=20; ctx.shadowColor=n.color;
+  const g=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,s);
+  g.addColorStop(0,'#fff'); g.addColorStop(0.4,n.color); g.addColorStop(1,'transparent');
+  ctx.fillStyle=g; ctx.beginPath(); ctx.arc(n.x,n.y,s,0,Math.PI*2); ctx.fill();
+  ctx.restore();
 }
+
 function drawLink(a,b){
-  ctx.save();ctx.globalAlpha=0.3;
-  ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=a.color;ctx.stroke();ctx.restore();
+  ctx.save(); ctx.globalAlpha=0.2 + 0.1*Math.sin(time*3);
+  ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
+  ctx.strokeStyle=a.color; ctx.lineWidth=2; ctx.stroke(); ctx.restore();
 }
+
 function evolve(dt){
-  if(unlocked>=stories.length)return;
+  if(unlocked>=stories.length) return;
   const last=nodes[unlocked-1];
   if(mouse.inside){
-    const d=Math.hypot(mouse.x-last.x,mouse.y-last.y);
-    if(d<90)charge=Math.min(1,charge+(1-d/90)*dt*0.8); else charge=Math.max(0,charge-dt*0.5);
+    const d=Math.hypot(mouse.x-last.x, mouse.y-last.y);
+    if(d<90) charge=Math.min(1,charge+(1-d/90)*dt*0.8); else charge=Math.max(0,charge-dt*0.5);
   }
-  if(charge>=1){nodes[unlocked].unlocked=true;nodes[unlocked].birth=0;unlocked++;charge=0;}
+  if(charge>=1){nodes[unlocked].active=true; nodes[unlocked].birth=0; unlocked++; charge=0;}
 }
+
 function anim(){
   ctx.clearRect(0,0,W,H);
   layout();
-  for(let i=0;i<unlocked;i++)for(let j=i+1;j<unlocked;j++){drawLink(nodes[i],nodes[j]);}
+  time+=0.03;
+
+  // dibujar links
+  for(let i=0;i<nodes.length;i++){
+    for(let j=i+1;j<nodes.length;j++){
+      drawLink(nodes[i], nodes[j]);
+    }
+  }
+
+  // hover detection
   let hover=-1;
   if(mouse.inside){
-    for(let i=0;i<unlocked;i++){if(Math.hypot(mouse.x-nodes[i].x,mouse.y-nodes[i].y)<40){hover=i;break;}}
+    for(let i=0;i<nodes.length;i++){
+      if(Math.hypot(mouse.x-nodes[i].x, mouse.y-nodes[i].y)<40){hover=i; break;}
+    }
   }
+
+  // dibujar nodos y labels
   nodes.forEach((n,i)=>{
-    n.x+= (n.tx-n.x)*0.06; n.y+=(n.ty-n.y)*0.06;
-    const size=8+(i===hover?4:0);
+    n.x += (n.tx-n.x)*0.06; n.y += (n.ty-n.y)*0.06;
+    const size = 10 + (i===hover?5:0);
     drawNode(n,size);
-    labels[i].style.left=n.x+'px';labels[i].style.top=n.y+'px';
-    labels[i].classList.toggle('show',i===hover);
+
+    // labels
+    labels[i].style.left = n.x+'px';
+    labels[i].style.top = n.y+'px';
+    if(i===hover && n.active){
+      labels[i].classList.add('show');
+    } else if(!n.active){
+      labels[i].classList.add('show'); // siempre visible para nodos futuros
+      labels[i].style.opacity = 0.4;
+    } else {
+      labels[i].classList.remove('show');
+    }
   });
+
   evolve(1/60);
   requestAnimationFrame(anim);
 }
-wrap.addEventListener('mousemove',e=>{const r=wrap.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;mouse.inside=true});
-wrap.addEventListener('mouseleave',()=>mouse.inside=false);
-wrap.addEventListener('click',e=>{
-  const r=wrap.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
-  for(let i=0;i<unlocked;i++)if(Math.hypot(x-nodes[i].x,y-nodes[i].y)<40 && stories[i].url)location.href=stories[i].url;
+
+// eventos mouse
+wrap.addEventListener('mousemove', e=>{
+  const r=wrap.getBoundingClientRect();
+  mouse.x=e.clientX-r.left; mouse.y=e.clientY-r.top; mouse.inside=true;
 });
-window.addEventListener('load',()=>{init();anim();});
-window.addEventListener('resize',resize);
+wrap.addEventListener('mouseleave',()=>mouse.inside=false);
+
+wrap.addEventListener('click', e=>{
+  const r=wrap.getBoundingClientRect(), x=e.clientX-r.left, y=e.clientY-r.top;
+  for(let i=0;i<nodes.length;i++){
+    if(Math.hypot(x-nodes[i].x,y-nodes[i].y)<40 && nodes[i].active && stories[i].url){
+      location.href=stories[i].url;
+    }
+  }
+});
+
+window.addEventListener('load',()=>{init(); anim();});
+window.addEventListener('resize', resize);
 })();
 </script>
 </body>
