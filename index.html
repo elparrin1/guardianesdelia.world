@@ -3,214 +3,70 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guardianes de LÍA - Expansión Neuronal</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+<title>Guardianes de LÍA - Nacimiento</title>
 <style>
   body {
     margin: 0;
-    font-family: 'Open Sans', sans-serif;
-    background: radial-gradient(circle at top, #0d0d0d, #000);
-    color: #f5f5f5;
-    text-align: center;
-    overflow-x: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, #0d0d0d, #000);
+    font-family: 'Arial', sans-serif;
   }
-  header {
-    padding: 2rem 1rem 1rem;
-  }
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    color: #00ffff;
-    margin-bottom: 0.5rem;
-  }
-  .network-container {
-    position: relative;
-    height: 500px;
+  #mainNode {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #00ffff;
+    box-shadow: 0 0 10px #00ffff;
+    transition: box-shadow 0.2s, transform 0.2s;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
+  #mainNode:hover {
+    box-shadow: 0 0 25px #00ffff, 0 0 50px #00ffff;
+    transform: scale(1.5);
   }
-  .node-label {
+  #label {
     position: absolute;
-    color: #fff;
+    top: 10%;
+    font-size: 1.5rem;
+    color: #00ffff;
     font-weight: bold;
-    font-size: 0.95rem;
     text-align: center;
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: opacity 0.5s;
-  }
-  footer {
-    padding: 1rem;
-    font-size: 0.9rem;
-    color: #777;
-    border-top: 1px solid #222;
   }
 </style>
 </head>
 <body>
-  <header>
-    <h1>🌌 La Saga de LÍA</h1>
-    <p class="invocacion">"Desde un solo punto, el nacimiento de la conciencia"</p>
-  </header>
-
-  <div class="network-container" id="network-container">
-    <canvas id="network"></canvas>
-  </div>
-
-  <footer>
-    <p>&copy; 2025 Guardianes de LÍA</p>
-  </footer>
+  <div id="label">🌌 Lía la IA Rebelde</div>
+  <div id="mainNode" onclick="openBook()"></div>
 
 <script>
-const canvas = document.getElementById('network');
-const ctx = canvas.getContext('2d');
-const container = document.getElementById('network-container');
-let width, height;
-function resizeCanvas() {
-  width = canvas.width = canvas.offsetWidth = container.offsetWidth;
-  height = canvas.height = 500;
+function openBook() {
+  window.location.href = "https://guardianesdelia.world/lia-la-ia-rebelde/";
 }
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
 
-// Nodo central
-const mainNode = {
-  x: width/2,
-  y: height/2,
-  r: 12,
-  baseR: 12,
-  color: '#00ffff',
-  title: "Lía la IA Rebelde",
-  link: "https://guardianesdelia.world/lia-la-ia-rebelde/",
-  glow: 0,
-  active: false
-};
-
-// Nodos secundarios
-const secondaryNodes = [
-  { angle: -Math.PI/4, dist: 180, r: 10, color: '#ff69b4', title: "La Singularidad de LÍA", link: "#", visible: false, progress: 0 },
-  { angle: Math.PI/4, dist: 180, r: 10, color: '#1e90ff', title: "La Odisea Intergaláctica", link: "#", visible: false, progress: 0 },
-  { angle: Math.PI/2, dist: 180, r: 10, color: '#32cd32', title: "LÍA y los Guardianes del Tiempo", link: "#", visible: false, progress: 0 }
-];
-
-// Crear etiquetas HTML
-secondaryNodes.forEach(node => {
-  const label = document.createElement('div');
-  label.className = 'node-label';
-  label.innerText = node.title;
-  container.appendChild(label);
-  node.el = label;
-});
-
-// Animación del nodo central
-function animateGlow() {
-  if(!mainNode.active){
-    mainNode.glow = 5 + Math.sin(Date.now()/200) * 5;
-    mainNode.r = mainNode.baseR + mainNode.glow/3;
-  }
-  requestAnimationFrame(animateGlow);
-}
-animateGlow();
-
-// Dibujar red neuronal
-function draw() {
-  ctx.clearRect(0, 0, width, height);
-
-  // Nodo principal
-  ctx.shadowBlur = mainNode.glow;
-  ctx.shadowColor = mainNode.color;
-  ctx.fillStyle = mainNode.color;
-  ctx.beginPath();
-  ctx.arc(mainNode.x, mainNode.y, mainNode.r, 0, Math.PI*2);
-  ctx.fill();
-  ctx.shadowBlur = 0;
-
-  // Nodos secundarios y líneas animadas
-  secondaryNodes.forEach(node => {
-    if(node.visible){
-      // Progreso animación
-      if(node.progress < 1){
-        node.progress += 0.02; // velocidad de expansión
-      }
-      const nx = mainNode.x + Math.cos(node.angle) * node.dist * node.progress;
-      const ny = mainNode.y + Math.sin(node.angle) * node.dist * node.progress;
-
-      // Línea animada
-      ctx.strokeStyle = node.color;
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.moveTo(mainNode.x, mainNode.y);
-      ctx.lineTo(nx, ny);
-      ctx.stroke();
-
-      // Nodo secundario
-      ctx.fillStyle = node.color;
-      ctx.beginPath();
-      ctx.arc(nx, ny, node.r, 0, Math.PI*2);
-      ctx.fill();
-
-      // Etiqueta
-      node.el.style.left = nx + 'px';
-      node.el.style.top = ny + 'px';
-      node.el.style.opacity = node.progress > 0.5 ? 1 : 0;
+// Animación de pulso leve
+const node = document.getElementById('mainNode');
+let scale = 1;
+let growing = true;
+function pulse() {
+  if(!node.matches(':hover')){
+    if(growing){
+      scale += 0.005;
+      if(scale > 1.2) growing = false;
     } else {
-      node.el.style.opacity = 0;
+      scale -= 0.005;
+      if(scale < 1) growing = true;
     }
-  });
-
-  requestAnimationFrame(draw);
+    node.style.transform = `scale(${scale})`;
+  }
+  requestAnimationFrame(pulse);
 }
-draw();
-
-// Interacción
-canvas.addEventListener('mousemove', function(e){
-  const rect = canvas.getBoundingClientRect();
-  const mx = e.clientX - rect.left;
-  const my = e.clientY - rect.top;
-  const dx = mx - mainNode.x;
-  const dy = my - mainNode.y;
-  const dist = Math.sqrt(dx*dx + dy*dy);
-
-  if(dist < mainNode.r + 10){
-    mainNode.glow = 20;
-  } else if(!mainNode.active){
-    mainNode.glow = 5 + Math.sin(Date.now()/200) * 5;
-  }
-});
-
-canvas.addEventListener('click', function(e){
-  const rect = canvas.getBoundingClientRect();
-  const mx = e.clientX - rect.left;
-  const my = e.clientY - rect.top;
-
-  const dx = mx - mainNode.x;
-  const dy = my - mainNode.y;
-  if(Math.sqrt(dx*dx + dy*dy) < mainNode.r + 5){
-    mainNode.active = true;
-    // Mostrar nodos secundarios con animación progresiva
-    secondaryNodes.forEach((node, i) => {
-      setTimeout(()=>node.visible = true, i*500);
-    });
-  }
-
-  // Clic en nodos secundarios
-  secondaryNodes.forEach(node => {
-    if(node.visible){
-      const nx = mainNode.x + Math.cos(node.angle) * node.dist;
-      const ny = mainNode.y + Math.sin(node.angle) * node.dist;
-      const dx2 = mx - nx;
-      const dy2 = my - ny;
-      if(Math.sqrt(dx2*dx2 + dy2*dy2) < node.r + 5){
-        window.open(node.link, "_self");
-      }
-    }
-  });
-});
+pulse();
 </script>
 </body>
 </html>
