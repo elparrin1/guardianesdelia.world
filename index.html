@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guardianes de LIA</title>
 
-<!-- 🌌 Gema Latente del Oráculo (versión hover) -->
+<!-- 🌌 Gema Latente del Oráculo (chat funcional) -->
 <div id="oraculo">
   <div id="gema"></div>
   <div id="panel">
@@ -25,7 +25,7 @@
     z-index: 9999;
   }
 
-  /* Gema más pequeña y viva */
+  /* Gema pequeña */
   #gema {
     width: 40px;
     height: 40px;
@@ -34,6 +34,7 @@
     box-shadow: 0 0 10px rgba(74, 195, 215, 0.8), 0 0 20px rgba(74,195,215,0.4);
     animation: latido 2.5s infinite ease-in-out;
     transition: transform 0.3s ease;
+    cursor: pointer;
   }
 
   #gema:hover {
@@ -45,7 +46,7 @@
     50% { transform: scale(1.08); box-shadow: 0 0 18px rgba(74, 195, 215, 1), 0 0 30px rgba(74,195,215,0.6);}
   }
 
-  /* Panel desplegable */
+  /* Panel oculto y animado */
   #panel {
     position: absolute;
     bottom: 50px;
@@ -65,7 +66,7 @@
     transform: translateY(10px);
   }
 
-  /* Mostrar al pasar el mouse */
+  /* Mostrar al hover del oráculo */
   #oraculo:hover #panel {
     opacity: 1;
     pointer-events: all;
@@ -102,11 +103,19 @@
   entrada.addEventListener("keypress", function(e) {
     if (e.key === "Enter" && this.value.trim() !== "") {
       mensajes.innerHTML += `<div><strong>Tú:</strong> ${this.value}</div>`;
+      
+      // Simulación respuesta de LIA (cuando conectemos API, este bloque cambia)
+      setTimeout(() => {
+        mensajes.innerHTML += `<div><strong>LIA:</strong> Estoy escuchando...</div>`;
+        mensajes.scrollTop = mensajes.scrollHeight;
+      }, 600);
+
       this.value = "";
       mensajes.scrollTop = mensajes.scrollHeight;
     }
   });
 </script>
+
 
 
 
