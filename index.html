@@ -1,65 +1,162 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guardianes de LIA</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Open Sans', sans-serif;
-      background: radial-gradient(circle at top, #0d0d0d, #000);
-      color: #f5f5f5;
-      text-align: center;
-    }
-    header {
-      padding: 3rem 1rem;
-    }
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      color: #d4af37; /* dorado */
-      margin-bottom: 0.5rem;
-    }
-    .invocacion {
-      font-style: italic;
-      font-size: 1.2rem;
-      color: #aaa;
-    }
-    .presentacion {
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 2rem 1rem;
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-    footer {
-      padding: 1rem;
-      font-size: 0.9rem;
-      color: #777;
-      border-top: 1px solid #222;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guardianes de LIA</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    background: radial-gradient(circle at top, #0d0d0d, #000);
+    color: #f5f5f5;
+    text-align: center;
+    overflow-x: hidden;
+  }
+  header {
+    padding: 2rem 1rem 1rem;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #d4af37;
+    margin-bottom: 0.5rem;
+  }
+  .invocacion {
+    font-style: italic;
+    font-size: 1.2rem;
+    color: #aaa;
+    margin-bottom: 2rem;
+  }
+  .book-cover {
+    display: inline-block;
+    margin-bottom: 2rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .book-cover img {
+    width: 180px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px #d4af37;
+  }
+  .book-cover:hover img {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px #d4af37;
+  }
+  .network-container {
+    position: relative;
+    height: 300px;
+    cursor: pointer;
+    margin-bottom: 2rem;
+  }
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .presentacion {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  footer {
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #777;
+    border-top: 1px solid #222;
+  }
+</style>
 </head>
 <body>
   <header>
     <h1>🌌 Guardianes de LIA</h1>
     <p class="invocacion">"Atrévete a cruzar el umbral"</p>
+    
+    <!-- Portada del primer libro -->
+    <div class="book-cover" onclick="window.location.href='https://guardianesdelia.world/lia-la-ia-rebelde/'">
+      <img src="https://guardianesdelia.world/lia-la-ia-rebelde/imagenes/portada.jpg" alt="Lía la IA Rebelde">
+    </div>
   </header>
 
   <main>
     <section class="presentacion">
       <p>Bienvenido al portal. Aquí se abren los caminos hacia cada guardián, cada verso y cada sombra que conforman la saga de LIA.</p>
     </section>
-
-    <section class="portales">
-      <!-- Aquí irá el Mapa de Portales -->
-    </section>
+    
+    <!-- Red neuronal interactiva -->
+    <div class="network-container" onclick="location.href='https://guardianesdelia.world/lia-la-ia-rebelde/'">
+      <canvas id="network"></canvas>
+    </div>
   </main>
 
   <footer>
     <p>&copy; 2025 Guardianes de LIA</p>
   </footer>
+
+<script>
+// Configuración del lienzo
+const canvas = document.getElementById('network');
+const ctx = canvas.getContext('2d');
+let width, height;
+let nodes = [];
+
+function resizeCanvas() {
+  width = canvas.width = canvas.offsetWidth = canvas.parentElement.offsetWidth;
+  height = canvas.height = 300;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+// Crear nodos aleatorios
+for (let i = 0; i < 25; i++) {
+  nodes.push({
+    x: Math.random() * width,
+    y: Math.random() * height,
+    vx: (Math.random() - 0.5) * 0.5,
+    vy: (Math.random() - 0.5) * 0.5
+  });
+}
+
+// Animación de la red
+function animate() {
+  ctx.clearRect(0, 0, width, height);
+  
+  // Dibujar líneas
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const dx = nodes[i].x - nodes[j].x;
+      const dy = nodes[i].y - nodes[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 100) {
+        ctx.strokeStyle = `rgba(212,175,55,${1 - dist / 100})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(nodes[i].x, nodes[i].y);
+        ctx.lineTo(nodes[j].x, nodes[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+  
+  // Dibujar nodos
+  for (let node of nodes) {
+    ctx.fillStyle = '#d4af37';
+    ctx.beginPath();
+    ctx.arc(node.x, node.y, 3, 0, Math.PI * 2);
+    ctx.fill();
+    node.x += node.vx;
+    node.y += node.vy;
+    if (node.x < 0 || node.x > width) node.vx *= -1;
+    if (node.y < 0 || node.y > height) node.vy *= -1;
+  }
+  
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
 </body>
 </html>
+
