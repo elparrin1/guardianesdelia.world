@@ -1,124 +1,107 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Guardianes de LIA — Portal</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg-1:#02040a; --bg-2:#050914; --neon:#38f5ff; --neon-2:#8a5cff; --text:#e9f1ff; --muted:#8aa0b3; --accent:#d4af37;
-  }
-  html,body{height:100%}
-  body{
-    margin:0; color:var(--text); font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, sans-serif;
-    background:
-      radial-gradient(1200px 500px at 50% -10%, #0b1630 0%, transparent 60%),
-      radial-gradient(900px 400px at 50% 110%, #0b0f1f 0%, transparent 60%),
-      linear-gradient(180deg, var(--bg-2), var(--bg-1));
-    text-align:center; overflow-x:hidden;
-  }
-  header{padding:2.5rem 1rem 1rem}
-  h1{
-    font-family:'Orbitron', sans-serif; letter-spacing:0.06em; margin:0 0 .4rem; font-size:clamp(28px,4vw,40px);
-    background: linear-gradient(90deg, var(--neon), var(--neon-2));
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-    text-shadow:0 0 12px rgba(56,245,255,.2), 0 0 22px rgba(138,92,255,.15);
-  }
-  .invocacion{font-style:italic; color:var(--muted); margin:0; font-size:clamp(14px,2.2vw,18px)}
-  .network-wrap{position:relative; height:420px; margin:16px auto 0; max-width:980px}
-  canvas{position:absolute; inset:0}
-  .grid{
-    position:absolute; inset:0; pointer-events:none;
-    background-image:
-      linear-gradient(to right, rgba(56,245,255,.07) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(138,92,255,.06) 1px, transparent 1px);
-    background-size:40px 40px;
-    mask-image: radial-gradient(220px 220px at 50% 50%, #000 50%, transparent 90%);
-    animation: drift 14s linear infinite;
-  }
-  @keyframes drift{ 0%{background-position:0 0, 0 0} 100%{background-position:40px 40px, 40px 40px} }
-  main{max-width:820px; margin:0 auto; padding:1.2rem 1rem 2.2rem}
-  .presentacion{color:#cdd6e3; line-height:1.65; font-size:1.05rem}
-  footer{border-top:1px solid rgba(255,255,255,.06); color:#98a6ba; font-size:.9rem; padding:1rem}
-  .hint{
-    position:absolute; left:50%; bottom:14px; transform:translateX(-50%);
-    font-size:.95rem; color:#b8c6d9; opacity:.0; transition:opacity .6s ease;
-    background:rgba(10,14,24,.6); border:1px solid rgba(136,146,255,.25);
-    padding:.45rem .7rem; border-radius:10px; backdrop-filter: blur(6px);
-  }
-  .ready .hint{opacity:1}
-  .network-wrap{cursor:default}
-  .ready.network-wrap{cursor:pointer}
-  .label{
-    position:absolute; transform:translate(-50%, calc(-100% - 12px));
-    padding:.25rem .5rem; font-size:.88rem; border-radius:.6rem;
-    color:#e9f1ff; background:rgba(12,16,28,.6); border:1px solid rgba(255,255,255,.12);
-    white-space:nowrap; pointer-events:none; opacity:.0; transition:opacity .25s ease, transform .25s ease;
-    backdrop-filter: blur(6px);
-  }
-  .label.show{ opacity:1; transform:translate(-50%, calc(-100% - 8px)); }
-  .accesos{
-    display:flex; gap:.6rem; flex-wrap:wrap; justify-content:center; margin-top:1.2rem
-  }
-  .accesos a{
-    display:inline-block; padding:.55rem .9rem; border:1px solid var(--accent); border-radius:10px; color:var(--accent);
-    text-decoration:none; font-family:'Orbitron', sans-serif; letter-spacing:.02em; font-size:.9rem;
-    transition: background .3s, color .3s, box-shadow .3s;
-  }
-  .accesos a:hover{ background:var(--accent); color:#000; box-shadow: 0 0 16px rgba(212,175,55,.3); }
-  #portal:focus{ outline:2px dashed rgba(212,175,55,.6); outline-offset:6px; border-radius:12px; }
+:root{
+  --bg1:#02040a; --bg2:#050914; --neon1:#38f5ff; --neon2:#8a5cff; --txt:#e9f1ff;
+}
+html,body{margin:0;height:100%;background:radial-gradient(1200px 500px at 50% -10%,#0b1630 0%,transparent 60%),
+radial-gradient(900px 400px at 50% 110%, #0b0f1f 0%,transparent 60%),linear-gradient(180deg,var(--bg2),var(--bg1));color:var(--txt);font-family:sans-serif;overflow:hidden}
+h1{font-family:'Orbitron',sans-serif;letter-spacing:.05em;margin:1rem 0;font-size:2rem;
+background:linear-gradient(90deg,var(--neon1),var(--neon2));-webkit-background-clip:text;color:transparent;text-align:center}
+.network-wrap{position:relative;width:100%;height:calc(100% - 4rem)}
+canvas{position:absolute;inset:0}
+.label{
+  position:absolute;transform:translate(-50%,-140%);padding:.25rem .5rem;background:rgba(0,0,0,.6);
+  border:1px solid rgba(255,255,255,.2);border-radius:.5rem;font-size:.85rem;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity .3s
+}
+.label.show{opacity:1}
 </style>
 </head>
 <body>
-<header>
-  <h1>🌌 Guardianes de LIA</h1>
-  <p class="invocacion">"Atrévete a cruzar el umbral"</p>
-</header>
-
-<div id="portal" class="network-wrap" aria-label="Mapa vivo de portales" tabindex="0">
-  <canvas id="net"></canvas>
-  <div class="grid"></div>
-  <div id="hint" class="hint">Acércate al nodo para despertar nuevos portales</div>
-  <span id="label-0" class="label">Lía la IA rebelde</span>
-  <span id="label-1" class="label">La Singularidad de LIA</span>
-  <span id="label-2" class="label">La Odisea Intergaláctica</span>
-  <span id="label-3" class="label">LIA y los Guardianes del Tiempo</span>
+<h1>🌌 Guardianes de LIA</h1>
+<div id="wrap" class="network-wrap" aria-label="Mapa interactivo">
+  <canvas id="c"></canvas>
+  <div id="l0" class="label">Lía la IA rebelde</div>
+  <div id="l1" class="label">La Singularidad de LIA</div>
+  <div id="l2" class="label">La Odisea Intergaláctica</div>
+  <div id="l3" class="label">LIA y los Guardianes del Tiempo</div>
 </div>
-
-<main>
-  <p class="presentacion">
-    Bienvenido al portal. Acerca tu presencia al primer nodo y observa cómo la red aprende y revela las demás historias.
-  </p>
-  <div class="accesos">
-    <a href="https://guardianesdelia.world/lia-la-ia-rebelde/">Lía la IA rebelde</a>
-    <a href="/la-singularidad-de-lia/">La Singularidad de LIA</a>
-    <a href="/la-odisea-intergalactica/">La Odisea Intergaláctica</a>
-    <a href="/lia-y-los-guardianes-del-tiempo/">LIA y los Guardianes del Tiempo</a>
-  </div>
-  <noscript>
-    <p style="margin-top:1rem;">
-      JavaScript está deshabilitado. Usa los enlaces de arriba para entrar a cada historia.
-    </p>
-  </noscript>
-</main>
-
-<footer>
-  <p>© 2025 Guardianes de LIA</p>
-</footer>
-
 <script>
-/* Script de animación y evolución de nodos */
-(() => {
-  const wrap = document.getElementById('portal');
-  const canvas = document.getElementById('net');
-  const ctx = canvas.getContext('2d');
-  const DPR = Math.min(2, window.devicePixelRatio || 1);
-  const hint = document.getElementById('hint');
-  const stories = [
-    { title:'Lía la IA rebelde', url:'https://guardianesdelia.world/lia-la-ia-rebelde/', color:'rgba(56,245,255,.90)'},
-    { title:'La Singularidad de LIA', url:'/la-singularidad-de-lia/', color:'rgba(138,92,255,.95)'},
-    { title:'La Odisea Intergaláctica', url:'/la-odisea-intergalactica/', color:'rgba(255,205,112,.95)'},
-    { title:'LIA y los Guardianes del Tiempo', url:'/lia-y-los-guardianes-del-tiempo/', color:'rgba(102,255,204,.95)'}
-  ];
-  let W, H, t0 = performance
+const canvas=document.getElementById('c'),ctx=canvas.getContext('2d');
+const wrap=document.getElementById('wrap'),labels=[...document.querySelectorAll('.label')];
+let W,H,DPR=Math.min(2,window.devicePixelRatio||1);
+const stories=[
+ {url:'https://guardianesdelia.world/lia-la-ia-rebelde/',color:'rgba(56,245,255,0.9)'},
+ {url:'/la-singularidad-de-lia/',color:'rgba(138,92,255,0.95)'},
+ {url:'/la-odisea-intergalactica/',color:'rgba(255,205,112,0.95)'},
+ {url:'/lia-y-los-guardianes-del-tiempo/',color:'rgba(102,255,204,0.95)'}
+];
+let nodes=[],unlocked=1,mouse={x:null,y:null,inside:false},charge=0;
+function resize(){
+  W=wrap.clientWidth;H=wrap.clientHeight;
+  canvas.width=W*DPR;canvas.height=H*DPR;canvas.style.width=W+'px';canvas.style.height=H+'px';
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+function init(){
+  nodes=stories.map((s,i)=>({x:W/2,y:H/2,tx:W/2,ty:H/2,color:s.color,unlocked:i===0,birth:i===0?1:0}));
+}
+function layout(){
+  const R=Math.min(W,H)*0.3,center={x:W/2,y:H/2};
+  const angs=[-Math.PI/2,0,Math.PI,Math.PI/2];
+  nodes.forEach((n,i)=>{n.tx=center.x+Math.cos(angs[i])*R;n.ty=center.y+Math.sin(angs[i])*R});
+  nodes[0].tx=center.x;nodes[0].ty=center.y;
+}
+function drawNode(n,size){
+  ctx.save();ctx.shadowBlur=20;ctx.shadowColor=n.color;
+  const g=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,size);
+  g.addColorStop(0,'#fff');g.addColorStop(0.4,n.color);g.addColorStop(1,'transparent');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(n.x,n.y,size,0,Math.PI*2);ctx.fill();ctx.restore();
+}
+function evolve(dt){
+  if(unlocked>=stories.length)return;
+  const last=nodes[unlocked-1];
+  if(mouse.inside){
+    const d=Math.hypot(mouse.x-last.x,mouse.y-last.y);
+    if(d<90)charge=Math.min(1,charge+(1-d/90)*dt*0.8); else charge=Math.max(0,charge-dt*0.5);
+  }
+  if(charge>=1){nodes[unlocked].unlocked=true;nodes[unlocked].birth=0;unlocked++;charge=0;}
+}
+function anim(){
+  ctx.clearRect(0,0,W,H);
+  layout();
+  for(let i=0;i<unlocked;i++)for(let j=i+1;j<unlocked;j++){
+    ctx.strokeStyle=nodes[i].color;ctx.globalAlpha=0.3;
+    ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.stroke();
+  }
+  let hover=-1;
+  if(mouse.inside){
+    for(let i=0;i<unlocked;i++){if(Math.hypot(mouse.x-nodes[i].x,mouse.y-nodes[i].y)<40){hover=i;break;}}
+  }
+  nodes.forEach((n,i)=>{
+    n.x+= (n.tx-n.x)*0.06; n.y+=(n.ty-n.y)*0.06;
+    const size=8+(i===hover?4:0);
+    drawNode(n,size);
+    labels[i].style.left=n.x+'px';labels[i].style.top=n.y+'px';
+    labels[i].classList.toggle('show',i===hover);
+  });
+  evolve(1/60);
+  requestAnimationFrame(anim);
+}
+wrap.addEventListener('mousemove',e=>{const r=wrap.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;mouse.inside=true});
+wrap.addEventListener('mouseleave',()=>mouse.inside=false);
+wrap.addEventListener('click',e=>{
+  const r=wrap.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+  for(let i=0;i<unlocked;i++)if(Math.hypot(x-nodes[i].x,y-nodes[i].y)<40)location.href=stories[i].url;
+});
+window.addEventListener('resize',resize);
+resize();init();anim();
+})();
+</script>
+</body>
+</html>
