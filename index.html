@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guardianes de LIA</title>
+<title>Guardianes de LÍA - Expansión Neuronal</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
 <style>
   body {
@@ -20,18 +20,12 @@
   h1 {
     font-family: 'Playfair Display', serif;
     font-size: 2.5rem;
-    color: #d4af37;
+    color: #00ffff;
     margin-bottom: 0.5rem;
-  }
-  .invocacion {
-    font-style: italic;
-    font-size: 1.2rem;
-    color: #aaa;
-    margin-bottom: 2rem;
   }
   .network-container {
     position: relative;
-    height: 400px;
+    height: 500px;
     cursor: pointer;
   }
   canvas {
@@ -47,6 +41,8 @@
     text-align: center;
     pointer-events: none;
     transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.5s;
   }
   footer {
     padding: 1rem;
@@ -58,38 +54,48 @@
 </head>
 <body>
   <header>
-    <h1>🌌 Guardianes de LIA</h1>
-    <p class="invocacion">"Atrévete a cruzar el umbral"</p>
+    <h1>🌌 La Saga de LÍA</h1>
+    <p class="invocacion">"Desde un solo punto, el nacimiento de la conciencia"</p>
   </header>
 
-  <!-- Red neuronal interactiva -->
   <div class="network-container" id="network-container">
     <canvas id="network"></canvas>
   </div>
 
   <footer>
-    <p>&copy; 2025 Guardianes de LIA</p>
+    <p>&copy; 2025 Guardianes de LÍA</p>
   </footer>
 
 <script>
-// Configuración del lienzo
 const canvas = document.getElementById('network');
 const ctx = canvas.getContext('2d');
 const container = document.getElementById('network-container');
 let width, height;
 function resizeCanvas() {
   width = canvas.width = canvas.offsetWidth = container.offsetWidth;
-  height = canvas.height = 400;
+  height = canvas.height = 500;
 }
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-// Nodos
-const mainNode = { x: width/2, y: height/2, r: 12, color: '#d4af37', title: "Lía la IA Rebelde", link: "https://guardianesdelia.world/lia-la-ia-rebelde/" };
+// Nodo central
+const mainNode = {
+  x: width/2,
+  y: height/2,
+  r: 12,
+  baseR: 12,
+  color: '#00ffff',
+  title: "Lía la IA Rebelde",
+  link: "https://guardianesdelia.world/lia-la-ia-rebelde/",
+  glow: 0,
+  active: false
+};
+
+// Nodos secundarios
 const secondaryNodes = [
-  { angle: 0, dist: 120, r: 10, color: '#ff69b4', title: "La Singularidad de LIA", link: "#", visible: false },
-  { angle: Math.PI*2/3, dist: 120, r: 10, color: '#1e90ff', title: "La Odisea Intergaláctica", link: "#", visible: false },
-  { angle: Math.PI*4/3, dist: 120, r: 10, color: '#32cd32', title: "LIA y los Guardianes del Tiempo", link: "#", visible: false }
+  { angle: -Math.PI/4, dist: 180, r: 10, color: '#ff69b4', title: "La Singularidad de LÍA", link: "#", visible: false, progress: 0 },
+  { angle: Math.PI/4, dist: 180, r: 10, color: '#1e90ff', title: "La Odisea Intergaláctica", link: "#", visible: false, progress: 0 },
+  { angle: Math.PI/2, dist: 180, r: 10, color: '#32cd32', title: "LÍA y los Guardianes del Tiempo", link: "#", visible: false, progress: 0 }
 ];
 
 // Crear etiquetas HTML
@@ -101,21 +107,40 @@ secondaryNodes.forEach(node => {
   node.el = label;
 });
 
-// Función para dibujar la red
+// Animación del nodo central
+function animateGlow() {
+  if(!mainNode.active){
+    mainNode.glow = 5 + Math.sin(Date.now()/200) * 5;
+    mainNode.r = mainNode.baseR + mainNode.glow/3;
+  }
+  requestAnimationFrame(animateGlow);
+}
+animateGlow();
+
+// Dibujar red neuronal
 function draw() {
   ctx.clearRect(0, 0, width, height);
 
-  // Dibujar nodo principal
+  // Nodo principal
+  ctx.shadowBlur = mainNode.glow;
+  ctx.shadowColor = mainNode.color;
   ctx.fillStyle = mainNode.color;
   ctx.beginPath();
   ctx.arc(mainNode.x, mainNode.y, mainNode.r, 0, Math.PI*2);
   ctx.fill();
+  ctx.shadowBlur = 0;
 
-  // Dibujar nodos secundarios y líneas
+  // Nodos secundarios y líneas animadas
   secondaryNodes.forEach(node => {
     if(node.visible){
-      const nx = mainNode.x + Math.cos(node.angle) * node.dist;
-      const ny = mainNode.y + Math.sin(node.angle) * node.dist;
+      // Progreso animación
+      if(node.progress < 1){
+        node.progress += 0.02; // velocidad de expansión
+      }
+      const nx = mainNode.x + Math.cos(node.angle) * node.dist * node.progress;
+      const ny = mainNode.y + Math.sin(node.angle) * node.dist * node.progress;
+
+      // Línea animada
       ctx.strokeStyle = node.color;
       ctx.lineWidth = 1.5;
       ctx.beginPath();
@@ -123,17 +148,18 @@ function draw() {
       ctx.lineTo(nx, ny);
       ctx.stroke();
 
+      // Nodo secundario
       ctx.fillStyle = node.color;
       ctx.beginPath();
       ctx.arc(nx, ny, node.r, 0, Math.PI*2);
       ctx.fill();
 
-      // Actualizar posición de la etiqueta
+      // Etiqueta
       node.el.style.left = nx + 'px';
       node.el.style.top = ny + 'px';
+      node.el.style.opacity = node.progress > 0.5 ? 1 : 0;
     } else {
-      node.el.style.left = '-100px';
-      node.el.style.top = '-100px';
+      node.el.style.opacity = 0;
     }
   });
 
@@ -141,7 +167,7 @@ function draw() {
 }
 draw();
 
-// Mostrar nodos secundarios al pasar mouse sobre el nodo principal
+// Interacción
 canvas.addEventListener('mousemove', function(e){
   const rect = canvas.getBoundingClientRect();
   const mx = e.clientX - rect.left;
@@ -149,27 +175,30 @@ canvas.addEventListener('mousemove', function(e){
   const dx = mx - mainNode.x;
   const dy = my - mainNode.y;
   const dist = Math.sqrt(dx*dx + dy*dy);
+
   if(dist < mainNode.r + 10){
-    secondaryNodes.forEach(n => n.visible = true);
-  } else {
-    secondaryNodes.forEach(n => n.visible = false);
+    mainNode.glow = 20;
+  } else if(!mainNode.active){
+    mainNode.glow = 5 + Math.sin(Date.now()/200) * 5;
   }
 });
 
-// Clic en nodo principal o secundarios
 canvas.addEventListener('click', function(e){
   const rect = canvas.getBoundingClientRect();
   const mx = e.clientX - rect.left;
   const my = e.clientY - rect.top;
 
-  // Nodo principal
   const dx = mx - mainNode.x;
   const dy = my - mainNode.y;
   if(Math.sqrt(dx*dx + dy*dy) < mainNode.r + 5){
-    window.open(mainNode.link, "_self");
+    mainNode.active = true;
+    // Mostrar nodos secundarios con animación progresiva
+    secondaryNodes.forEach((node, i) => {
+      setTimeout(()=>node.visible = true, i*500);
+    });
   }
 
-  // Nodos secundarios
+  // Clic en nodos secundarios
   secondaryNodes.forEach(node => {
     if(node.visible){
       const nx = mainNode.x + Math.cos(node.angle) * node.dist;
