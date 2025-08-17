@@ -62,24 +62,53 @@
 <h1>🌌 Lía la IA Rebelde</h1>
 <img src="imagenes/portada.jpg" alt="Lía la IA Rebelde">
 
-  <!-- Botón IA Cibernética -->
-<div style="text-align:center; margin: 2rem 0;">
-  <a href="https://guardianesdelia.world/" title="Volver a la página principal">
-    <img src="imagenes/boton-ia-cibernetica.png" 
-         alt="Botón IA Cibernética" 
-         style="width:120px; transition: transform 0.3s;">
-  </a>
-</div>
+<!-- Botón cibernético -->
+<canvas id="boton-ia" width="200" height="60" style="cursor:pointer; display:block; margin: 20px auto;"></canvas>
 
 <script>
-  // Animación simple al pasar el mouse
-  const btnIA = document.querySelector('a img');
-  btnIA.addEventListener('mouseover', () => {
-    btnIA.style.transform = 'scale(1.2) rotate(10deg)';
-  });
-  btnIA.addEventListener('mouseout', () => {
-    btnIA.style.transform = 'scale(1) rotate(0deg)';
-  });
+// Configuración del canvas
+const canvasBoton = document.getElementById('boton-ia');
+const ctxBoton = canvasBoton.getContext('2d');
+
+function dibujarBoton() {
+    // Fondo
+    const grad = ctxBoton.createLinearGradient(0, 0, canvasBoton.width, canvasBoton.height);
+    grad.addColorStop(0, '#0ff');
+    grad.addColorStop(1, '#00f');
+    ctxBoton.fillStyle = grad;
+    ctxBoton.fillRect(0, 0, canvasBoton.width, canvasBoton.height);
+
+    // Bordes brillantes
+    ctxBoton.strokeStyle = '#0ff';
+    ctxBoton.lineWidth = 3;
+    ctxBoton.strokeRect(0, 0, canvasBoton.width, canvasBoton.height);
+
+    // Texto
+    ctxBoton.font = 'bold 16px "Open Sans", sans-serif';
+    ctxBoton.fillStyle = '#fff';
+    ctxBoton.textAlign = 'center';
+    ctxBoton.textBaseline = 'middle';
+    ctxBoton.fillText('🔙 Regresar', canvasBoton.width / 2, canvasBoton.height / 2);
+
+    // Efecto cibernético extra: pequeños puntos animados
+    for (let i = 0; i < 30; i++) {
+        ctxBoton.fillStyle = `rgba(0,255,255,${Math.random()})`;
+        ctxBoton.fillRect(Math.random()*canvasBoton.width, Math.random()*canvasBoton.height, 2, 2);
+    }
+}
+
+// Animación
+function animarBoton() {
+    ctxBoton.clearRect(0, 0, canvasBoton.width, canvasBoton.height);
+    dibujarBoton();
+    requestAnimationFrame(animarBoton);
+}
+animarBoton();
+
+// Evento clic
+canvasBoton.addEventListener('click', () => {
+    window.location.href = 'https://guardianesdelia.world/';
+});
 </script>
 
 <!-- COPIA AQUÍ EL TEXTO DE BLOGGER -->
