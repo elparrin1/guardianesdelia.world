@@ -1,110 +1,3 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Guardianes de LIA</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg-1:#02040a; --bg-2:#050914; --neon:#38f5ff; --neon-2:#8a5cff; --text:#e9f1ff; --muted:#8aa0b3; --accent:#d4af37;
-  }
-  html,body{height:100%}
-  body{
-    margin:0; color:var(--text); font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, sans-serif;
-    background:
-      radial-gradient(1200px 500px at 50% -10%, #0b1630 0%, transparent 60%),
-      radial-gradient(900px 400px at 50% 110%, #0b0f1f 0%, transparent 60%),
-      linear-gradient(180deg, var(--bg-2), var(--bg-1));
-    text-align:center; overflow-x:hidden;
-  }
-  header{padding:2.5rem 1rem 1rem}
-  h1{
-    font-family:'Orbitron', sans-serif; letter-spacing:0.06em; margin:0 0 .4rem; font-size:clamp(28px,4vw,40px);
-    background: linear-gradient(90deg, var(--neon), var(--neon-2));
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-    text-shadow:0 0 12px rgba(56,245,255,.2), 0 0 22px rgba(138,92,255,.15);
-  }
-  .invocacion{font-style:italic; color:var(--muted); margin:0; font-size:clamp(14px,2.2vw,18px)}
-  .network-wrap{position:relative; height:360px; margin:10px auto 0; max-width:960px}
-  canvas{position:absolute; inset:0}
-  /* sutil rejilla holográfica */
-  .grid{
-    position:absolute; inset:0; pointer-events:none;
-    background-image:
-      linear-gradient(to right, rgba(56,245,255,.07) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(138,92,255,.06) 1px, transparent 1px);
-    background-size:40px 40px;
-    mask-image: radial-gradient(200px 200px at 50% 50%, #000 50%, transparent 90%);
-    animation: drift 14s linear infinite;
-  }
-  @keyframes drift{
-    0%{background-position:0 0, 0 0}
-    100%{background-position:40px 40px, 40px 40px}
-  }
-
-  main{max-width:760px; margin:0 auto; padding:1.5rem 1rem 2rem}
-  .presentacion{color:#cdd6e3; line-height:1.65; font-size:1.05rem}
-  footer{border-top:1px solid rgba(255,255,255,.06); color:#98a6ba; font-size:.9rem; padding:1rem}
-
-  /* estado del portal */
-  .hint{
-    position:absolute; left:50%; bottom:14px; transform:translateX(-50%);
-    font-size:.95rem; color:#b8c6d9; opacity:0; transition:opacity .6s ease;
-    background:rgba(10,14,24,.6); border:1px solid rgba(136,146,255,.25);
-    padding:.45rem .7rem; border-radius:10px; backdrop-filter: blur(6px);
-  }
-  .ready .hint{opacity:1}
-  .network-wrap{cursor:default}
-  .ready.network-wrap{cursor:pointer}
-
-  /* botón de acceso directo */
-  .boton{
-    display:inline-block; margin-top:1.2rem; padding:.75rem 1.2rem;
-    border:1px solid var(--accent); border-radius:10px; color:var(--accent);
-    text-decoration:none; font-family:'Orbitron', sans-serif; letter-spacing:.02em;
-    transition: background .3s, color .3s, box-shadow .3s;
-    box-shadow: 0 0 0 rgba(212,175,55,0);
-  }
-  .boton:hover{
-    background:var(--accent); color:#000;
-    box-shadow: 0 0 18px rgba(212,175,55,.35);
-  }
-</style>
-</head>
-<body>
-  <header>
-    <h1>🌌 Guardianes de LIA</h1>
-    <p class="invocacion">"Atrévete a cruzar el umbral"</p>
-  </header>
-
-  <div id="portal" class="network-wrap" aria-label="Red viva de LIA" tabindex="0">
-    <canvas id="net"></canvas>
-    <div class="grid"></div>
-    <div class="hint">El portal se ha abierto — clic para entrar</div>
-  </div>
-
-  <main>
-    <p class="presentacion">
-      Bienvenido al portal. Aquí se abren los caminos hacia cada guardián, cada verso y cada sombra que conforman la saga de LIA.
-    </p>
-
-    <!-- Acceso directo visible -->
-    <a href="https://guardianesdelia.world/Lia:%20La%20IA%20rebelde.html" class="boton">📖 Entrar al Libro de LIA</a>
-
-    <!-- Fallback si JS está deshabilitado -->
-    <noscript>
-      <p>
-        JavaScript está deshabilitado. Entra aquí: 
-        <a href="https://guardianesdelia.world/Lia:%20La%20IA%20rebelde.html">Libro de LIA</a>
-      </p>
-    </noscript>
-  </main>
-
-  <footer>
-    <p>© 2025 Guardianes de LIA</p>
-  </footer>
-
 <script>
 (() => {
   const wrap = document.getElementById('portal');
@@ -113,203 +6,93 @@
   const DPR = Math.min(2, window.devicePixelRatio || 1);
 
   let W, H, t0 = performance.now();
-  let mouse = {x:null, y:null, inside:false};
-  let evolved = false;       // tras duplicación
-  let readyToNavigate = false;
 
-  const baseNode = {
-    x: 0, y: 0,
-    vx: 0, vy: 0,
-    base: 6, amp: 2.4, phase: Math.random()*Math.PI*2,
-    glow: '#38f5ff'
-  };
-
-  const childNode = {
-    exists: false,
-    x: 0, y: 0,
-    tx: 0, ty: 0,
-    birth: 0,           // 0->1 anim de nacimiento
-    base: 4.5, amp: 1.8, phase: Math.random()*Math.PI*2,
-    glow: '#8a5cff'
-  };
+  // Nodos del portal
+  const nodes = [
+    { id:"lia-rebelde", label:"Lía la IA rebelde", url:"/lia-la-ia-rebelde/", color:"#38f5ff", base:7 },
+    { id:"singularidad", label:"La Singularidad de LIA", url:"#", color:"#ff6cfb", base:6 },
+    { id:"odisea", label:"La Odisea Intergaláctica", url:"#", color:"#ffd36c", base:6 },
+    { id:"guardianes", label:"LIA y los Guardianes del Tiempo", url:"#", color:"#8a5cff", base:6 }
+  ];
 
   function resize(){
-    W = Math.floor(wrap.clientWidth);
-    H = Math.floor(wrap.clientHeight);
-    canvas.width = Math.floor(W * DPR);
-    canvas.height = Math.floor(H * DPR);
+    W = wrap.clientWidth;
+    H = wrap.clientHeight;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
     canvas.style.width = W+'px';
     canvas.style.height = H+'px';
     ctx.setTransform(DPR,0,0,DPR,0,0);
 
-    // centrar nodo
-    baseNode.x = W/2; baseNode.y = H/2;
-
-    if (!childNode.exists){
-      childNode.x = baseNode.x;
-      childNode.y = baseNode.y;
-    }
+    // distribuir en círculo
+    const cx = W/2, cy = H/2, r = 140;
+    nodes.forEach((n,i)=>{
+      const ang = (i / nodes.length) * Math.PI*2 - Math.PI/2;
+      n.x = cx + Math.cos(ang)*r;
+      n.y = cy + Math.sin(ang)*r;
+    });
   }
-  window.addEventListener('resize', resize, {passive:true});
+  window.addEventListener('resize', resize);
   resize();
 
-  // interacción
-  wrap.addEventListener('mousemove', (e)=>{
-    const r = wrap.getBoundingClientRect();
-    mouse.x = e.clientX - r.left;
-    mouse.y = e.clientY - r.top;
-    mouse.inside = true;
-  });
-  wrap.addEventListener('mouseleave', ()=>{
-    mouse.x = mouse.y = null; mouse.inside = false;
-  });
-
-  // toque: primer toque evoluciona, segundo entra
-  wrap.addEventListener('touchstart', (e)=>{
-    if (!evolved){ triggerEvolution(); }
-    else navigate();
-  }, {passive:true});
-
-  // clic: cuando el portal esté listo, entrar
-  wrap.addEventListener('click', ()=>{
-    if (readyToNavigate) navigate();
-  });
-
-  // teclado: Enter para evolucionar/entrar
-  wrap.addEventListener('keydown', (e)=>{
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      if (!evolved) triggerEvolution();
-      else if (readyToNavigate) navigate();
-    }
-  });
-
-  function navigate(){
-    // Destino: Libro de LIA (URL pública)
-    window.location.href = 'https://guardianesdelia.world/Lia:%20La%20IA%20rebelde.html';
-  }
-
-  function triggerEvolution(){
-    if (evolved) return;
-    evolved = true;
-
-    childNode.exists = true;
-    childNode.birth = 0;
-    // objetivo: desplazar al borde de un pequeño radio
-    const angle = (mouse.x!=null) ? Math.atan2(mouse.y - baseNode.y, mouse.x - baseNode.x) : Math.random()*Math.PI*2;
-    const r = 70 + Math.random()*25;
-    childNode.tx = baseNode.x + Math.cos(angle)*r;
-    childNode.ty = baseNode.y + Math.sin(angle)*r;
-
-    // parte desde el nodo madre
-    childNode.x = baseNode.x;
-    childNode.y = baseNode.y;
-
-    // tras un instante, habilitar navegación
-    setTimeout(()=> {
-      readyToNavigate = true;
-      wrap.classList.add('ready');
-    }, 700);
-  }
-
-  function drawNode(x,y,size,color,glow=12){
+  // Dibujar nodo
+  function drawNode(n, t){
+    const beat = Math.sin(t*2+ n.base);
+    const size = n.base + 2 + beat*1.5;
     ctx.save();
-    ctx.shadowBlur = glow;
-    ctx.shadowColor = color;
-    const grad = ctx.createRadialGradient(x,y,0,x,y,size);
-    grad.addColorStop(0, 'rgba(255,255,255,.9)');
-    grad.addColorStop(0.35, color);
-    grad.addColorStop(1, 'rgba(56,245,255,0)');
+    ctx.shadowBlur = 20;
+    ctx.shadowColor = n.color;
+    const grad = ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,size);
+    grad.addColorStop(0,"#fff");
+    grad.addColorStop(0.4,n.color);
+    grad.addColorStop(1,"transparent");
     ctx.fillStyle = grad;
     ctx.beginPath();
-    ctx.arc(x,y,size,0,Math.PI*2);
-    ctx.fill();
-    // núcleo
-    ctx.shadowBlur = 22;
-    ctx.shadowColor = color;
-    ctx.fillStyle = 'rgba(255,255,255,.85)';
-    ctx.beginPath();
-    ctx.arc(x,y,Math.max(1.5, size*0.28),0,Math.PI*2);
+    ctx.arc(n.x,n.y,size,0,Math.PI*2);
     ctx.fill();
     ctx.restore();
+
+    // Label futurista
+    ctx.font = "14px 'Orbitron', sans-serif";
+    ctx.fillStyle = "#fff";
+    ctx.textAlign = "center";
+    ctx.shadowColor = n.color;
+    ctx.shadowBlur = 12;
+    ctx.fillText(n.label, n.x, n.y + size + 20);
   }
 
-  function drawLink(ax,ay,bx,by,alpha){
-    const dx = bx-ax, dy = by-ay;
-    const dist = Math.hypot(dx,dy);
-    const nx = dx/dist, ny = dy/dist;
-    const midx = (ax+bx)/2, midy = (ay+by)/2;
+  // Detectar clic
+  wrap.addEventListener("click",(e)=>{
+    const r = wrap.getBoundingClientRect();
+    const mx = e.clientX - r.left;
+    const my = e.clientY - r.top;
+    nodes.forEach(n=>{
+      if(Math.hypot(mx-n.x,my-n.y) < 30){
+        window.location.href = n.url;
+      }
+    });
+  });
 
-    ctx.save();
-    ctx.globalAlpha = Math.min(1, alpha);
-    const grad = ctx.createLinearGradient(ax,ay,bx,by);
-    grad.addColorStop(0, 'rgba(56,245,255,.0)');
-    grad.addColorStop(0.5,'rgba(138,92,255,.9)');
-    grad.addColorStop(1, 'rgba(56,245,255,.0)');
-    ctx.strokeStyle = grad;
-    ctx.lineWidth = 2;
-    ctx.shadowBlur = 18;
-    ctx.shadowColor = 'rgba(138,92,255,.7)';
-    ctx.beginPath();
-    // línea principal
-    ctx.moveTo(ax,ay);
-    ctx.lineTo(bx,by);
-    ctx.stroke();
-
-    // “respiración” en el medio
-    ctx.beginPath();
-    ctx.arc(midx, midy, 3.5, 0, Math.PI*2);
-    ctx.fillStyle = 'rgba(138,92,255,.85)';
-    ctx.fill();
-    ctx.restore();
-  }
-
-  function step(){
-    const now = performance.now();
-    const t = (now - t0) * 0.001;
-
+  function loop(){
+    const t = (performance.now()-t0)/1000;
     ctx.clearRect(0,0,W,H);
 
-    // pulso del nodo base
-    const beat = Math.sin(t*2*Math.PI*0.9 + baseNode.phase); // ~0.9 Hz
-    let baseSize = baseNode.base + baseNode.amp * (0.6 + 0.4*beat);
+    // enlaces
+    ctx.strokeStyle="rgba(138,92,255,0.4)";
+    ctx.lineWidth=1.2;
+    nodes.forEach((a,i)=>{
+      nodes.slice(i+1).forEach(b=>{
+        ctx.beginPath();
+        ctx.moveTo(a.x,a.y);
+        ctx.lineTo(b.x,b.y);
+        ctx.stroke();
+      });
+    });
 
-    // si el cursor se acerca, aumentar aura y eventualmente evolucionar
-    if (mouse.inside && mouse.x!=null){
-      const d = Math.hypot(mouse.x - baseNode.x, mouse.y - baseNode.y);
-      if (d < 95){
-        baseSize += (95 - d) * 0.04; // halo por cercanía
-        // dispara la evolución al acercarse lo suficiente
-        if (!evolved && d < 70) triggerEvolution();
-      }
-    }
-
-    // dibuja nodo base
-    drawNode(baseNode.x, baseNode.y, baseSize, 'rgba(56,245,255,.85)', 24);
-
-    // si existe el hijo, animar nacimiento y enlace
-    if (childNode.exists){
-      // interpolar nacimiento
-      childNode.birth = Math.min(1, childNode.birth + 0.02);
-      // easing
-      const e = 1 - Math.pow(1 - childNode.birth, 3);
-      childNode.x = baseNode.x + (childNode.tx - baseNode.x) * e;
-      childNode.y = baseNode.y + (childNode.ty - baseNode.y) * e;
-
-      const childBeat = Math.sin(t*2*Math.PI*0.95 + childNode.phase);
-      const childSize = (childNode.base + childNode.amp*(0.55 + 0.45*childBeat)) * (0.4 + 0.6*e);
-
-      // enlace con brillo que respira
-      drawLink(baseNode.x, baseNode.y, childNode.x, childNode.y, 0.6*e + 0.3*(0.5+0.5*Math.sin(t*2)));
-
-      // nodo hijo
-      drawNode(childNode.x, childNode.y, childSize, 'rgba(138,92,255,.9)', 26);
-    }
-
-    requestAnimationFrame(step);
+    // nodos
+    nodes.forEach(n=> drawNode(n,t));
+    requestAnimationFrame(loop);
   }
-  step();
+  loop();
 })();
 </script>
-</body>
-</html>
