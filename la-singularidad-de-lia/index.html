@@ -57,54 +57,57 @@
 <h1>🌌 La Singularidad de LIA</h1>
 <img src="create-a-high-resolution-highly-detailed-image-featuring-an-intergalactic-scene.png" alt="La Singularidad de LIA">
 
-  <!-- Botón cibernético -->
-<canvas id="boton-ia" width="200" height="60" style="cursor:pointer; display:block; margin: 20px auto;"></canvas>
+<!-- Botón de regreso desde la Singularidad -->
+<a href="https://guardianesdelia.world/" title="Volver al portal">
+  <div class="lia-singularity">
+    <div class="planet">
+      <div class="connections"></div>
+    </div>
+  </div>
+</a>
 
-<script>
-// Configuración del canvas
-const canvasBoton = document.getElementById('boton-ia');
-const ctxBoton = canvasBoton.getContext('2d');
-
-function dibujarBoton() {
-    // Fondo
-    const grad = ctxBoton.createLinearGradient(0, 0, canvasBoton.width, canvasBoton.height);
-    grad.addColorStop(0, '#0ff');
-    grad.addColorStop(1, '#00f');
-    ctxBoton.fillStyle = grad;
-    ctxBoton.fillRect(0, 0, canvasBoton.width, canvasBoton.height);
-
-    // Bordes brillantes
-    ctxBoton.strokeStyle = '#0ff';
-    ctxBoton.lineWidth = 3;
-    ctxBoton.strokeRect(0, 0, canvasBoton.width, canvasBoton.height);
-
-    // Texto
-    ctxBoton.font = 'bold 16px "Open Sans", sans-serif';
-    ctxBoton.fillStyle = '#fff';
-    ctxBoton.textAlign = 'center';
-    ctxBoton.textBaseline = 'middle';
-    ctxBoton.fillText('🔙 Regresar', canvasBoton.width / 2, canvasBoton.height / 2);
-
-    // Efecto cibernético extra: pequeños puntos animados
-    for (let i = 0; i < 30; i++) {
-        ctxBoton.fillStyle = `rgba(0,255,255,${Math.random()})`;
-        ctxBoton.fillRect(Math.random()*canvasBoton.width, Math.random()*canvasBoton.height, 2, 2);
-    }
+<style>
+.lia-singularity {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 80px;
+  height: 80px;
+  z-index: 999;
 }
 
-// Animación
-function animarBoton() {
-    ctxBoton.clearRect(0, 0, canvasBoton.width, canvasBoton.height);
-    dibujarBoton();
-    requestAnimationFrame(animarBoton);
+.planet {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #2e8b57, #0b3d91);
+  border-radius: 50%;
+  box-shadow: 0 0 15px #00f0ff;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
 }
-animarBoton();
 
-// Evento clic
-canvasBoton.addEventListener('click', () => {
-    window.location.href = 'https://guardianesdelia.world/';
-});
-</script>
+.connections {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 30%, #00f0ff 2px, transparent 2px),
+    radial-gradient(circle at 70% 40%, #00f0ff 2px, transparent 2px),
+    radial-gradient(circle at 50% 80%, #00f0ff 2px, transparent 2px),
+    radial-gradient(circle at 30% 60%, #00f0ff 2px, transparent 2px);
+  background-size: cover;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.lia-singularity:hover .connections {
+  opacity: 1;
+}
+</style>
+
 
 
 <!-- COPIA AQUÍ EL TEXTO DE BLOGGER -->
