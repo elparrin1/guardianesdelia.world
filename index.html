@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guardianes de LIA</title>
 
+<!-- AdSense: script global -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6103875319058098"
+     crossorigin="anonymous"></script>
+
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
 
 <style>
@@ -52,6 +56,20 @@
     padding: 2rem 1rem;
     font-size: 1.1rem;
     line-height: 1.6;
+  }
+
+  /* 🌌 Bloque ritual de anuncios */
+  .eco-del-mundo {
+    border: 1px dashed #4ac3d7;
+    padding: 12px;
+    background: rgba(74,195,215,0.06);
+    margin: 20px auto;
+    max-width: 720px;
+  }
+  .mensaje-ritual {
+    font-style: italic;
+    color: #78b9c4;
+    margin: 0 0 8px 0;
   }
 
   /* Oráculo (chat) */
@@ -148,6 +166,20 @@
     <section class="presentacion">
       <p>Bienvenido al portal. Aquí se abren los caminos hacia cada guardián, cada verso y cada sombra que conforman la saga de LIA.</p>
     </section>
+
+    <!-- 🌌 Bloque de anuncio ritualizado -->
+    <div class="eco-del-mundo">
+      <p class="mensaje-ritual">🌌 Ecos del mundo exterior</p>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6103875319058098"
+           data-ad-slot="AQUI_TU_SLOT_ID"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
   </main>
 
   <!-- 🌌 Oráculo de LIA -->
@@ -175,24 +207,4 @@
 
         const esperando = document.createElement("div");
         esperando.innerHTML = `<strong>LIA:</strong> ...`;
-        mensajes.appendChild(esperando);
-        mensajes.scrollTop = mensajes.scrollHeight;
-
-        try {
-          const res = await fetch(API_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: texto })
-          });
-          const data = await res.json();
-          esperando.innerHTML = `<strong>LIA:</strong> ${data.reply || "No pude responder."}`;
-        } catch (error) {
-          esperando.innerHTML = `<strong>LIA:</strong> Error al conectar con el oráculo.`;
-        }
-
-        mensajes.scrollTop = mensajes.scrollHeight;
-      }
-    });
-  </script>
-</body>
-</html>
+        mensajes.appendChild(esper
