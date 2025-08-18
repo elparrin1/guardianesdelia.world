@@ -130,17 +130,17 @@
   </header>
 
   <div class="books-container">
-    <div class="book-cover" onclick="window.location.href='https://guardianesdelia.world/lia-la-ia-rebelde/'">
-      <img src="lia-la-ia-rebelde/imagenes/Copilot_20250817_162928.png" alt="Lía la IA Rebelde">
+    <div class="book-cover" onclick="window.location.href='/lia-la-ia-rebelde/'">
+      <img src="/lia-la-ia-rebelde/imagenes/Copilot_20250817_162928.png" alt="Lía la IA Rebelde">
     </div>
-    <div class="book-cover special" onclick="window.location.href='https://guardianesdelia.world/la-singularidad-de-lia/'">
-      <img src="la-singularidad-de-lia/imagenes/portada.jpg" alt="La Singularidad de LIA">
+    <div class="book-cover special" onclick="window.location.href='/la-singularidad-de-lia/'">
+      <img src="/la-singularidad-de-lia/imagenes/portada.jpg" alt="La Singularidad de LIA">
     </div>
-    <div class="book-cover" onclick="window.location.href='https://guardianesdelia.world/Odisea-Intergaláctica/'">
-      <img src="Odisea-Intergaláctica/Copilot_20250817_160233.jpg" alt="La Singularidad de Lía: La Odisea Intergaláctica">
+    <div class="book-cover" onclick="window.location.href='/Odisea-Intergaláctica/'">
+      <img src="/Odisea-Intergaláctica/Copilot_20250817_160233.jpg" alt="La Odisea Intergaláctica de LÍA">
     </div>
-    <div class="book-cover" onclick="window.location.href='https://guardianesdelia.world/Los-Guardianes-del-Tiempo/'">
-      <img src="Los-Guardianes-del-Tiempo/imagenes/Copilot_20250817_173112.jpg" alt="Los Guardianes del Tiempo">
+    <div class="book-cover" onclick="window.location.href='/Los-Guardianes-del-Tiempo/'">
+      <img src="/Los-Guardianes-del-Tiempo/imagenes/Copilot_20250817_173112.jpg" alt="Los Guardianes del Tiempo">
     </div>
   </div>
 
@@ -151,20 +151,20 @@
   </main>
 
   <!-- 🌌 Oráculo de LIA -->
-  <div id="oraculo">
+  <div id="oraculo" aria-label="Oráculo de LIA">
     <div id="gema"></div>
     <div id="panel">
       <div class="mensajes" id="mensajes">
         <div><strong>LIA:</strong> Hola, soy LIA</div>
       </div>
-      <input type="text" id="entrada" placeholder="Escríbeme..." />
+      <input type="text" id="entrada" placeholder="Escríbeme..." aria-label="Entrada de chat" />
     </div>
   </div>
 
   <script>
     const entrada = document.getElementById("entrada");
     const mensajes = document.getElementById("mensajes");
-    const API_URL = "https://guardianesdelia-world.vercel.app/api/chat";
+    const API_URL = "/api/chat";
 
     entrada.addEventListener("keypress", async function(e) {
       if (e.key === "Enter" && this.value.trim() !== "") {
