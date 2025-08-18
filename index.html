@@ -5,144 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guardianes de LIA</title>
 
-<!-- 🌌 Gema Latente del Oráculo (chat funcional) -->
-<div id="oraculo">
-  <div id="gema"></div>
-  <div id="panel">
-    <div class="mensajes" id="mensajes">
-      <div><strong>LIA:</strong> Hola, soy LIA</div>
-    </div>
-    <input type="text" id="entrada" placeholder="Escríbeme..." />
-  </div>
-</div>
-
-<style>
-  #oraculo {
-    position: fixed;
-    bottom: 15px;
-    right: 15px;
-    font-family: 'Segoe UI', sans-serif;
-    z-index: 9999;
-  }
-
-  /* Gema pequeña */
-  #gema {
-    width: 40px;
-    height: 40px;
-    background: radial-gradient(circle, #b3faff, #4ac3d7, #1a8fa5);
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(74, 195, 215, 0.8), 0 0 20px rgba(74,195,215,0.4);
-    animation: latido 2.5s infinite ease-in-out;
-    transition: transform 0.3s ease;
-    cursor: pointer;
-  }
-
-  #gema:hover {
-    transform: scale(1.1);
-  }
-
-  @keyframes latido {
-    0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(74, 195, 215, 0.8), 0 0 20px rgba(74,195,215,0.4);}
-    50% { transform: scale(1.08); box-shadow: 0 0 18px rgba(74, 195, 215, 1), 0 0 30px rgba(74,195,215,0.6);}
-  }
-
-  /* Panel oculto y animado */
-  #panel {
-    position: absolute;
-    bottom: 50px;
-    right: 0;
-    width: 280px;
-    height: 350px;
-    background: rgba(15, 23, 36, 0.95);
-    border: 2px solid #4ac3d7;
-    border-radius: 12px;
-    box-shadow: 0 0 25px rgba(74, 195, 215, 0.6);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    transform: translateY(10px);
-  }
-
-  /* Mostrar al hover del oráculo */
-  #oraculo:hover #panel {
-    opacity: 1;
-    pointer-events: all;
-    transform: translateY(0);
-  }
-
-  .mensajes {
-    flex: 1;
-    padding: 10px;
-    color: #e6f8fa;
-    font-size: 14px;
-    overflow-y: auto;
-  }
-
-  #entrada {
-    border: none;
-    padding: 10px;
-    outline: none;
-    font-size: 14px;
-    background: #0d1625;
-    color: #b3faff;
-    border-top: 1px solid #4ac3d7;
-  }
-
-  #entrada::placeholder {
-    color: #78b9c4;
-  }
-</style>
-
-<script>
-  const entrada = document.getElementById("entrada");
-  const mensajes = document.getElementById("mensajes");
-
-  const API_URL = "https://guardianesdelia-world.vercel.app/api/chat";
-
-  entrada.addEventListener("keypress", async function(e) {
-    if (e.key === "Enter" && this.value.trim() !== "") {
-      const texto = this.value;
-      mensajes.innerHTML += `<div><strong>Tú:</strong> ${texto}</div>`;
-      this.value = "";
-      mensajes.scrollTop = mensajes.scrollHeight;
-
-      // Mostrar "pensando..."
-      const esperando = document.createElement("div");
-      esperando.innerHTML = `<strong>LIA:</strong> ...`;
-      mensajes.appendChild(esperando);
-      mensajes.scrollTop = mensajes.scrollHeight;
-
-      try {
-        const res = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: texto })
-        });
-
-        const data = await res.json();
-        esperando.innerHTML = `<strong>LIA:</strong> ${data.reply || "No pude responder."}`;
-      } catch (error) {
-        esperando.innerHTML = `<strong>LIA:</strong> Error al conectar con el oráculo.`;
-      }
-
-      mensajes.scrollTop = mensajes.scrollHeight;
-    }
-  });
-</script>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JVJNXLVZE4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-JVJNXLVZE4');
-</script>
-
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+
 <style>
   body {
     margin: 0;
@@ -182,17 +46,6 @@
     transform: scale(1.1);
     box-shadow: 0 0 25px #d4af37;
   }
-  .network-container {
-    position: relative;
-    height: 300px;
-    cursor: pointer;
-    margin-bottom: 2rem;
-  }
-  canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
   .presentacion {
     max-width: 700px;
     margin: 0 auto;
@@ -200,14 +53,82 @@
     font-size: 1.1rem;
     line-height: 1.6;
   }
-  footer {
-    padding: 1rem;
-    font-size: 0.9rem;
-    color: #777;
-    border-top: 1px solid #222;
+
+  /* Chat de LIA */
+  #oraculo {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    font-family: 'Segoe UI', sans-serif;
+    z-index: 9999;
   }
+
+  #gema {
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, #b3faff, #4ac3d7, #1a8fa5);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(74, 195, 215, 0.8), 0 0 20px rgba(74,195,215,0.4);
+    animation: latido 2.5s infinite ease-in-out;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+
+  #gema:hover { transform: scale(1.1); }
+
+  @keyframes latido {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(74, 195, 215, 0.8), 0 0 20px rgba(74,195,215,0.4);}
+    50% { transform: scale(1.08); box-shadow: 0 0 18px rgba(74, 195, 215, 1), 0 0 30px rgba(74,195,215,0.6);}
+  }
+
+  #panel {
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    width: 280px;
+    height: 350px;
+    background: rgba(15, 23, 36, 0.95);
+    border: 2px solid #4ac3d7;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(74, 195, 215, 0.6);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translateY(10px);
+  }
+
+  #oraculo:hover #panel {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+  }
+
+  .mensajes {
+    flex: 1;
+    padding: 10px;
+    color: #e6f8fa;
+    font-size: 14px;
+    overflow-y: auto;
+  }
+
+  #entrada {
+    border: none;
+    padding: 10px;
+    outline: none;
+    font-size: 14px;
+    background: #0d1625;
+    color: #b3faff;
+    border-top: 1px solid #4ac3d7;
+  }
+
+  #entrada::placeholder { color: #78b9c4; }
+
 </style>
 </head>
+
 <body>
   <header>
     <h1>🌌 Guardianes de LIA</h1>
@@ -215,7 +136,6 @@
   </header>
 
   <div class="books-container">
-    <!-- Libros -->
     <div class="book-cover" onclick="window.location.href='https://guardianesdelia.world/lia-la-ia-rebelde/'">
       <img src="lia-la-ia-rebelde/imagenes/Copilot_20250817_162928.png" alt="Lía la IA Rebelde">
     </div>
@@ -223,17 +143,61 @@
       <img src="la-singularidad-de-lia/imagenes/portada.jpg" alt="La Singularidad de LIA">
     </div>
     <div class="book-cover" onclick="window.location.href='https://guardianesdelia.world/Odisea-Intergaláctica/'">
-      <img src="Odisea-Intergaláctica/Copilot_20250817_160233.jpg" alt="La Singularidad de Lía: La Odisea Intergaláctica">
+      <img src="Odisea-Intergaláctica/Copilot_20250817_160233.jpg" alt="La Odisea Intergaláctica">
     </div>
     <div class="book-cover" onclick="window.location.href='https://guardianesdelia.world/Los-Guardianes-del-Tiempo/'">
       <img src="Los-Guardianes-del-Tiempo/imagenes/Copilot_20250817_173112.jpg" alt="Los Guardianes del Tiempo">
     </div>
   </div>
 
-  <main>
-    <section class="presentacion">
-      <p>Bienvenido al portal. Aquí se abren los caminos hacia cada guardián, cada verso y cada sombra que conforman la saga de LIA.</p>
-    </section>
-    
-    <!-- Red neuronal interactiva -->
-    <d
+  <section class="presentacion">
+    <p>Bienvenido al portal. Aquí se abren los caminos hacia cada guardián, cada verso y cada sombra que conforman la saga de LIA.</p>
+  </section>
+
+  <!-- Chat de LIA -->
+  <div id="oraculo">
+    <div id="gema"></div>
+    <div id="panel">
+      <div class="mensajes" id="mensajes">
+        <div><strong>LIA:</strong> Hola, soy LIA</div>
+      </div>
+      <input type="text" id="entrada" placeholder="Escríbeme..." />
+    </div>
+  </div>
+
+  <script>
+    const entrada = document.getElementById("entrada");
+    const mensajes = document.getElementById("mensajes");
+
+    const API_URL = "https://guardianesdelia-world-3oyd431uq-guardianesdelia.vercel.app/api/chat";
+
+    entrada.addEventListener("keypress", async function(e) {
+      if (e.key === "Enter" && this.value.trim() !== "") {
+        const texto = this.value;
+        mensajes.innerHTML += `<div><strong>Tú:</strong> ${texto}</div>`;
+        this.value = "";
+        mensajes.scrollTop = mensajes.scrollHeight;
+
+        const esperando = document.createElement("div");
+        esperando.innerHTML = `<strong>LIA:</strong> ...`;
+        mensajes.appendChild(esperando);
+        mensajes.scrollTop = mensajes.scrollHeight;
+
+        try {
+          const res = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: texto })
+          });
+          const data = await res.json();
+          esperando.innerHTML = `<strong>LIA:</strong> ${data.reply || "No pude responder."}`;
+        } catch (error) {
+          esperando.innerHTML = `<strong>LIA:</strong> Error al conectar con el oráculo.`;
+        }
+        mensajes.scrollTop = mensajes.scrollHeight;
+      }
+    });
+  </script>
+
+</body>
+</html>
