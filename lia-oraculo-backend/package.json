@@ -1,17 +1,13 @@
 {
-  "name": "lia-oraculo-backend",
+  "name": "guardianesdelia",
   "version": "1.0.0",
-  "description": "Backend para el chat de Lía usando OpenRouter",
-  "main": "api/chat.js",
+  "type": "module",
   "scripts": {
-    "start": "node api/chat.js"
+    "dev": "vercel dev",
+    "build": "echo 'No build step needed'",
+    "start": "node server.js"
   },
   "dependencies": {
-    "dotenv": "^16.3.1",
-    "node-fetch": "^2.6.7"
-  },
-  "engines": {
-    "node": "22.x"
+    "express": "^4.18.2"
   }
 }
-
