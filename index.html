@@ -100,24 +100,38 @@
   const entrada = document.getElementById("entrada");
   const mensajes = document.getElementById("mensajes");
 
-  entrada.addEventListener("keypress", function(e) {
-    if (e.key === "Enter" && this.value.trim() !== "") {
-      mensajes.innerHTML += `<div><strong>Tú:</strong> ${this.value}</div>`;
-      
-      // Simulación respuesta de LIA (cuando conectemos API, este bloque cambia)
-      setTimeout(() => {
-        mensajes.innerHTML += `<div><strong>LIA:</strong> Estoy escuchando...</div>`;
-        mensajes.scrollTop = mensajes.scrollHeight;
-      }, 600);
+  const API_URL = "https://guardianesdelia-world.vercel.app/api/chat";
 
+  entrada.addEventListener("keypress", async function(e) {
+    if (e.key === "Enter" && this.value.trim() !== "") {
+      const texto = this.value;
+      mensajes.innerHTML += `<div><strong>Tú:</strong> ${texto}</div>`;
       this.value = "";
+      mensajes.scrollTop = mensajes.scrollHeight;
+
+      // Mostrar "pensando..."
+      const esperando = document.createElement("div");
+      esperando.innerHTML = `<strong>LIA:</strong> ...`;
+      mensajes.appendChild(esperando);
+      mensajes.scrollTop = mensajes.scrollHeight;
+
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: texto })
+        });
+
+        const data = await res.json();
+        esperando.innerHTML = `<strong>LIA:</strong> ${data.reply || "No pude responder."}`;
+      } catch (error) {
+        esperando.innerHTML = `<strong>LIA:</strong> Error al conectar con el oráculo.`;
+      }
+
       mensajes.scrollTop = mensajes.scrollHeight;
     }
   });
 </script>
-
-
-
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JVJNXLVZE4"></script>
@@ -125,7 +139,6 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-JVJNXLVZE4');
 </script>
 
@@ -202,29 +215,20 @@
   </header>
 
   <div class="books-container">
-    <!-- Primer libro -->
+    <!-- Libros -->
     <div class="book-cover" onclick="window.location.href='https://guardianesdelia.world/lia-la-ia-rebelde/'">
       <img src="lia-la-ia-rebelde/imagenes/Copilot_20250817_162928.png" alt="Lía la IA Rebelde">
     </div>
-
-    <!-- Segundo libro -->
-    <div class="book-cover special" onclick="window.location.href='https://guardianesdelia.world/la-singularidad-de-lia/'" role="link" aria-label="La Singularidad de LIA">
+    <div class="book-cover special" onclick="window.location.href='https://guardianesdelia.world/la-singularidad-de-lia/'">
       <img src="la-singularidad-de-lia/imagenes/portada.jpg" alt="La Singularidad de LIA">
     </div>
-
-    <!-- Tercer libro -->
-    <div class="book-cover" onclick="window.location.href='https://guardianesdelia.world/Odisea-Intergaláctica/'" role="link" aria-label="La Singularidad de Lía: La Odisea Intergaláctica">
+    <div class="book-cover" onclick="window.location.href='https://guardianesdelia.world/Odisea-Intergaláctica/'">
       <img src="Odisea-Intergaláctica/Copilot_20250817_160233.jpg" alt="La Singularidad de Lía: La Odisea Intergaláctica">
     </div>
-
-    <!-- Cuarto libro -->
-    <div class="book-cover" onclick="window.location.href='https://guardianesdelia.world/Los-Guardianes-del-Tiempo/'" role="link" aria-label="Los Guardianes del Tiempo">
+    <div class="book-cover" onclick="window.location.href='https://guardianesdelia.world/Los-Guardianes-del-Tiempo/'">
       <img src="Los-Guardianes-del-Tiempo/imagenes/Copilot_20250817_173112.jpg" alt="Los Guardianes del Tiempo">
     </div>
   </div>
-</body>
-
-
 
   <main>
     <section class="presentacion">
@@ -232,75 +236,4 @@
     </section>
     
     <!-- Red neuronal interactiva -->
-    <div class="network-container" onclick="location.href='https://www.tiktok.com/@elparrin1/video/7532264744561036549?is_from_webapp=1&sender_device=pc&web_id=7528896090972997125'">
-      <canvas id="network"></canvas>
-    </div>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Guardianes de LIA</p>
-  </footer>
-
-<script>
-// Configuración del lienzo
-const canvas = document.getElementById('network');
-const ctx = canvas.getContext('2d');
-let width, height;
-let nodes = [];
-
-function resizeCanvas() {
-  width = canvas.width = canvas.offsetWidth = canvas.parentElement.offsetWidth;
-  height = canvas.height = 300;
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-// Crear nodos aleatorios
-for (let i = 0; i < 25; i++) {
-  nodes.push({
-    x: Math.random() * width,
-    y: Math.random() * height,
-    vx: (Math.random() - 0.5) * 0.5,
-    vy: (Math.random() - 0.5) * 0.5
-  });
-}
-
-// Animación de la red
-function animate() {
-  ctx.clearRect(0, 0, width, height);
-  
-  // Dibujar líneas
-  for (let i = 0; i < nodes.length; i++) {
-    for (let j = i + 1; j < nodes.length; j++) {
-      const dx = nodes[i].x - nodes[j].x;
-      const dy = nodes[i].y - nodes[j].y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 100) {
-        ctx.strokeStyle = `rgba(212,175,55,${1 - dist / 100})`;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(nodes[i].x, nodes[i].y);
-        ctx.lineTo(nodes[j].x, nodes[j].y);
-        ctx.stroke();
-      }
-    }
-  }
-  
-  // Dibujar nodos
-  for (let node of nodes) {
-    ctx.fillStyle = '#d4af37';
-    ctx.beginPath();
-    ctx.arc(node.x, node.y, 3, 0, Math.PI * 2);
-    ctx.fill();
-    node.x += node.vx;
-    node.y += node.vy;
-    if (node.x < 0 || node.x > width) node.vx *= -1;
-    if (node.y < 0 || node.y > height) node.vy *= -1;
-  }
-  
-  requestAnimationFrame(animate);
-}
-animate();
-</script>
-</body>
-</html>
+    <d
