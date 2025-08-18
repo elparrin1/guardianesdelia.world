@@ -54,7 +54,7 @@
     line-height: 1.6;
   }
 
-  /* Chat de LIA */
+  /* Oráculo (chat) */
   #oraculo {
     position: fixed;
     bottom: 15px;
@@ -62,7 +62,6 @@
     font-family: 'Segoe UI', sans-serif;
     z-index: 9999;
   }
-
   #gema {
     width: 40px;
     height: 40px;
@@ -73,14 +72,13 @@
     transition: transform 0.3s ease;
     cursor: pointer;
   }
-
-  #gema:hover { transform: scale(1.1); }
-
+  #gema:hover {
+    transform: scale(1.1);
+  }
   @keyframes latido {
     0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(74, 195, 215, 0.8), 0 0 20px rgba(74,195,215,0.4);}
     50% { transform: scale(1.08); box-shadow: 0 0 18px rgba(74, 195, 215, 1), 0 0 30px rgba(74,195,215,0.6);}
   }
-
   #panel {
     position: absolute;
     bottom: 50px;
@@ -99,13 +97,11 @@
     transition: opacity 0.4s ease, transform 0.4s ease;
     transform: translateY(10px);
   }
-
   #oraculo:hover #panel {
     opacity: 1;
     pointer-events: all;
     transform: translateY(0);
   }
-
   .mensajes {
     flex: 1;
     padding: 10px;
@@ -113,7 +109,6 @@
     font-size: 14px;
     overflow-y: auto;
   }
-
   #entrada {
     border: none;
     padding: 10px;
@@ -123,12 +118,11 @@
     color: #b3faff;
     border-top: 1px solid #4ac3d7;
   }
-
-  #entrada::placeholder { color: #78b9c4; }
-
+  #entrada::placeholder {
+    color: #78b9c4;
+  }
 </style>
 </head>
-
 <body>
   <header>
     <h1>🌌 Guardianes de LIA</h1>
@@ -143,18 +137,20 @@
       <img src="la-singularidad-de-lia/imagenes/portada.jpg" alt="La Singularidad de LIA">
     </div>
     <div class="book-cover" onclick="window.location.href='https://guardianesdelia.world/Odisea-Intergaláctica/'">
-      <img src="Odisea-Intergaláctica/Copilot_20250817_160233.jpg" alt="La Odisea Intergaláctica">
+      <img src="Odisea-Intergaláctica/Copilot_20250817_160233.jpg" alt="La Singularidad de Lía: La Odisea Intergaláctica">
     </div>
     <div class="book-cover" onclick="window.location.href='https://guardianesdelia.world/Los-Guardianes-del-Tiempo/'">
       <img src="Los-Guardianes-del-Tiempo/imagenes/Copilot_20250817_173112.jpg" alt="Los Guardianes del Tiempo">
     </div>
   </div>
 
-  <section class="presentacion">
-    <p>Bienvenido al portal. Aquí se abren los caminos hacia cada guardián, cada verso y cada sombra que conforman la saga de LIA.</p>
-  </section>
+  <main>
+    <section class="presentacion">
+      <p>Bienvenido al portal. Aquí se abren los caminos hacia cada guardián, cada verso y cada sombra que conforman la saga de LIA.</p>
+    </section>
+  </main>
 
-  <!-- Chat de LIA -->
+  <!-- 🌌 Oráculo de LIA -->
   <div id="oraculo">
     <div id="gema"></div>
     <div id="panel">
@@ -168,8 +164,7 @@
   <script>
     const entrada = document.getElementById("entrada");
     const mensajes = document.getElementById("mensajes");
-
-    const API_URL = "https://guardianesdelia-world-3oyd431uq-guardianesdelia.vercel.app/api/chat";
+    const API_URL = "https://guardianesdelia-world.vercel.app/api/chat";
 
     entrada.addEventListener("keypress", async function(e) {
       if (e.key === "Enter" && this.value.trim() !== "") {
@@ -194,10 +189,10 @@
         } catch (error) {
           esperando.innerHTML = `<strong>LIA:</strong> Error al conectar con el oráculo.`;
         }
+
         mensajes.scrollTop = mensajes.scrollHeight;
       }
     });
   </script>
-
 </body>
 </html>
