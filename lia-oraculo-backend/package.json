@@ -1,0 +1,16 @@
+{
+  "name": "lia-oraculo-backend",
+  "version": "1.0.0",
+  "description": "Backend para el chat de Lía usando OpenRouter",
+  "main": "api/chat.js",
+  "scripts": {
+    "start": "node api/chat.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "node-fetch": "^3.4.2"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
