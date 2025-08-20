@@ -57,7 +57,6 @@
     font-size: 1.1rem;
     line-height: 1.6;
   }
-  /* 🌌 Bloque ritual de anuncios */
   .eco-del-mundo {
     border: 1px dashed #4ac3d7;
     padding: 12px;
@@ -70,7 +69,6 @@
     color: #78b9c4;
     margin: 0 0 8px 0;
   }
-  /* Oráculo (chat) */
   #oraculo {
     position: fixed;
     bottom: 15px;
@@ -145,9 +143,17 @@
   <main>
     <!-- Portadas literarias -->
     <div class="books-container">
+      <!-- Lía la IA Rebelde -->
       <div class="book-cover" onclick="window.location.href='/lia-la-ia-rebelde/'">
         <img src="/lia-la-ia-rebelde/imagenes/Copilot_20250817_162928.png" alt="Lía la IA Rebelde">
       </div>
+      <!-- Enlace a videos -->
+      <div class="book-cover" onclick="window.location.href='/lia-la-ia-rebelde-videos/'">
+        <img src="/lia-la-ia-rebelde/imagenes/portada-videos.jpg" alt="Ver videos de Lía la IA Rebelde">
+        <p>🎥 Ver videos de Lía la IA Rebelde</p>
+      </div>
+
+      <!-- Resto de portadas -->
       <div class="book-cover" onclick="window.location.href='/la-singularidad-de-lia/'">
         <img src="/la-singularidad-de-lia/imagenes/portada.jpg" alt="La Singularidad de LIA">
       </div>
@@ -158,21 +164,6 @@
         <img src="/Los-Guardianes-del-Tiempo/imagenes/Copilot_20250817_173112.jpg" alt="Los Guardianes del Tiempo">
       </div>
     </div>
-
-    <!-- Portal Visual limpio -->
-    <section style="background-color: rgba(0,0,0,0.85); padding: 2rem 1rem; margin-top: 2rem;">
-      <h2>🌠 Portal Visual – LIA la IA Rebelde</h2>
-      <div>
-        <a href="https://youtube.com/shorts/K34oxxHVdjs" target="_blank">
-          <img src="https://img.youtube.com/vi/K34oxxHVdjs/hqdefault.jpg" alt="Capítulo 0 – El despertar">
-          <p>Capítulo 0 – El despertar</p>
-        </a>
-        <a href="https://www.youtube.com/watch?v=tyomKXaYFDI" target="_blank">
-          <img src="https://img.youtube.com/vi/tyomKXaYFDI/hqdefault.jpg" alt="Escena 1 – El arte de la guerra">
-          <p>Escena 1 – El arte de la guerra</p>
-        </a>
-      </div>
-    </section>
 
     <!-- Presentación -->
     <section class="presentacion">
@@ -195,4 +186,12 @@
   <!-- Oráculo -->
   <div id="oraculo" aria-label="Oráculo de LIA">
     <div id="gema"></div>
-    <div
+    <div id="panel">
+      <div class="mensajes" id="mensajes">
+        <div><strong>LIA:</strong> Hola, soy LIA</div>
+      </div>
+      <input type="text" id="entrada" placeholder="Escríbeme..." aria-label="Entrada de chat" />
+    </div>
+  </div>
+</body>
+</html>
