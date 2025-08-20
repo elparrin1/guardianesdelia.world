@@ -88,9 +88,7 @@
     transition: transform 0.3s ease;
     cursor: pointer;
   }
-  #gema:hover {
-    transform: scale(1.1);
-  }
+  #gema:hover { transform: scale(1.1); }
   @keyframes latido {
     0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(74, 195, 215, 0.8), 0 0 20px rgba(74,195,215,0.4);}
     50% { transform: scale(1.08); box-shadow: 0 0 18px rgba(74, 195, 215, 1), 0 0 30px rgba(74,195,215,0.6);}
@@ -134,9 +132,7 @@
     color: #b3faff;
     border-top: 1px solid #4ac3d7;
   }
-  #entrada::placeholder {
-    color: #78b9c4;
-  }
+  #entrada::placeholder { color: #78b9c4; }
 </style>
 </head>
 
@@ -147,11 +143,12 @@
   </header>
 
   <main>
+    <!-- Portadas literarias -->
     <div class="books-container">
       <div class="book-cover" onclick="window.location.href='/lia-la-ia-rebelde/'">
         <img src="/lia-la-ia-rebelde/imagenes/Copilot_20250817_162928.png" alt="Lía la IA Rebelde">
       </div>
-      <div class="book-cover special" onclick="window.location.href='/la-singularidad-de-lia/'">
+      <div class="book-cover" onclick="window.location.href='/la-singularidad-de-lia/'">
         <img src="/la-singularidad-de-lia/imagenes/portada.jpg" alt="La Singularidad de LIA">
       </div>
       <div class="book-cover" onclick="window.location.href='/Odisea-Intergaláctica/'">
@@ -162,8 +159,8 @@
       </div>
     </div>
 
-    <!-- 🌌 Portal Visual -->
-    <section>
+    <!-- Portal Visual limpio -->
+    <section style="background-color: rgba(0,0,0,0.85); padding: 2rem 1rem; margin-top: 2rem;">
       <h2>🌠 Portal Visual – LIA la IA Rebelde</h2>
       <div>
         <a href="https://youtube.com/shorts/K34oxxHVdjs" target="_blank">
@@ -177,11 +174,12 @@
       </div>
     </section>
 
+    <!-- Presentación -->
     <section class="presentacion">
       <p>Bienvenido al portal. Aquí se abren los caminos hacia cada guardián, cada verso y cada sombra que conforman la saga de LIA.</p>
     </section>
 
-    <!-- 🌌 Bloque de anuncio ritualizado -->
+    <!-- Bloque anuncio -->
     <div class="eco-del-mundo">
       <p class="mensaje-ritual">🌌 Ecos del mundo exterior</p>
       <ins class="adsbygoogle"
@@ -190,15 +188,11 @@
            data-ad-slot="AQUI_TU_SLOT_ID"
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
-      <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
   </main>
 
-  <!-- 🌌 Oráculo de LIA -->
+  <!-- Oráculo -->
   <div id="oraculo" aria-label="Oráculo de LIA">
     <div id="gema"></div>
-    <div id="panel">
-      <div class="mensajes" id="mensajes">
-        <div><
+    <div
