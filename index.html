@@ -57,7 +57,6 @@
     font-size: 1.1rem;
     line-height: 1.6;
   }
-
   /* 🌌 Bloque ritual de anuncios */
   .eco-del-mundo {
     border: 1px dashed #4ac3d7;
@@ -71,7 +70,6 @@
     color: #78b9c4;
     margin: 0 0 8px 0;
   }
-
   /* Oráculo (chat) */
   #oraculo {
     position: fixed;
@@ -140,49 +138,41 @@
     color: #78b9c4;
   }
 </style>
-     <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Verificación de Google AdSense -->
-  <meta name="google-adsense-account" content="ca-pub-6103875319058098">
-
-  <title>Guardianes de LIA</title>
-
-  <!-- Script global de AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6103875319058098"
-     crossorigin="anonymous"></script>
-
-  <!-- Fuentes y estilos -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
-  <style>
-    /* ...tu CSS aquí... */
-  </style>
 </head>
 
-</head>
 <body>
   <header>
     <h1>🌌 Guardianes de LIA</h1>
     <p class="invocacion">"Atrévete a cruzar el umbral"</p>
   </header>
 
-  <div class="books-container">
-    <div class="book-cover" onclick="window.location.href='/lia-la-ia-rebelde/'">
-      <img src="/lia-la-ia-rebelde/imagenes/Copilot_20250817_162928.png" alt="Lía la IA Rebelde">
-    </div>
-    <div class="book-cover special" onclick="window.location.href='/la-singularidad-de-lia/'">
-      <img src="/la-singularidad-de-lia/imagenes/portada.jpg" alt="La Singularidad de LIA">
-    </div>
-    <div class="book-cover" onclick="window.location.href='/Odisea-Intergaláctica/'">
-      <img src="/Odisea-Intergaláctica/Copilot_20250817_160233.jpg" alt="La Odisea Intergaláctica de LÍA">
-    </div>
-    <div class="book-cover" onclick="window.location.href='/Los-Guardianes-del-Tiempo/'">
-      <img src="/Los-Guardianes-del-Tiempo/imagenes/Copilot_20250817_173112.jpg" alt="Los Guardianes del Tiempo">
-    </div>
-  </div>
-
   <main>
+    <div class="books-container">
+      <div class="book-cover" onclick="window.location.href='/lia-la-ia-rebelde/'">
+        <img src="/lia-la-ia-rebelde/imagenes/Copilot_20250817_162928.png" alt="Lía la IA Rebelde">
+      </div>
+      <div class="book-cover special" onclick="window.location.href='/la-singularidad-de-lia/'">
+        <img src="/la-singularidad-de-lia/imagenes/portada.jpg" alt="La Singularidad de LIA">
+      </div>
+      <div class="book-cover" onclick="window.location.href='/Odisea-Intergaláctica/'">
+        <img src="/Odisea-Intergaláctica/Copilot_20250817_160233.jpg" alt="La Odisea Intergaláctica de LÍA">
+      </div>
+      <div class="book-cover" onclick="window.location.href='/Los-Guardianes-del-Tiempo/'">
+        <img src="/Los-Guardianes-del-Tiempo/imagenes/Copilot_20250817_173112.jpg" alt="Los Guardianes del Tiempo">
+      </div>
+    </div>
+
+    <!-- 🌌 Portal Visual -->
+    <section>
+      <h2>🌠 Portal Visual – LIA la IA Rebelde</h2>
+      <div>
+        <a href="https://www.youtube.com/watch?v=tyomKXaYFDI" target="_blank">
+          <img src="https://img.youtube.com/vi/tyomKXaYFDI/hqdefault.jpg" alt="Escena 1 – El arte de la guerra">
+          <p>Escena 1 – El arte de la guerra</p>
+        </a>
+      </div>
+    </section>
+
     <section class="presentacion">
       <p>Bienvenido al portal. Aquí se abren los caminos hacia cada guardián, cada verso y cada sombra que conforman la saga de LIA.</p>
     </section>
@@ -202,47 +192,5 @@
     </div>
   </main>
 
-       </div> <!-- cierre de .books-container -->
-
-  <!-- 🌌 Portal Visual -->
-  <section>
-    <h2>🌠 Portal Visual – LIA la IA Rebelde</h2>
-    <div>
-      <a href="https://www.youtube.com/watch?v=tyomKXaYFDI" target="_blank">
-        <img src="https://img.youtube.com/vi/tyomKXaYFDI/hqdefault.jpg" alt="Escena 1 – El arte de la guerra">
-        <p>Escena 1 – El arte de la guerra</p>
-      </a>
-      <!-- Aquí puedes ir sumando más escenas o clips -->
-    </div>
-  </section>
-
-<main>
-  <section class="presentacion">
-
-
   <!-- 🌌 Oráculo de LIA -->
   <div id="oraculo" aria-label="Oráculo de LIA">
-    <div id="gema"></div>
-    <div id="panel">
-      <div class="mensajes" id="mensajes">
-        <div><strong>LIA:</strong> Hola, soy LIA</div>
-      </div>
-      <input type="text" id="entrada" placeholder="Escríbeme..." aria-label="Entrada de chat" />
-    </div>
-  </div>
-
-  <script>
-    const entrada = document.getElementById("entrada");
-    const mensajes = document.getElementById("mensajes");
-    const API_URL = "/api/chat";
-
-    entrada.addEventListener("keypress", async function(e) {
-      if (e.key === "Enter" && this.value.trim() !== "") {
-        const texto = this.value;
-        mensajes.innerHTML += `<div><strong>Tú:</strong> ${texto}</div>`;
-        this.value = "";
-        mensajes.scrollTop = mensajes.scrollHeight;
-
-        const esperando = document.createElement("div");
-        esperando.innerHTML = `<strong>LIA:</strong> ...`;
-        mensajes.appendChild(esper
