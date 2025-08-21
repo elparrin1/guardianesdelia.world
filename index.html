@@ -192,6 +192,41 @@
     <p class="invocacion">"Atrévete a cruzar el umbral"</p>
   </header>
 
+<!-- ... tu código anterior ... -->
+
+    <!-- Oráculo de Vercel -->
+    <div id="oraculo">
+      <div id="gema" title="Consultar al Oráculo"></div>
+      <div id="panel">
+        <div class="mensajes" id="mensajes-oraculo">
+          Consultando al Guardián...
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Simulación de mensaje del Oráculo
+      document.addEventListener("DOMContentLoaded", () => {
+        const mensajes = document.getElementById("mensajes-oraculo");
+        // Obtenemos fecha/hora actual como "último despliegue"
+        const ahora = new Date();
+        const opciones = { 
+          year: 'numeric', month: '2-digit', day: '2-digit', 
+          hour: '2-digit', minute: '2-digit', 
+          hour12: false 
+        };
+        const fechaFormateada = ahora.toLocaleString('es-UY', opciones);
+        
+        mensajes.innerHTML = `
+          🔮 El Oráculo dice:<br>
+          El portal fue abierto el <strong>${fechaFormateada}</strong>
+        `;
+      });
+    </script>
+
+<!-- ... tu código sigue ... -->
+
+     
   <main>
     <!-- Portadas -->
     <div class="books-container">
