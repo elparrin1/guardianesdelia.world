@@ -254,7 +254,7 @@ document.getElementById('chat-enviar').addEventListener('click', async () => {
   entrada.value = '';
 
   try {
-    const res = await fetch('/lia-oraculo-backend/api/chat', {
+    const res = await fetch('https://lia-oraculo-backend-git-main-guardianesdelia.vercel.app/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: texto })
