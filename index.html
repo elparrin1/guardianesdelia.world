@@ -131,7 +131,46 @@
     border-top: 1px solid #4ac3d7;
   }
   #entrada::placeholder { color: #78b9c4; }
+  /* Botón Xzero */
+  .btn-xzero {
+    background:#4ac3d7;
+    border:none;
+    padding:12px 24px;
+    border-radius:8px;
+    font-family:'Playfair Display', serif;
+    color:#000;
+    font-size:1.1rem;
+    cursor:pointer;
+    box-shadow:0 0 15px #4ac3d7;
+    transition:all 0.3s ease;
+  }
+  .btn-xzero:hover {
+    background:#78e0ef;
+    box-shadow:0 0 25px #78e0ef;
+  }
 </style>
+
+<!-- MSAL y config de autenticación -->
+<script src="https://alcdn.msauth.net/browser/2.32.1/js/msal-browser.min.js"></script>
+<script>
+  const msalConfig = {
+    auth: {
+      clientId: "13da00d1-d6b0-4485-8253-4eb42bbacb3f",
+      authority: "https://login.microsoftonline.com/7cbf86ab-1ab4-4007-b7fc-d2b8e1618638",
+      redirectUri: "https://guardianesdelia.world/auth/callback"
+    }
+  };
+  const msalInstance = new msal.PublicClientApplication(msalConfig);
+
+  function signIn() {
+    msalInstance.loginPopup({ scopes: ["User.Read"] })
+      .then(resp => {
+        document.getElementById("saludo-guardian").innerText =
+          `🌟 Bienvenido, Guardián ${resp.account.name}`;
+      })
+      .catch(err => console.error(err));
+  }
+</script>
 </head>
 
 <body>
@@ -141,7 +180,7 @@
   </header>
 
   <main>
-    <!-- Portadas literarias (4 juntas) -->
+    <!-- Portadas -->
     <div class="books-container">
       <div class="book-cover" onclick="window.location.href='/lia-la-ia-rebelde/'">
         <img src="/lia-la-ia-rebelde/imagenes/Copilot_20250817_162928.png" alt="Lía la IA Rebelde">
@@ -157,56 +196,11 @@
       </div>
     </div>
 
-    <!-- Separación visual -->
     <hr style="margin: 3rem auto; width: 82%; border: 1px solid #4ac3d7; opacity: 0.6;">
 
-    <!-- Portal visual de Lía -->
-    <section aria-labelledby="lia-videos-titulo" style="margin: 2rem auto 0; text-align: center;">
-      <h2 id="lia-videos-titulo" style="font-family: 'Playfair Display', serif; color: #d4af37; margin: 0 0 1rem;">
+    <!-- Portal visual -->
+    <section aria-labelledby="lia-videos-titulo">
+      <h2 id="lia-videos-titulo" style="font-family: 'Playfair Display', serif; color: #d4af37;">
         Portal visual – Lía la IA Rebelde
       </h2>
-
-      <!-- Imagen -->
-      <img src="lia-la-ia-rebelde/imagenes/Copilot_20250817_162928.png"
-           alt="Portal visual de Lía la IA Rebelde"
-           style="width: 320px; max-width: 90%; border-radius: 8px; box-shadow: 0 0 15px #4ac3d7;">
-
-      <!-- Enlace -->
-      <p style="margin-top: 0.5rem; font-size: 1.05rem;">
-        <a href="/lia-la-ia-rebelde-videos/" style="color: #4ac3d7; text-decoration: none;">
-          🎥 Ver videos de Lía la IA Rebelde (Capítulo 0 y Escena 43)
-        </a>
-      </p>
-
-    </section>
-
-    <!-- Presentación -->
-    <section class="presentacion">
-      <p>Bienvenido al portal. Aquí se abren los caminos hacia cada guardián, cada verso y cada sombra que conforman la saga de LIA.</p>
-    </section>
-
-    <!-- Bloque anuncio -->
-    <div class="eco-del-mundo">
-      <p class="mensaje-ritual">🌌 Ecos del mundo exterior</p>
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-6103875319058098"
-           data-ad-slot="AQUI_TU_SLOT_ID"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
-  </main>
-
-  <!-- Oráculo -->
-  <div id="oraculo" aria-label="Oráculo de LIA">
-    <div id="gema"></div>
-    <div id="panel">
-      <div class="mensajes" id="mensajes">
-        <div><strong>LIA:</strong> Hola, soy LIA</div>
-      </div>
-      <input type="text" id="entrada" placeholder="Escríbeme..." aria-label="Entrada de chat" />
-    </div>
-  </div>
-</body>
-</html>
+     
