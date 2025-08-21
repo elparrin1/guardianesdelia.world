@@ -216,5 +216,59 @@
     </section>
   </main>
 </body>
+
+     <!-- CHATBOT flotante -->
+<div id="chatbot" style="position:fixed; bottom:80px; right:15px; width:300px;
+  background:rgba(15,23,36,0.95); border:2px solid #4ac3d7; border-radius:10px;
+  box-shadow:0 0 20px rgba(74,195,215,0.5); display:none; flex-direction:column; z-index:9999;">
+  <div id="chat-mensajes" style="flex:1; padding:10px; overflow-y:auto;
+    font-size:14px; color:#e6f8fa; text-align:left;">
+    🤖 Hola, soy el Guardián Virtual. Pregúntame lo que quieras...
+  </div>
+  <div style="display:flex; border-top:1px solid #4ac3d7;">
+    <input id="chat-entrada" type="text" placeholder="Escribe tu mensaje..."
+      style="flex:1; padding:8px; background:#0d1625; color:#b3faff; border:none; outline:none;">
+    <button id="chat-enviar" class="btn-xzero">Enviar</button>
+  </div>
+</div>
+
+<!-- Botón flotante para abrir/cerrar -->
+<div id="chat-toggle" title="Abrir chat" 
+  style="position:fixed; bottom:15px; right:15px; width:40px; height:40px;
+  border-radius:50%; background:#4ac3d7; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; box-shadow:0 0 15px #4ac3d7; z-index:9999;">💬</div>
+
+<script>
+const chat = document.getElementById('chatbot');
+const toggle = document.getElementById('chat-toggle');
+toggle.addEventListener('click', () => {
+  chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
+});
+
+document.getElementById('chat-enviar').addEventListener('click', async () => {
+  const entrada = document.getElementById('chat-entrada');
+  const mensajes = document.getElementById('chat-mensajes');
+  const texto = entrada.value.trim();
+  if (!texto) return;
+
+  mensajes.innerHTML += `<div>👤 ${texto}</div>`;
+  entrada.value = '';
+
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: texto })
+    });
+    const data = await res.json();
+    mensajes.innerHTML += `<div>🤖 ${data.reply || 'Sin respuesta'}</div>`;
+  } catch {
+    mensajes.innerHTML += `<div style="color:red">⚠ Error en el Oráculo</div>`;
+  }
+
+  mensajes.scrollTop = mensajes.scrollHeight;
+});
+</script>
+
 </html>
 
