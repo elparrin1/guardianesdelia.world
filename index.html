@@ -204,28 +204,6 @@
       </div>
     </div>
 
-    <!-- Dentro de #panel -->
-<div class="mensajes" id="mensajes-oraculo">
-  🔮 El Oráculo aguarda tu pregunta...
-</div>
-<input id="entrada" type="text" placeholder="Escribe tu pregunta...">
-<button id="btn-enviar" class="btn-xzero">Preguntar</button>
-
-<script>
-  document.getElementById('btn-enviar').addEventListener('click', () => {
-    const entrada = document.getElementById('entrada');
-    const mensajes = document.getElementById('mensajes-oraculo');
-    const pregunta = entrada.value.trim();
-    if (pregunta) {
-      mensajes.innerHTML += `<div>👤 Tú: ${pregunta}</div>`;
-      // Aquí definimos la "respuesta" del Oráculo
-      mensajes.innerHTML += `<div>🔮 Oráculo: El destino revelará su respuesta pronto...</div>`;
-      entrada.value = '';
-      mensajes.scrollTop = mensajes.scrollHeight;
-    }
-  });
-</script>
-
 
      
   <main>
