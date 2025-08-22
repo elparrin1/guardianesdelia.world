@@ -13,41 +13,39 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: url('https://guardianesdelia.world/lia-fondo.jpg') no-repeat center center fixed;
-    background-size: cover;
     position: relative;
     color: #fff;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://guardianesdelia.world/lia-fondo.jpg') no-repeat center center fixed;
+    background-size: cover;
+    overflow: hidden;
   }
   body::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.4);
-    backdrop-filter: blur(2px);
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
     z-index: 0;
   }
   .panel {
     position: relative;
     z-index: 1;
     background: rgba(20, 20, 20, 0.85);
-    padding: 30px;
-    border-radius: 10px;
-    max-width: 350px;
+    padding: 40px;
+    border-radius: 12px;
+    max-width: 380px;
     width: 90%;
     text-align: center;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-    background-image: url('https://guardianesdelia.world/lia-panel-textura.png');
-    background-size: cover;
-    background-blend-mode: overlay;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
   }
-  h1 { font-size: 2em; color: #ffd700; margin-bottom: 0.3em; text-shadow: 0 0 8px rgba(255, 215, 0, 0.7); }
+  h1 { font-size: 2.2em; color: #ffd700; margin-bottom: 0.5em; text-shadow: 0 0 12px rgba(255, 215, 0, 0.8); }
   p { font-size: 1.05em; margin-bottom: 1.5em; color: #ccc; }
-  input, button { display: block; margin: 8px auto; width: 100%; padding: 12px; font-size: 1em; border: none; border-radius: 5px; }
-  input { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid #555; }
-  input::placeholder { color: #aaa; }
-  button { background: #ffd700; color: #000; font-weight: bold; cursor: pointer; transition: background 0.3s; }
-  button:hover { background: #e6c200; }
-  hr { margin: 20px 0; border: none; border-top: 1px solid #444; width: 80%; }
+  input, button { display: block; margin: 10px auto; width: 100%; padding: 12px; font-size: 1em; border: none; border-radius: 6px; }
+  input { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid #888; }
+  input::placeholder { color: #ddd; }
+  button { background: #ffd700; color: #000; font-weight: bold; cursor: pointer; transition: background 0.3s, transform 0.2s; }
+  button:hover { background: #e6c200; transform: scale(1.05); }
+  hr { margin: 25px 0; border: none; border-top: 1px solid #444; width: 80%; }
 </style>
 </head>
 <body>
