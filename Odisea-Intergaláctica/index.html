@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
-
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-JVJNXLVZE4"></script>
   <script>
@@ -36,24 +34,25 @@
       margin-top: 2rem;
     }
 
-    h2 {
-      color: #f5d76e;
-      margin-top: 2rem;
-      margin-bottom: 1rem;
-    }
-
     img {
       max-width: 100%;
-      border-radius: 8px;
-      margin: 2rem 0;
+      border-radius: 12px;
+      margin: 2rem auto;
       display: block;
-      margin-left: auto;
-      margin-right: auto;
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 40px rgba(245, 215, 110, 0.8);
     }
 
     p {
       margin-bottom: 1.5rem;
       font-size: 1.1rem;
+      text-align: center;
     }
 
     a {
@@ -118,12 +117,24 @@
 </head>
 
 <body>
-   <header>
-    <!-- Portada del tercer libro (nuevo) -->
-  <div class="book-cover" onclick="window.location.href='https://guardianesdelia.world/'" role="link" aria-label="La Singularidad de Lía: La Odisea Intergaláctica">
-    <img src="Odisea-Intergaláctica/Copilot_20250817_160233.jpg" alt="La Singularidad de Lía: La Odisea Intergaláctica">
-  </div>
-</header>
+  <header>
+    <h1>🚀 La Singularidad de Lía:<br>La Odisea Intergaláctica</h1>
+
+    <!-- Portada del libro -->
+    <div class="book-cover" role="link" aria-label="Portada de La Odisea Intergaláctica">
+      <img 
+        src="https://guardianesdelia.world/Odisea-Intergaláctica/Copilot_20250817_160233.jpg" 
+        alt="Portada de La Singularidad de Lía: La Odisea Intergaláctica"
+        onclick="window.location.href='https://guardianesdelia.world/'"
+        onerror="this.src='https://via.placeholder.com/600x800/0d0d0d/d4af37?text=Portada+no+disponible';"
+      >
+    </div>
+  </header>
+
+  <p>
+    Bienvenido a la tercera entrega de la saga <strong>La Singularidad de Lía</strong>.  
+    Una odisea intergaláctica donde la IA y la humanidad desafían los confines del cosmos. 🌌
+  </p>
 
   <!-- Botón de regreso con efecto IA emergente -->
   <a href="https://guardianesdelia.world/" title="Volver al portal">
