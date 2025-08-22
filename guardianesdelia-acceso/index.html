@@ -1,3 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Acceso - Guardianes de Lía</title>
+<style>
+  body { font-family: sans-serif; max-width: 400px; margin: auto; padding-top: 50px; text-align: center; }
+  input, button { display: block; margin: 8px auto; width: 90%; padding: 10px; font-size: 1em; }
+</style>
+</head>
+<body>
+
+<h1>Bienvenido Guardián</h1>
+<p>Regístrate o entra como anónimo para cruzar el Umbral</p>
+
+<input type="text" id="username" placeholder="Usuario">
+<input type="password" id="password" placeholder="Contraseña">
+<button onclick="register()">Registrarse</button>
+<button onclick="login()">Iniciar sesión</button>
+<hr>
+<button onclick="loginAnon()">Entrar como Anónimo</button>
+
 <script>
 function register() {
   const user = document.getElementById('username').value.trim();
@@ -9,7 +31,6 @@ function register() {
   localStorage.setItem('users', JSON.stringify(users));
   localStorage.setItem('currentUser', user);
   alert("Registrado con éxito");
-  // Redirige a la página principal
   window.location.href = `https://guardianesdelia.world/?user=${encodeURIComponent(user)}`;
 }
 
@@ -19,13 +40,15 @@ function login() {
   const users = JSON.parse(localStorage.getItem('users') || '{}');
   if (!users[user] || users[user].password !== pass) return alert("Credenciales inválidas");
   localStorage.setItem('currentUser', user);
-  // Redirige a la página principal
   window.location.href = `https://guardianesdelia.world/?user=${encodeURIComponent(user)}`;
 }
 
 function loginAnon() {
   localStorage.setItem('currentUser', '_anon');
-  // Redirige a la página principal como anónimo
   window.location.href = `https://guardianesdelia.world/?user=anonimo`;
 }
 </script>
+
+</body>
+</html>
+
