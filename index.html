@@ -1,15 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Acceso - Guardianes de Lía</title>
+<style>
+  body {
+    font-family: sans-serif;
+    max-width: 400px;
+    margin: auto;
+    padding-top: 50px;
+    text-align: center;
+    background-color: #f9f9f9;
+  }
+  h1 {
+    margin-bottom: 10px;
+  }
+  p {
+    margin-bottom: 20px;
+  }
+  input, button {
+    display: block;
+    margin: 8px auto;
+    width: 90%;
+    padding: 10px;
+    font-size: 1em;
+  }
+  hr {
+    margin: 20px 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>Bienvenido Guardián</h1>
+<p>Regístrate o entra como anónimo para cruzar el Umbral</p>
+
+<input type="text" id="username" placeholder="Usuario">
+<input type="password" id="password" placeholder="Contraseña">
+<button onclick="register()">Registrarse</button>
+<button onclick="login()">Iniciar sesión</button>
+<hr>
+<button onclick="loginAnon()">Entrar como Anónimo</button>
+
 <script>
 function register() {
   const user = document.getElementById('username').value.trim();
   const pass = document.getElementById('password').value.trim();
   if (!user || !pass) return alert("Completa usuario y contraseña");
+
   const users = JSON.parse(localStorage.getItem('users') || '{}');
   if (users[user]) return alert("Usuario ya existe");
+
   users[user] = { password: pass, achievements: [], bookmarks: [] };
   localStorage.setItem('users', JSON.stringify(users));
   localStorage.setItem('currentUser', user);
+
   alert("Registrado con éxito");
-  // Redirige al portal principal en guardianesdelia-acceso
   window.location.href = `https://guardianesdelia.world/guardianesdelia-acceso/?user=${encodeURIComponent(user)}`;
 }
 
@@ -17,15 +63,18 @@ function login() {
   const user = document.getElementById('username').value.trim();
   const pass = document.getElementById('password').value.trim();
   const users = JSON.parse(localStorage.getItem('users') || '{}');
+
   if (!users[user] || users[user].password !== pass) return alert("Credenciales inválidas");
+
   localStorage.setItem('currentUser', user);
-  // Redirige al portal principal en guardianesdelia-acceso
   window.location.href = `https://guardianesdelia.world/guardianesdelia-acceso/?user=${encodeURIComponent(user)}`;
 }
 
 function loginAnon() {
   localStorage.setItem('currentUser', '_anon');
-  // Redirige al portal principal en guardianesdelia-acceso
   window.location.href = `https://guardianesdelia.world/guardianesdelia-acceso/?user=anonimo`;
 }
 </script>
+
+</body>
+</html>
