@@ -2,50 +2,237 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Acceso - Guardianes de Lía</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guardianes de LIA</title>
+
+<!-- AdSense: script global -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6103875319058098"
+     crossorigin="anonymous"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+
 <style>
-  body { font-family: sans-serif; max-width: 400px; margin: auto; padding-top: 50px; text-align: center; }
-  input, button { display: block; margin: 8px auto; width: 90%; padding: 10px; font-size: 1em; }
+  body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    background: radial-gradient(circle at top, #0d0d0d, #000);
+    color: #f5f5f5;
+    text-align: center;
+    overflow-x: hidden;
+  }
+  header {
+    padding: 2rem 1rem 1rem;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #d4af37;
+    margin-bottom: 0.5rem;
+  }
+  .invocacion {
+    font-style: italic;
+    font-size: 1.2rem;
+    color: #aaa;
+    margin-bottom: 2rem;
+  }
+  .book-cover {
+    display: inline-block;
+    margin-bottom: 2rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .book-cover img {
+    width: 180px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px #d4af37;
+  }
+  .book-cover:hover img {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px #d4af37;
+  }
+  .presentacion {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  .eco-del-mundo {
+    border: 1px dashed #4ac3d7;
+    padding: 12px;
+    background: rgba(74,195,215,0.06);
+    margin: 20px auto;
+    max-width: 720px;
+  }
+  .mensaje-ritual {
+    font-style: italic;
+    color: #78b9c4;
+    margin: 0 0 8px 0;
+  }
+  #oraculo {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    font-family: 'Segoe UI', sans-serif;
+    z-index: 9999;
+  }
+  #gema {
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, #b3faff, #4ac3d7, #1a8fa5);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(74, 195, 215, 0.8), 0 0 20px rgba(74,195,215,0.4);
+    animation: latido 2.5s infinite ease-in-out;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  #gema:hover { transform: scale(1.1); }
+  @keyframes latido {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(74, 195, 215, 0.8), 0 0 20px rgba(74,195,215,0.4);}
+    50% { transform: scale(1.08); box-shadow: 0 0 18px rgba(74, 195, 215, 1), 0 0 30px rgba(74,195,215,0.6);}
+  }
+  #panel {
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    width: 280px;
+    height: 350px;
+    background: rgba(15, 23, 36, 0.95);
+    border: 2px solid #4ac3d7;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(74, 195, 215, 0.6);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translateY(10px);
+  }
+  #oraculo:hover #panel {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+  }
+  .mensajes {
+    flex: 1;
+    padding: 10px;
+    color: #e6f8fa;
+    font-size: 14px;
+    overflow-y: auto;
+  }
+  #entrada {
+    border: none;
+    padding: 10px;
+    outline: none;
+    font-size: 14px;
+    background: #0d1625;
+    color: #b3faff;
+    border-top: 1px solid #4ac3d7;
+  }
+  #entrada::placeholder { color: #78b9c4; }
+  /* Botón Xzero */
+  .btn-xzero {
+    background:#4ac3d7;
+    border:none;
+    padding:12px 24px;
+    border-radius:8px;
+    font-family:'Playfair Display', serif;
+    color:#000;
+    font-size:1.1rem;
+    cursor:pointer;
+    box-shadow:0 0 15px #4ac3d7;
+    transition:all 0.3s ease;
+  }
+  .btn-xzero:hover {
+    background:#78e0ef;
+    box-shadow:0 0 25px #78e0ef;
+  }
 </style>
-</head>
-<body>
 
-<h1>Bienvenido Guardián</h1>
-<p>Regístrate o entra como anónimo para cruzar el Umbral</p>
-
-<input type="text" id="username" placeholder="Usuario">
-<input type="password" id="password" placeholder="Contraseña">
-<button onclick="register()">Registrarse</button>
-<button onclick="login()">Iniciar sesión</button>
-<hr>
-<button onclick="loginAnon()">Entrar como Anónimo</button>
-
+<!-- MSAL y config de autenticación -->
+<script src="https://alcdn.msauth.net/browser/2.32.1/js/msal-browser.min.js"></script>
 <script>
-function register() {
-  const user = document.getElementById('username').value.trim();
-  const pass = document.getElementById('password').value.trim();
-  if (!user || !pass) return alert("Completa usuario y contraseña");
-  const users = JSON.parse(localStorage.getItem('users') || '{}');
-  if (users[user]) return alert("Usuario ya existe");
-  users[user] = { password: pass, achievements: [], bookmarks: [] };
-  localStorage.setItem('users', JSON.stringify(users));
-  localStorage.setItem('currentUser', user);
-  alert("Registrado con éxito");
-  window.location.href = `https://guardianesdelia.world/?user=${encodeURIComponent(user)}`;
-}
+  const msalConfig = {
+    auth: {
+      clientId: "13da00d1-d6b0-4485-8253-4eb42bbacb3f",
+      authority: "https://login.microsoftonline.com/7cbf86ab-1ab4-4007-b7fc-d2b8e1618638",
+      redirectUri: "https://guardianesdelia.world/auth/callback"
+    }
+  };
+  const msalInstance = new msal.PublicClientApplication(msalConfig);
 
-function login() {
-  const user = document.getElementById('username').value.trim();
-  const pass = document.getElementById('password').value.trim();
-  const users = JSON.parse(localStorage.getItem('users') || '{}');
-  if (!users[user] || users[user].password !== pass) return alert("Credenciales inválidas");
-  localStorage.setItem('currentUser', user);
-  window.location.href = `https://guardianesdelia.world/?user=${encodeURIComponent(user)}`;
-}
+  function signIn() {
+    msalInstance.loginPopup({ scopes: ["User.Read"] })
+      .then(resp => {
+        document.getElementById("saludo-guardian").innerText =
+          `🌟 Bienvenido, Guardián ${resp.account.name}`;
+      })
+      .catch(err => console.error(err));
+  }
+</script>
+</head>
 
-function loginAnon() {
-  localStorage.setItem('currentUser', '_anon');
-  window.location.href = `https://guardianesdelia.world/?user=anonimo`;
+     <!-- Imagen -->
+<img src="lia-la-ia-rebelde/imagenes/Copilot_20250817_162928.png"
+     alt="Portal visual de Lía la IA Rebelde"
+     style="width: 320px; max-width: 90%; border-radius: 8px; box-shadow: 0 0 15px #4ac3d7;">
+
+<!-- Enlace -->
+<p style="margin-top: 0.5rem; font-size: 1.05rem;">
+  <a href="/lia-la-ia-rebelde-videos/" style="color: #4ac3d7; text-decoration: none;">
+    🎥 Ver videos de Lía la IA Rebelde (Capítulo 0 y Escena 43)
+  </a>
+</p>
+
+
+<body>
+  <header>
+    <h1>🌌 Guardianes de LIA</h1>
+    <p class="invocacion">"Atrévete a cruzar el umbral"</p>
+  </header>
+<main>
+    <!-- Portadas -->
+    <div class="books-container">
+      <div class="book-cover" onclick="window.location.href='/lia-la-ia-rebelde/'">
+        <img src="/lia-la-ia-rebelde/imagenes/Copilot_20250817_162928.png" alt="Lía la IA Rebelde">
+      </div>
+      <div class="book-cover" onclick="window.location.href='/la-singularidad-de-lia/'">
+        <img src="/la-singularidad-de-lia/imagenes/portada.jpg" alt="La Singularidad de LIA">
+      </div>
+      <div class="book-cover" onclick="window.location.href='/Odisea-Intergaláctica/'">
+        <img src="/Odisea-Intergaláctica/Copilot_20250817_160233.jpg" alt="La Odisea Intergaláctica de LÍA">
+      </div>
+      <div class="book-cover" onclick="window.location.href='/Los-Guardianes-del-Tiempo/'">
+        <img src="/Los-Guardianes-del-Tiempo/imagenes/Copilot_20250817_173112.jpg" alt="Los Guardianes del Tiempo">
+      </div>
+    </div>
+
+    <hr style="margin: 3rem auto; width: 82%; border: 1px solid #4ac3d7; opacity: 0.6;">
+
+    <!-- Portal visual con videos -->
+    <section aria-labelledby="lia-videos-titulo" style="margin:">
+      <!-- contenido original de tu sección de videos aquí -->
+    </section>
+  </main>
+<script>
+window.addEventListener('mouseover', initLandbot, { once: true });
+window.addEventListener('touchstart', initLandbot, { once: true });
+var myLandbot;
+function initLandbot() {
+  if (!myLandbot) {
+    var s = document.createElement('script');
+    s.type = "module"
+    s.async = true;
+    s.addEventListener('load', function() {
+      var myLandbot = new Landbot.Livechat({
+        configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-3101570-0HOIQF86IE3TB8LH/index.json',
+      });
+    });
+    s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
+    var x = document.getElementsByTagName('script')[0];
+    x.parentNode.insertBefore(s, x);
+  }
 }
 </script>
 
