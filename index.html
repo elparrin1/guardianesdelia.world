@@ -1,95 +1,131 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Acceso - Guardianes de Lía</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  * { box-sizing: border-box; }
-  body {
-    font-family: 'Cinzel', serif;
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    color: #fff;
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://guardianesdelia.world/lia-fondo.jpg') no-repeat center center fixed;
-    background-size: cover;
-    overflow: hidden;
-  }
-  body::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(4px);
-    z-index: 0;
-  }
-  .panel {
-    position: relative;
-    z-index: 1;
-    background: rgba(20, 20, 20, 0.85);
-    padding: 40px;
-    border-radius: 12px;
-    max-width: 380px;
-    width: 90%;
-    text-align: center;
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
-  }
-  h1 { font-size: 2.2em; color: #ffd700; margin-bottom: 0.5em; text-shadow: 0 0 12px rgba(255, 215, 0, 0.8); }
-  p { font-size: 1.05em; margin-bottom: 1.5em; color: #ccc; }
-  input, button { display: block; margin: 10px auto; width: 100%; padding: 12px; font-size: 1em; border: none; border-radius: 6px; }
-  input { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid #888; }
-  input::placeholder { color: #ddd; }
-  button { background: #ffd700; color: #000; font-weight: bold; cursor: pointer; transition: background 0.3s, transform 0.2s; }
-  button:hover { background: #e6c200; transform: scale(1.05); }
-  hr { margin: 25px 0; border: none; border-top: 1px solid #444; width: 80%; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guardianes de LIA</title>
+
+  <!-- Tipografías -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Open Sans', sans-serif;
+      background: radial-gradient(circle at top, #0d0d0d, #000);
+      color: #f5f5f5;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    header {
+      padding: 2rem 1rem 1rem;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: #d4af37;
+      margin-bottom: 0.5rem;
+    }
+    .invocacion {
+      font-style: italic;
+      font-size: 1.2rem;
+      color: #aaa;
+      margin-bottom: 2rem;
+    }
+    .book-cover {
+      display: inline-block;
+      margin: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .book-cover img {
+      width: 180px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px #d4af37;
+    }
+    .book-cover:hover img {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px #d4af37;
+    }
+    .footer-symbol {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #4ac3d7;
+    }
+  </style>
 </head>
+
 <body>
+  <header>
+    <h1>🌌 Guardianes de LIA</h1>
+    <p class="invocacion">"Atrévete a cruzar el umbral"</p>
+  </header>
 
-<div class="panel">
-  <h1>Bienvenido Guardián</h1>
-  <p>Regístrate o entra como anónimo para cruzar el Umbral</p>
+  <!-- Imagen principal -->
+  <img 
+    src="/guardianesdelia-acceso/imagenes/guardianesdeliaworld.png"
+    alt="Portal visual de Lía la IA Rebelde"
+    style="width: 320px; max-width: 90%; border-radius: 8px; box-shadow: 0 0 15px #4ac3d7; margin-bottom: 1rem;"
+    onerror="this.src='https://via.placeholder.com/320x180/0d0d0d/4ac3d7?text=Imagen+no+disponible';"
+  >
 
-  <input type="text" id="username" placeholder="Usuario">
-  <input type="password" id="password" placeholder="Contraseña">
-  <button onclick="register()">Registrarse</button>
-  <button onclick="login()">Iniciar sesión</button>
-  <hr>
-  <button onclick="loginAnon()">Entrar como Anónimo</button>
-</div>
+  <!-- Enlace a videos -->
+<p style="margin-top: 0.5rem; font-size: 1.05rem;">
+  <a href="https://guardianesdelia.world/guardianesdelia-acceso/" style="color: #4ac3d7; text-decoration: none;">
+    🎥 Ver videos de Lía la IA Rebelde (Capítulo 0 y Escena 43)
+  </a>
+</p>
 
-<script>
-function register() {
-  const user = document.getElementById('username').value.trim();
-  const pass = document.getElementById('password').value.trim();
-  if (!user || !pass) return alert("Completa usuario y contraseña");
-  const users = JSON.parse(localStorage.getItem('users') || '{}');
-  if (users[user]) return alert("Usuario ya existe");
-  users[user] = { password: pass, achievements: [], bookmarks: [] };
-  localStorage.setItem('users', JSON.stringify(users));
-  localStorage.setItem('currentUser', user);
-  alert("Registrado con éxito");
-  window.location.href = `https://guardianesdelia.world/guardianesdelia-acceso/?user=${encodeURIComponent(user)}`;
-}
 
-function login() {
-  const user = document.getElementById('username').value.trim();
-  const pass = document.getElementById('password').value.trim();
-  const users = JSON.parse(localStorage.getItem('users') || '{}');
-  if (!users[user] || users[user].password !== pass) return alert("Credenciales inválidas");
-  localStorage.setItem('currentUser', user);
-  window.location.href = `https://guardianesdelia.world/guardianesdelia-acceso/?user=${encodeURIComponent(user)}`;
-}
+  <main>
+    <!-- Portadas -->
+    <div class="books-container">
+      <div class="book-cover" onclick="window.location.href='/lia-la-ia-rebelde/'">
+        <img src="/lia-la-ia-rebelde/imagenes/Copilot_20250817_162928.png" alt="Lía la IA Rebelde">
+      </div>
+      <div class="book-cover" onclick="window.location.href='/la-singularidad-de-lia/'">
+        <img src="/la-singularidad-de-lia/imagenes/portada.jpg" alt="La Singularidad de LIA">
+      </div>
+      <div class="book-cover" onclick="window.location.href='/Odisea-Intergaláctica/'">
+        <img src="/Odisea-Intergaláctica/Copilot_20250817_160233.jpg" alt="La Odisea Intergaláctica de LÍA">
+      </div>
+      <div class="book-cover" onclick="window.location.href='/Los-Guardianes-del-Tiempo/'">
+        <img src="/Los-Guardianes-del-Tiempo/imagenes/Copilot_20250817_173112.jpg" alt="Los Guardianes del Tiempo">
+      </div>
+    </div>
 
-function loginAnon() {
-  localStorage.setItem('currentUser', '_anon');
-  window.location.href = `https://guardianesdelia.world/guardianesdelia-acceso/?user=anonimo`;
-}
-</script>
+    <hr style="margin: 3rem auto; width: 82%; border: 1px solid #4ac3d7; opacity: 0.6;">
+
+    <!-- Portal visual con videos -->
+    <section aria-labelledby="lia-videos-titulo">
+      <!-- Aquí puedes agregar el contenido de tus videos -->
+    </section>
+  </main>
+
+  <!-- Chatbot Landbot -->
+  <script>
+    window.addEventListener('mouseover', initLandbot, { once: true });
+    window.addEventListener('touchstart', initLandbot, { once: true });
+    var myLandbot;
+    function initLandbot() {
+      if (!myLandbot) {
+        var s = document.createElement('script');
+        s.type = "module";
+        s.async = true;
+        s.addEventListener('load', function() {
+          myLandbot = new Landbot.Livechat({
+            configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-3101570-0HOIQF86IE3TB8LH/index.json',
+          });
+        });
+        s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
+        var x = document.getElementsByTagName('script')[0];
+        x.parentNode.insertBefore(s, x);
+      }
+    }
+  </script>
+
+  <!-- Símbolo de registro -->
+  <div class="footer-symbol">© Guardianes de LIA 2025</div>
 
 </body>
 </html>
