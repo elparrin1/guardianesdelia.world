@@ -3,125 +3,136 @@
 <head>
 
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JVJNXLVZE4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JVJNXLVZE4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-JVJNXLVZE4');
+  </script>
 
-  gtag('config', 'G-JVJNXLVZE4');
-</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title></title>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-<style>
-  body {
-    margin: 0;
-    font-family: 'Open Sans', sans-serif;
-    background: #0d0d0d;
-    color: #f5f5f5;
-    line-height: 1.7;
-    padding: 2rem;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  h1 {
-    color: #d4af37;
-    text-align: center;
-    margin-top: 2rem;
-  }
-  h2 {
-    color: #f5d76e;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-  }
-  img {
-    max-width: 100%;
-    border-radius: 8px;
-    margin: 2rem 0;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  p {
-    margin-bottom: 1.5rem;
-    font-size: 1.1rem;
-  }
-  a {
-    color: #f5d76e;
-    text-decoration: none;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Guardianes de Lía</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Open Sans', sans-serif;
+      background: #0d0d0d;
+      color: #f5f5f5;
+      line-height: 1.7;
+      padding: 2rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    h1 {
+      color: #d4af37;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    h2 {
+      color: #f5d76e;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 2rem 0;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    }
+    p {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+    a {
+      color: #f5d76e;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Botón de regreso con efecto IA emergente */
+    .ia-return {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 60px;
+      height: 100px;
+      z-index: 999;
+    }
+
+    .phone {
+      width: 100%;
+      height: 100%;
+      background: #222;
+      border: 2px solid #888;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 10px #000;
+      transition: transform 0.3s ease;
+    }
+
+    .screen {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 5px;
+      background: #ccc;
+      border-radius: 2px;
+    }
+
+    .ia {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%) scale(0);
+      width: 40px;
+      height: 40px;
+      background: radial-gradient(circle, #00f0ff, #004466);
+      border-radius: 50%;
+      box-shadow: 0 0 15px #00f0ff;
+      transition: transform 0.5s ease;
+    }
+
+    .ia-return:hover .ia {
+      transform: translateX(-50%) scale(1.2);
+    }
+  </style>
 </head>
 <body>
 
-  
+  <h1>Guardianes de Lía</h1>
 
-<!-- Botón de regreso con efecto IA emergente -->
-<a href="https://guardianesdelia.world/" title="Volver al portal">
-  <div class="ia-return">
-    <div class="phone">
-      <div class="screen"></div>
-      <div class="ia"></div>
+  <!-- Imagen principal -->
+  <img src="https://guardianesdelia.world/Los-Guardianes-del-Tiempo/imagenes/Copilot_20250817_173112.jpg" 
+       alt="Guardianes de Lía">
+
+  <p>
+    Bienvenido al universo de <strong>Guardianes de Lía</strong>, una historia donde el tiempo, la 
+    imaginación y la tecnología se encuentran en un viaje único.
+  </p>
+
+  <!-- Botón de regreso -->
+  <a href="https://guardianesdelia.world/" title="Volver al portal">
+    <div class="ia-return">
+      <div class="phone">
+        <div class="screen"></div>
+        <div class="ia"></div>
+      </div>
     </div>
-  </div>
-</a>
-
-<style>
-.ia-return {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  width: 60px;
-  height: 100px;
-  z-index: 999;
-}
-
-.phone {
-  width: 100%;
-  height: 100%;
-  background: #222;
-  border: 2px solid #888;
-  border-radius: 12px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 0 10px #000;
-  transition: transform 0.3s ease;
-}
-
-.screen {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 30px;
-  height: 5px;
-  background: #ccc;
-  border-radius: 2px;
-}
-
-.ia {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%) scale(0);
-  width: 40px;
-  height: 40px;
-  background: radial-gradient(circle, #00f0ff, #004466);
-  border-radius: 50%;
-  box-shadow: 0 0 15px #00f0ff;
-  transition: transform 0.5s ease;
-}
-
-.ia-return:hover .ia {
-  transform: translateX(-50%) scale(1.2);
-}
-</style>
+  </a>
 
 
 
