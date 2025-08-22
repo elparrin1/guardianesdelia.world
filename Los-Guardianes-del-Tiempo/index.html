@@ -136,13 +136,6 @@ url += new Date().getTime();
 document.write(unescape("%3Cscript src='" + url + 
 "' type='text/javascript' charset='utf-8'%3E%3C/script%3E"));
 })();
-</script>
-<div id="scwdt2507242587644" class="scWidget scWidget-box"></div>
-<script type="text/javascript">SCLabelLoader('2507242587644','2307274375895',{"tplName":"box","locale":"es","showIconlicense":false,"showInfo":false,"showDownload":false,"showCaptions":false,"showSocial":false,"logo":"safecreative"});</script>
-  
-  <!-- <p>Primer párrafo de tu historia...</p> -->
-  <!-- <p>Segundo párrafo de tu historia...</p> -->
-</section>
 <script>
 window.addEventListener('mouseover', initLandbot, { once: true });
 window.addEventListener('touchstart', initLandbot, { once: true });
@@ -153,7 +146,7 @@ function initLandbot() {
     s.type = "module"
     s.async = true;
     s.addEventListener('load', function() {
-      myLandbot = new Landbot.Popup({
+      var myLandbot = new Landbot.Livechat({
         configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-3101570-0HOIQF86IE3TB8LH/index.json',
       });
     });
