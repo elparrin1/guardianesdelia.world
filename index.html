@@ -13,22 +13,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(270deg, #0f2027, #203a43, #2c5364);
-    background-size: 600% 600%;
-    animation: gradientBG 15s ease infinite;
+    background: url('https://guardianesdelia.world/lia-fondo.jpg') no-repeat center center fixed;
+    background-size: cover;
     position: relative;
     color: #fff;
-  }
-  @keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
   }
   body::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.4);
     backdrop-filter: blur(2px);
     z-index: 0;
   }
@@ -42,6 +36,9 @@
     width: 90%;
     text-align: center;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    background-image: url('https://guardianesdelia.world/lia-panel-textura.png');
+    background-size: cover;
+    background-blend-mode: overlay;
   }
   h1 { font-size: 2em; color: #ffd700; margin-bottom: 0.3em; text-shadow: 0 0 8px rgba(255, 215, 0, 0.7); }
   p { font-size: 1.05em; margin-bottom: 1.5em; color: #ccc; }
