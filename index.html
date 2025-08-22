@@ -70,14 +70,11 @@
   >
 
   <!-- Enlace a videos -->
-<p style="margin-top: 0.5rem; font-size: 1.05rem;">
-  <a href="https://guardianesdelia.world/Videos//" 
-     style="color: #4ac3d7; text-decoration: none;">
-     🎥 Ver videos de Lía la IA Rebelde
-  </a>
-</p>
-
-
+  <p style="margin-top: 0.5rem; font-size: 1.05rem;">
+    <a href="/Videos/" style="color: #4ac3d7; text-decoration: none;">
+      🎥 Ver videos de Lía la IA Rebelde
+    </a>
+  </p>
 
   <main>
     <!-- Portadas -->
@@ -100,7 +97,7 @@
 
     <!-- Portal visual con videos -->
     <section aria-labelledby="lia-videos-titulo">
-      <!-- Aquí puedes agregar el contenido de tus videos si quieres mostrar miniaturas o listas -->
+      <!-- Aquí puedes agregar miniaturas o listas de tus videos de YouTube -->
     </section>
   </main>
 
@@ -120,28 +117,7 @@
           });
         });
         s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
-        var x = document.getElementsByTagName('script')[0];
-        x.parentNode.insertBefore(s, x);
-      }
-    }
-  </script>
-
-  <!-- Símbolo de registro -->
-  <div class="footer-symbol">© Guardianes de LIA 2025</div>
-
-</body>
-</html>
-        var s = document.createElement('script');
-        s.type = "module";
-        s.async = true;
-        s.addEventListener('load', function() {
-          myLandbot = new Landbot.Livechat({
-            configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-3101570-0HOIQF86IE3TB8LH/index.json',
-          });
-        });
-        s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
-        var x = document.getElementsByTagName('script')[0];
-        x.parentNode.insertBefore(s, x);
+        document.getElementsByTagName('script')[0].parentNode.insertBefore(s, document.getElementsByTagName('script')[0]);
       }
     }
   </script>
