@@ -1,0 +1,15 @@
+<script>
+function login() {
+  const user = document.getElementById('username').value;
+  const pass = document.getElementById('password').value;
+  const users = JSON.parse(localStorage.getItem('users') || '{}');
+  if (!users[user] || users[user].password !== pass) return alert("Credenciales inválidas");
+  localStorage.setItem('currentUser', user);
+  window.location.href = `https://guardianesdelia.world/?user=${encodeURIComponent(user)}`;
+}
+
+function loginAnon() {
+  localStorage.setItem('currentUser', '_anon');
+  window.location.href = `https://guardianesdelia.world/?user=anonimo`;
+}
+</script>
