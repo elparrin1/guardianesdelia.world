@@ -8,22 +8,9 @@
   <!-- Tipografías -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
 
-  <!-- Google Publisher Tag -->
-  <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
-  <script>
-    window.googletag = window.googletag || { cmd: [] };
-    
-    googletag.cmd.push(() => {
-      // Definir el slot de anuncio
-      googletag.defineSlot('/6355419/Travel', [300, 250], 'div-gpt-ad-1353922262543-0')
-               .setTargeting('test', 'event')
-               .addService(googletag.pubads());
-
-      // Evitar carga automática
-      googletag.pubads().disableInitialLoad();
-      googletag.enableServices();
-    });
-  </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6103875319058098"
+     crossorigin="anonymous"></script>
 
   <style>
     body {
@@ -118,13 +105,15 @@
     </section>
   </main>
 
-  <!-- Contenedor del anuncio GPT -->
-  <div id="div-gpt-ad-1353922262543-0" style="width: 300px; height: 250px; margin: 2rem auto;"></div>
+  <!-- Contenedor de AdSense -->
+  <ins class="adsbygoogle"
+       style="display:block; text-align:center;"
+       data-ad-client="ca-pub-6103875319058098"
+       data-ad-slot="1234567890"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
   <script>
-    googletag.cmd.push(() => {
-      // Mostrar el anuncio
-      googletag.display('div-gpt-ad-1353922262543-0');
-    });
+       (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
 
   <!-- Chatbot Landbot -->
