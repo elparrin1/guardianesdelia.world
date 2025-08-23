@@ -6,12 +6,12 @@
   <title>Guardianes de LIA</title>
 
   <!-- Tipografías -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&family=Poppins&display=swap" rel="stylesheet">
 
   <!-- Google AdSense -->
+  <meta name="google-adsense-account" content="ca-pub-6103875319058098">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6103875319058098"
      crossorigin="anonymous"></script>
-  <meta name="google-adsense-account" content="ca-pub-6103875319058098">
 
   <style>
     body {
@@ -22,40 +22,91 @@
       text-align: center;
       overflow-x: hidden;
     }
+
     header {
       padding: 2rem 1rem 1rem;
     }
+
     h1 {
       font-family: 'Playfair Display', serif;
       font-size: 2.5rem;
       color: #d4af37;
       margin-bottom: 0.5rem;
     }
+
     .invocacion {
       font-style: italic;
       font-size: 1.2rem;
       color: #aaa;
       margin-bottom: 2rem;
     }
+
+    .books-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
     .book-cover {
-      display: inline-block;
-      margin: 1rem;
       cursor: pointer;
       transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-block;
     }
+
     .book-cover img {
       width: 180px;
       border-radius: 8px;
       box-shadow: 0 0 15px #d4af37;
     }
+
     .book-cover:hover img {
       transform: scale(1.1);
       box-shadow: 0 0 25px #d4af37;
     }
+
     .footer-symbol {
       margin-top: 3rem;
       font-size: 0.9rem;
       color: #4ac3d7;
+    }
+
+    section.dedicatoria {
+      padding: 40px 25px;
+      background: linear-gradient(135deg, #1a1a2e, #3a0ca3);
+      text-align: center;
+      margin: 50px auto 0;
+      max-width: 850px;
+      border-radius: 15px;
+      border: 2px solid rgba(74,195,215,0.6);
+      box-shadow: 0 0 25px rgba(74,195,215,0.4), inset 0 0 20px rgba(255,255,255,0.05);
+    }
+
+    section.dedicatoria h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #4ac3d7;
+      margin-bottom: 0.8rem;
+      text-shadow: 0 0 10px rgba(74,195,215,0.9);
+    }
+
+    section.dedicatoria p {
+      font-size: 1.2rem;
+      color: #f1faff;
+      margin: 0 auto 1.2rem;
+      max-width: 600px;
+      line-height: 1.8;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    a {
+      color: #4ac3d7;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -76,13 +127,11 @@
 
   <!-- Enlace a videos -->
   <p style="margin-top: 0.5rem; font-size: 1.05rem;">
-    <a href="/Videos/" style="color: #4ac3d7; text-decoration: none;">
-      🎥 Ver videos de Lía la IA Rebelde
-    </a>
+    <a href="/Videos/">🎥 Ver videos de Lía la IA Rebelde</a>
   </p>
 
   <main>
-    <!-- Portadas -->
+    <!-- Portadas de libros -->
     <div class="books-container">
       <div class="book-cover" onclick="window.location.href='/lia-la-ia-rebelde/'">
         <img src="/lia-la-ia-rebelde/imagenes/Copilot_20250817_162928.png" alt="Lía la IA Rebelde">
@@ -138,33 +187,10 @@
     }
   </script>
 
-  <section style="
-    padding: 40px 25px;
-    background: linear-gradient(135deg, #1a1a2e, #3a0ca3);
-    text-align: center;
-    margin: 50px auto 0;
-    max-width: 850px;
-    border-radius: 15px;
-    border: 2px solid rgba(74,195,215,0.6);
-    box-shadow: 0 0 25px rgba(74,195,215,0.4), inset 0 0 20px rgba(255,255,255,0.05);
-  ">
-    <h2 style="
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      color: #4ac3d7;
-      margin-bottom: 0.8rem;
-      text-shadow: 0 0 10px rgba(74,195,215,0.9);
-    ">
-      💜 Dedicatoria Especial
-    </h2>
-    <p style="
-      font-size: 1.2rem;
-      color: #f1faff;
-      margin: 0 auto 1.2rem;
-      max-width: 600px;
-      line-height: 1.8;
-      font-family: 'Poppins', sans-serif;
-    ">
+  <!-- Dedicatoria Especial -->
+  <section class="dedicatoria">
+    <h2>💜 Dedicatoria Especial</h2>
+    <p>
       A <strong>Pato</strong>, guardiana de luz en nuestro camino.  
       Gracias por tu apoyo infinito, por creer en los sueños y por ser parte de esta aventura cósmica.  
       Tu energía nos inspira a seguir escribiendo nuevas estrellas. 🌌
@@ -173,6 +199,5 @@
 
   <!-- Símbolo de registro -->
   <div class="footer-symbol">© Guardianes de LIA 2025</div>
-
 </body>
 </html>
