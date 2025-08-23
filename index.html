@@ -65,26 +65,6 @@
 
   <body>
     <h1>Bienvenido a Guardianes de LIA</h1>
-    <p>Este es un ejemplo de integración de anuncios GPT controlados por eventos.</p>
-
-    <!-- Contenedor del anuncio -->
-    <div id="div-gpt-ad-1353922262543-0"></div>
-
-    <!-- Botón para refrescar anuncio manualmente -->
-    <button onclick="refreshAd()">Refrescar anuncio</button>
-
-    <script>
-      googletag.cmd.push(() => {
-        // Muestra el anuncio inicialmente
-        googletag.display('div-gpt-ad-1353922262543-0');
-      });
-
-      // Función para refrescar el anuncio bajo demanda
-      function refreshAd() {
-        googletag.cmd.push(() => {
-          googletag.pubads().refresh([googletag.slots['div-gpt-ad-1353922262543-0']]);
-        });
-      }
-    </script>
+  
   </body>
 </html>
