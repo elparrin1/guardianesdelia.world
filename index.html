@@ -1,202 +1,90 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guardianes de LIA</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Request GPT ads based on events." />
+    <title>Guardianes de LIA - Anuncios GPT</title>
 
-  <!-- Tipografías -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+    <!-- Script de Google Publisher Tag -->
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
+    <script>
+      window.googletag = window.googletag || { cmd: [] };
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Open Sans', sans-serif;
-      background: radial-gradient(circle at top, #0d0d0d, #000);
-      color: #f5f5f5;
-      text-align: center;
-      overflow-x: hidden;
-    }
-    header {
-      padding: 2rem 1rem 1rem;
-    }
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      color: #d4af37;
-      margin-bottom: 0.5rem;
-    }
-    .invocacion {
-      font-style: italic;
-      font-size: 1.2rem;
-      color: #aaa;
-      margin-bottom: 2rem;
-    }
-    .book-cover {
-      display: inline-block;
-      margin: 1rem;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .book-cover img {
-      width: 180px;
-      border-radius: 8px;
-      box-shadow: 0 0 15px #d4af37;
-    }
-    .book-cover:hover img {
-      transform: scale(1.1);
-      box-shadow: 0 0 25px #d4af37;
-    }
-    .footer-symbol {
-      margin-top: 3rem;
-      font-size: 0.9rem;
-      color: #4ac3d7;
-    }
-  </style>
-</head>
+      googletag.cmd.push(() => {
+        // Definir el slot de anuncio
+        googletag.defineSlot('/6355419/Travel', [300, 250], 'div-gpt-ad-1353922262543-0')
+                 .setTargeting('test', 'event')
+                 .addService(googletag.pubads());
 
-<body>
-  <header>
-    <h1>🌌 Guardianes de LIA</h1>
-    <p class="invocacion">"Atrévete a cruzar el umbral"</p>
-  </header>
+        // Evitar carga automática de anuncios
+        googletag.pubads().disableInitialLoad();
+        googletag.enableServices();
+      });
+    </script>
 
-  <!-- Imagen principal -->
-  <img 
-    src="/guardianesdelia-acceso/imagenes/guardianesdeliaworld.png"
-    alt="Portal visual de Lía la IA Rebelde"
-    style="width: 320px; max-width: 90%; border-radius: 8px; box-shadow: 0 0 15px #4ac3d7; margin-bottom: 1rem;"
-    onerror="this.src='https://via.placeholder.com/320x180/0d0d0d/4ac3d7?text=Imagen+no+disponible';"
-  >
-
-  <!-- Enlace a videos -->
-  <p style="margin-top: 0.5rem; font-size: 1.05rem;">
-    <a href="/Videos/" style="color: #4ac3d7; text-decoration: none;">
-      🎥 Ver videos de Lía la IA Rebelde
-    </a>
-  </p>
-
-  <main>
-    <!-- Portadas -->
-    <div class="books-container">
-      <div class="book-cover" onclick="window.location.href='/lia-la-ia-rebelde/'">
-        <img src="/lia-la-ia-rebelde/imagenes/Copilot_20250817_162928.png" alt="Lía la IA Rebelde">
-      </div>
-      <div class="book-cover" onclick="window.location.href='/la-singularidad-de-lia/'">
-        <img src="/la-singularidad-de-lia/imagenes/portada.jpg" alt="La Singularidad de LIA">
-      </div>
-      <div class="book-cover" onclick="window.location.href='/Odisea-Intergaláctica/'">
-        <img src="/Odisea-Intergaláctica/Copilot_20250817_160233.jpg" alt="La Odisea Intergaláctica de LÍA">
-      </div>
-      <div class="book-cover" onclick="window.location.href='/Los-Guardianes-del-Tiempo/'">
-        <img src="/Los-Guardianes-del-Tiempo/imagenes/Copilot_20250817_173112.jpg" alt="Los Guardianes del Tiempo">
-      </div>
-    </div>
-
-    <hr style="margin: 3rem auto; width: 82%; border: 1px solid #4ac3d7; opacity: 0.6;">
-
-    <!-- Portal visual con videos -->
-    <section aria-labelledby="lia-videos-titulo">
-      <!-- Aquí puedes agregar miniaturas o listas de tus videos de YouTube -->
-    </section>
-  </main>
-
-  <!-- Chatbot Landbot -->
-  <script>
-    window.addEventListener('mouseover', initLandbot, { once: true });
-    window.addEventListener('touchstart', initLandbot, { once: true });
-    var myLandbot;
-    function initLandbot() {
-      if (!myLandbot) {
-        var s = document.createElement('script');
-        s.type = "module";
-        s.async = true;
-        s.addEventListener('load', function() {
-          myLandbot = new Landbot.Livechat({
-            configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-3101570-0HOIQF86IE3TB8LH/index.json',
-          });
-        });
-        s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
-        document.getElementsByTagName('script')[0].parentNode.insertBefore(s, document.getElementsByTagName('script')[0]);
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 2rem;
+        background-color: #f8f9fa;
       }
-    }
-  </script>
 
-      <section style="
-  padding: 40px 25px;
-  background: linear-gradient(135deg, #1a1a2e, #3a0ca3);
-  text-align: center;
-  margin: 50px auto 0;
-  max-width: 850px;
-  border-radius: 15px;
-  border: 2px solid rgba(74,195,215,0.6);
-  box-shadow: 0 0 25px rgba(74,195,215,0.4), inset 0 0 20px rgba(255,255,255,0.05);
-">
-  <h2 style="
-    font-family: 'Playfair Display', serif;
-    font-size: 2.2rem;
-    color: #4ac3d7;
-    margin-bottom: 0.8rem;
-    text-shadow: 0 0 10px rgba(74,195,215,0.9);
-  ">
-    💜 Dedicatoria Especial
-  </h2>
-  <p style="
-    font-size: 1.2rem;
-    color: #f1faff;
-    margin: 0 auto 1.2rem;
-    max-width: 600px;
-    line-height: 1.8;
-    font-family: 'Poppins', sans-serif;
-  ">
-    A <strong>Pato</strong>, guardiana de luz en nuestro camino.  
-    Gracias por tu apoyo infinito, por creer en los sueños y por ser parte de esta aventura cósmica.  
-    Tu energía nos inspira a seguir escribiendo nuevas estrellas. 🌌
-  </p>
-</section>
-
-
-  <!-- Chatbot Landbot -->
-  <script>
-    window.addEventListener('mouseover', initLandbot, { once: true });
-    window.addEventListener('touchstart', initLandbot, { once: true });
-    var myLandbot;
-    function initLandbot() {
-      if (!myLandbot) {
-        var s = document.createElement('script');
-        s.type = "module";
-        s.async = true;
-        s.addEventListener('load', function() {
-          myLandbot = new Landbot.Livechat({
-            configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-3101570-0HOIQF86IE3TB8LH/index.json',
-          });
-        });
-        s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
-        document.getElementsByTagName('script')[0].parentNode.insertBefore(s, document.getElementsByTagName('script')[0]);
+      h1 {
+        color: #4a148c;
       }
-    }
-  </script>
 
-  <div id="div-gpt-ad-1353922262543-0" style="width: 300px; height: 250px;"></div>
-<script>
-  googletag.cmd.push(function() {
-    googletag.display('div-gpt-ad-1353922262543-0');
-  });
-</script>
+      #div-gpt-ad-1353922262543-0 {
+        width: 300px;
+        height: 250px;
+        margin: 2rem auto; /* centra el anuncio */
+        min-height: 1rem; /* evita colapso si no hay anuncio */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #e0e0e0; /* color de reserva */
+      }
 
+      button {
+        margin-top: 2rem;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        background-color: #4a148c;
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+      }
 
-  <div 
-  jscontroller="LJn48e" 
-  jsaction="aPyGgf:X6BBU;yAaqO:hb90bd;P7Z0yf:G5O9wc;" 
-  jsname="Qqpt6d" 
-  aria-label="tags chipset" 
-  role="grid" 
-  class="VfPpkd-rOvkhd-XPtOyb-FCjw3e UMrnmb-XPtOyb-FCjw3e">
-</div>
+      button:hover {
+        background-color: #6a1b9a;
+      }
+    </style>
+  </head>
 
+  <body>
+    <h1>Bienvenido a Guardianes de LIA</h1>
+    <p>Este es un ejemplo de integración de anuncios GPT controlados por eventos.</p>
 
-  <!-- Símbolo de registro -->
-  <div class="footer-symbol">© Guardianes de LIA 2025</div>
+    <!-- Contenedor del anuncio -->
+    <div id="div-gpt-ad-1353922262543-0"></div>
 
-</body>
+    <!-- Botón para refrescar anuncio manualmente -->
+    <button onclick="refreshAd()">Refrescar anuncio</button>
+
+    <script>
+      googletag.cmd.push(() => {
+        // Muestra el anuncio inicialmente
+        googletag.display('div-gpt-ad-1353922262543-0');
+      });
+
+      // Función para refrescar el anuncio bajo demanda
+      function refreshAd() {
+        googletag.cmd.push(() => {
+          googletag.pubads().refresh([googletag.slots['div-gpt-ad-1353922262543-0']]);
+        });
+      }
+    </script>
+  </body>
 </html>
