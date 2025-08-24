@@ -24,8 +24,7 @@ body {
   min-height: 4000px;
   background:
     linear-gradient(-45deg, rgba(13,13,13,0.55), rgba(26,26,26,0.55), rgba(0,0,0,0.55), rgba(13,13,13,0.55)),
-    url('guardianesdelia.world/css/imagenes/fondo
-/fondo-de-pantalla.png') no-repeat center top;
+    url('css/imagenes/fondo/fondo-de-pantalla.png') no-repeat center top;
   background-size: 400% 400%, 100% 100%;
   background-attachment: scroll;
   background-repeat: no-repeat;
