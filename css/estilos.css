@@ -1,9 +1,18 @@
+/* ====== ESTILOS BASE ====== */
 body {
   margin: 0;
   font-family: 'Open Sans', sans-serif;
-  background: radial-gradient(circle at top, #0d0d0d, #000);
+  background: linear-gradient(-45deg, #0d0d0d, #1a1a1a, #000, #0d0d0d);
+  background-size: 400% 400%;
+  animation: fondo 20s ease infinite;
   color: #f5f5f5;
   line-height: 1.6;
+}
+
+@keyframes fondo {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 header, main, footer {
@@ -17,15 +26,18 @@ h1, h2, h3 {
   color: #ffd700;
 }
 
-.libro {
-  margin-bottom: 40px;
+h2 {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 2px;
 }
 
-.libro img {
-  max-width: 220px;
-  display: block;
-  margin-bottom: 10px;
-  border: 2px solid #ffd700;
+a {
+  color: #ffd700;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 .ads {
@@ -41,16 +53,7 @@ footer {
   text-align: center;
 }
 
-a {
-  color: #ffd700;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* 🎆 Animación del título */
+/* ====== TÍTULO ANIMADO ====== */
 .titulo-animado {
   font-size: 2.8rem;
   font-family: 'Playfair Display', serif;
@@ -58,8 +61,10 @@ a:hover {
   background-size: 600% 600%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: flujo 6s ease infinite, latido 2.5s infinite;
+  animation: flujo 6s ease infinite, latido 2.5s infinite, aparecer 1.5s ease forwards;
   text-shadow: 0 0 10px rgba(255,215,0,0.4);
+  margin-bottom: 1rem;
+  opacity: 0;
 }
 
 @keyframes flujo {
@@ -71,4 +76,58 @@ a:hover {
 @keyframes latido {
   0%, 100% { text-shadow: 0 0 10px rgba(255,215,0,0.4); }
   50% { text-shadow: 0 0 25px rgba(255,215,0,0.9); }
+}
+
+@keyframes aparecer {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ====== PORTADAS ====== */
+.libro {
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: aparecer-libro 0.8s ease forwards;
+}
+
+.libro:nth-child(1) { animation-delay: 0.2s; }
+.libro:nth-child(2) { animation-delay: 0.4s; }
+.libro:nth-child(3) { animation-delay: 0.6s; }
+.libro:nth-child(4) { animation-delay: 0.8s; }
+
+@keyframes aparecer-libro {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.libro img {
+  max-width: 220px;
+  display: block;
+  margin-bottom: 10px;
+  border: 2px solid #ffd700;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.libro img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255,215,0,0.7);
+}
+
+/* ====== SEPARADOR SIMBÓLICO ====== */
+.separador {
+  text-align: center;
+  color: #ffd700;
+  font-size: 1.5rem;
+  margin: 2rem 0;
+  animation: parpadeo 3s infinite;
+}
+
+@keyframes parpadeo {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
