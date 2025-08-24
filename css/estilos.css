@@ -4,5 +4,5 @@ body {
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-position: center top;
-  min-height: 4000px;
+  min-height: 100vh;
 }
