@@ -21,12 +21,11 @@
 body {
   margin: 0;
   font-family: 'Open Sans', sans-serif;
-  /* Fondo compuesto: gradiente + imagen */
   background:
     linear-gradient(-45deg, rgba(13,13,13,0.55), rgba(26,26,26,0.55), rgba(0,0,0,0.55), rgba(13,13,13,0.55)),
-    url('imagenes/fondo/fondo-evolucion-lia.png') no-repeat center top;
-  background-size: 400% 400%, 100% auto; /* gradiente animado + imagen a lo largo */
-  background-attachment: scroll; /* la imagen se mueve con el contenido */
+    url('css/imagenes/fondo/fondo-de-pantalla.png') no-repeat center top;
+  background-size: 400% 400%, 100% auto;
+  background-attachment: scroll;
   background-repeat: no-repeat;
   animation: fondo 20s ease infinite;
   color: #f5f5f5;
