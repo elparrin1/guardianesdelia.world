@@ -2,17 +2,32 @@
 body {
   margin: 0;
   font-family: 'Open Sans', sans-serif;
-  /* Fondo compuesto: gradiente + imagen */
+
+  /* Fondo compuesto: gradiente animado + imagen superior + mural central + imagen inferior */
   background:
+    /* Gradiente animado */
     linear-gradient(-45deg, rgba(13,13,13,0.55), rgba(26,26,26,0.55), rgba(0,0,0,0.55), rgba(13,13,13,0.55)),
-    url('imagenes/fondo/fondo-evolucion-lia.png') no-repeat center top;
-  background-size: 400% 400%, 100% auto; /* gradiente animado + imagen a lo largo */
-  background-attachment: scroll; /* la imagen se mueve con el contenido */
+    /* Imagen superior */
+    url('imagenes/fondo/guardianes de lia superior.png') top center no-repeat,
+    /* Imagen mural central */
+    url('imagenes/fondo/fondo-evolucion-lia.png') center top no-repeat,
+    /* Imagen inferior */
+    url('imagenes/fondo/guardianes de lia inferior.png') bottom center no-repeat;
+
+  background-size:
+    400% 400%,   /* gradiente animado */
+    100% auto,   /* imagen superior */
+    100% auto,   /* mural central */
+    100% auto;   /* imagen inferior */
+
+  background-attachment: scroll;
   background-repeat: no-repeat;
   animation: fondo 20s ease infinite;
+
   color: #f5f5f5;
   line-height: 1.6;
 }
+
 
 
 
