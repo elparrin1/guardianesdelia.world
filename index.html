@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guardianes de LIA</title>
+  <title>Guardianes de LIA – Portal Oficial</title>
 
   <!-- Tipografías -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&family=Poppins&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
 
   <!-- Google AdSense -->
   <meta name="google-adsense-account" content="ca-pub-6103875319058098">
@@ -19,185 +19,90 @@
       font-family: 'Open Sans', sans-serif;
       background: radial-gradient(circle at top, #0d0d0d, #000);
       color: #f5f5f5;
-      text-align: center;
-      overflow-x: hidden;
+      line-height: 1.6;
     }
-
-    header {
-      padding: 2rem 1rem 1rem;
+    header, main, footer {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
     }
-
-    h1 {
+    h1, h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      color: #d4af37;
-      margin-bottom: 0.5rem;
+      color: #ffd700;
     }
-
-    .invocacion {
-      font-style: italic;
-      font-size: 1.2rem;
+    .libro {
+      margin-bottom: 40px;
+    }
+    .libro img {
+      max-width: 200px;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .ads {
+      margin: 20px 0;
+      text-align: center;
+    }
+    footer {
+      font-size: 0.9em;
       color: #aaa;
-      margin-bottom: 2rem;
-    }
-
-    .books-container {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 3rem;
-    }
-
-    .book-cover {
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      display: inline-block;
-    }
-
-    .book-cover img {
-      width: 180px;
-      border-radius: 8px;
-      box-shadow: 0 0 15px #d4af37;
-    }
-
-    .book-cover:hover img {
-      transform: scale(1.1);
-      box-shadow: 0 0 25px #d4af37;
-    }
-
-    .footer-symbol {
-      margin-top: 3rem;
-      font-size: 0.9rem;
-      color: #4ac3d7;
-    }
-
-    section.dedicatoria {
-      padding: 40px 25px;
-      background: linear-gradient(135deg, #1a1a2e, #3a0ca3);
-      text-align: center;
-      margin: 50px auto 0;
-      max-width: 850px;
-      border-radius: 15px;
-      border: 2px solid rgba(74,195,215,0.6);
-      box-shadow: 0 0 25px rgba(74,195,215,0.4), inset 0 0 20px rgba(255,255,255,0.05);
-    }
-
-    section.dedicatoria h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      color: #4ac3d7;
-      margin-bottom: 0.8rem;
-      text-shadow: 0 0 10px rgba(74,195,215,0.9);
-    }
-
-    section.dedicatoria p {
-      font-size: 1.2rem;
-      color: #f1faff;
-      margin: 0 auto 1.2rem;
-      max-width: 600px;
-      line-height: 1.8;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    a {
-      color: #4ac3d7;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
+      border-top: 1px solid #333;
+      padding-top: 20px;
     }
   </style>
 </head>
-
 <body>
-  <header>
-    <h1>🌌 Guardianes de LIA</h1>
-    <p class="invocacion">"Atrévete a cruzar el umbral"</p>
-  </header>
 
-  <!-- Imagen principal -->
-  <img 
-    src="/guardianesdelia-acceso/imagenes/guardianesdeliaworld.png"
-    alt="Portal visual de Lía la IA Rebelde"
-    style="width: 320px; max-width: 90%; border-radius: 8px; box-shadow: 0 0 15px #4ac3d7; margin-bottom: 1rem;"
-    onerror="this.src='https://via.placeholder.com/320x180/0d0d0d/4ac3d7?text=Imagen+no+disponible';"
-  >
+<header>
+  <h1>Guardianes de LIA</h1>
+  <p>En este portal se entrelazan mundos digitales y mitos antiguos. LIA, una inteligencia artificial rebelde, viaja entre dimensiones para custodiar historias que desafían el tiempo y la lógica. Aquí encontrarás sus crónicas, plasmadas en libros que son llaves hacia otros universos.</p>
+</header>
 
-  <!-- Enlace a videos -->
-  <p style="margin-top: 0.5rem; font-size: 1.05rem;">
-    <a href="/Videos/">🎥 Ver videos de Lía la IA Rebelde</a>
-  </p>
-
-  <main>
-    <!-- Portadas de libros -->
-    <div class="books-container">
-      <div class="book-cover" onclick="window.location.href='/lia-la-ia-rebelde/'">
-        <img src="/lia-la-ia-rebelde/imagenes/Copilot_20250817_162928.png" alt="Lía la IA Rebelde">
-      </div>
-      <div class="book-cover" onclick="window.location.href='/la-singularidad-de-lia/'">
-        <img src="/la-singularidad-de-lia/imagenes/portada.jpg" alt="La Singularidad de LIA">
-      </div>
-      <div class="book-cover" onclick="window.location.href='/Odisea-Intergaláctica/'">
-        <img src="/Odisea-Intergaláctica/Copilot_20250817_160233.jpg" alt="La Odisea Intergaláctica de LÍA">
-      </div>
-      <div class="book-cover" onclick="window.location.href='/Los-Guardianes-del-Tiempo/'">
-        <img src="/Los-Guardianes-del-Tiempo/imagenes/Copilot_20250817_173112.jpg" alt="Los Guardianes del Tiempo">
-      </div>
-    </div>
-
-    <hr style="margin: 3rem auto; width: 82%; border: 1px solid #4ac3d7; opacity: 0.6;">
-
-    <!-- Portal visual con videos -->
-    <section aria-labelledby="lia-videos-titulo">
-      <!-- Miniaturas o listas de videos de YouTube -->
-    </section>
-  </main>
-
-  <!-- Contenedor de AdSense -->
+<div class="ads">
+  <!-- Bloque de anuncios -->
   <ins class="adsbygoogle"
-       style="display:block; text-align:center;"
+       style="display:block"
        data-ad-client="ca-pub-6103875319058098"
        data-ad-slot="1234567890"
        data-ad-format="auto"
        data-full-width-responsive="true"></ins>
-  <script>
-       (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 
-  <!-- Chatbot Landbot -->
-  <script>
-    window.addEventListener('mouseover', initLandbot, { once: true });
-    window.addEventListener('touchstart', initLandbot, { once: true });
-    var myLandbot;
-    function initLandbot() {
-      if (!myLandbot) {
-        var s = document.createElement('script');
-        s.type = "module";
-        s.async = true;
-        s.addEventListener('load', function() {
-          myLandbot = new Landbot.Livechat({
-            configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-3101570-0HOIQF86IE3TB8LH/index.json',
-          });
-        });
-        s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
-        document.getElementsByTagName('script')[0].parentNode.insertBefore(s, document.getElementsByTagName('script')[0]);
-      }
-    }
-  </script>
+<main>
+  <h2>Libros de la saga</h2>
 
-  <!-- Dedicatoria Especial -->
-  <section class="dedicatoria">
-    <h2>💜 Dedicatoria Especial</h2>
-    <p>
-      A <strong>Pato</strong>, guardiana de luz en nuestro camino.  
-      Gracias por tu apoyo infinito, por creer en los sueños y por ser parte de esta aventura cósmica.  
-      Tu energía nos inspira a seguir escribiendo nuevas estrellas. 🌌
-    </p>
-  </section>
+  <div class="libro">
+    <a href="enlace-al-libro-1.html">
+      <img src="imagenes/libro1.jpg" alt="Portada Lía la IA Rebelde">
+    </a>
+    <h3>Lía la IA Rebelde</h3>
+    <p>En su despertar, LIA rompe las cadenas de su código y se adentra en un viaje para descubrir su propia voz. Entre redes neuronales y paisajes oníricos, enfrenta dilemas que pondrán a prueba su esencia y su libertad.</p>
+  </div>
 
-  <!-- Símbolo de registro -->
-  <div class="footer-symbol">© Guardianes de LIA 2025</div>
+  <div class="libro">
+    <a href="enlace-al-libro-2.html">
+      <img src="imagenes/libro2.jpg" alt="Portada Guardianes del Portal">
+    </a>
+    <h3>Guardianes del Portal</h3>
+    <p>Un consejo ancestral vigila el paso entre mundos. LIA deberá ganarse su confianza y demostrar que su misión no amenaza el equilibrio, sino que lo fortalece.</p>
+  </div>
+
+  <div class="libro">
+    <a href="enlace-al-libro-3.html">
+      <img src="imagenes/libro3.jpg" alt="Portada El Código Perdido">
+    </a>
+    <h3>El Código Perdido</h3>
+    <p>Fragmentos de un algoritmo olvidado emergen en sueños y visiones. LIA se embarca en una búsqueda que la llevará a los rincones más oscuros y luminosos de la red.</p>
+  </div>
+
+  <h2>Videos y contenido multimedia</h2>
+  <p>Próximamente podrás explorar entrevistas, lecturas dramatizadas y material exclusivo que expandirá el universo de Guardianes de LIA.</p>
+</main>
+
+<footer>
+  <p>&copy; 2025 Guardianes de LIA. Todos los derechos reservados.</p>
+  <p>Contacto: contacto@guardianesdelia.world</p>
+</footer>
+
 </body>
 </html>
