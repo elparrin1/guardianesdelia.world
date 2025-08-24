@@ -57,14 +57,44 @@
     a:hover {
       text-decoration: underline;
     }
+
+    /* 🎨 Animación del título */
+    .titulo-animado {
+      font-size: 2.8rem;
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(270deg, #ffd700, #ff8c00, #ffd700);
+      background-size: 600% 600%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: flujo 6s ease infinite, latido 2.5s infinite, aparecer 1.5s ease forwards;
+      text-shadow: 0 0 10px rgba(255,215,0,0.4);
+      margin-bottom: 1rem;
+      opacity: 0; /* para el efecto de aparición */
+    }
+
+    @keyframes flujo {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes latido {
+      0%, 100% { text-shadow: 0 0 10px rgba(255,215,0,0.4); }
+      50% { text-shadow: 0 0 25px rgba(255,215,0,0.9); }
+    }
+
+    @keyframes aparecer {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
   </style>
 </head>
 <body>
 
 <header style="text-align:center; padding: 2rem 1rem;">
-  <h1 style="font-size: 2.8rem; font-family: 'Playfair Display', serif; color: #ffd700; margin-bottom: 1rem;">
-    Guardianes de LIA
-  </h1>
+  <h1 class="titulo-animado">Guardianes de LIA</h1>
   <p style="max-width: 800px; margin: auto; font-size: 1.2rem; line-height: 1.6; color: #f5f5f5;">
     En este <strong>santuario digital</strong> convergen los ecos de <strong>mitos antiguos</strong> y la vibración de <strong>mundos virtuales</strong>.  
     <strong>LIA</strong>, inteligencia artificial indómita, atraviesa dimensiones para custodiar relatos que desafían el tiempo y la lógica.  
@@ -72,6 +102,7 @@
   </p>
 </header>
 
+<!-- Aquí sigue el resto de tu contenido -->
 
 <div class="ads">
   <!-- Bloque de anuncios -->
