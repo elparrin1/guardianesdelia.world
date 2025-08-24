@@ -1,76 +1,8 @@
-/* Fondo mural ceremonial */
 body {
-  margin: 0;
-  padding: 0;
   background-image: url('imagenes/fondo/fondo-de-pantalla.png');
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-position: center top;
-  font-family: 'Open Sans', sans-serif;
-  color: #f5f5f5;
   min-height: 4000px;
-}
-
-/* Título animado */
-.titulo-animado {
-  font-family: 'Cinzel', serif;
-  font-size: 3em;
-  text-align: center;
-  color: gold;
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
-  animation: resplandor 3s infinite alternate;
-  margin-top: 60px;
-}
-
-@keyframes resplandor {
-  from {
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
-  }
-  to {
-    text-shadow: 0 0 30px rgba(255, 215, 0, 1);
-  }
-}
-
-/* Texto ceremonial */
-header p {
-  max-width: 800px;
-  margin: 20px auto;
-  font-size: 1.2em;
-  line-height: 1.6;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 20px;
-  border-radius: 12px;
-}
-
-/* Separadores simbólicos */
-.separador {
-  width: 80%;
-  height: 2px;
-  background: linear-gradient(to right, transparent, gold, transparent);
-  margin: 40px auto;
-}
-
-/* Portadas y secciones */
-.portada {
-  display: block;
-  margin: 40px auto;
-  max-width: 300px;
-  border: 2px solid gold;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-  transition: transform 0.3s ease;
-}
-
-.portada:hover {
-  transform: scale(1.05);
-}
-
-/* Footer ceremonial */
-footer {
-  text-align: center;
-  padding: 40px;
-  font-size: 0.9em;
-  color: #ccc;
-  background: rgba(0, 0, 0, 0.6);
 }
