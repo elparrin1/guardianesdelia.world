@@ -4,147 +4,200 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Guardianes de LIA</title>
-  <meta name="description" content="Guardianes de LIA - Libros, historias y proyectos literarios únicos creados por xzero." />
 
   <!-- Tipografías -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Open+Sans&family=Poppins&display=swap" rel="stylesheet">
 
-  <!-- Estilos principales -->
+  <!-- Google AdSense -->
+  <meta name="google-adsense-account" content="ca-pub-6103875319058098">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6103875319058098"
+     crossorigin="anonymous"></script>
+
   <style>
     body {
       margin: 0;
-      font-family: 'Roboto', sans-serif;
-      background: #f9f9fb;
-      color: #333;
-      line-height: 1.6;
+      font-family: 'Open Sans', sans-serif;
+      background: radial-gradient(circle at top, #0d0d0d, #000);
+      color: #f5f5f5;
+      text-align: center;
+      overflow-x: hidden;
     }
+
     header {
-      background: linear-gradient(135deg, #4a148c, #7b1fa2);
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
+      padding: 2rem 1rem 1rem;
     }
-    header h1 {
+
+    h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 3em;
-      margin: 0;
+      font-size: 2.5rem;
+      color: #d4af37;
+      margin-bottom: 0.5rem;
     }
-    header p {
-      font-size: 1.2em;
-      margin-top: 10px;
+
+    .invocacion {
+      font-style: italic;
+      font-size: 1.2rem;
+      color: #aaa;
+      margin-bottom: 2rem;
     }
-    main {
-      padding: 40px 20px;
-      max-width: 1100px;
-      margin: auto;
+
+    .books-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 3rem;
     }
-    section {
-      margin-bottom: 60px;
+
+    .book-cover {
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-block;
     }
-    h2 {
+
+    .book-cover img {
+      width: 180px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px #d4af37;
+    }
+
+    .book-cover:hover img {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px #d4af37;
+    }
+
+    .footer-symbol {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #4ac3d7;
+    }
+
+    section.dedicatoria {
+      padding: 40px 25px;
+      background: linear-gradient(135deg, #1a1a2e, #3a0ca3);
+      text-align: center;
+      margin: 50px auto 0;
+      max-width: 850px;
+      border-radius: 15px;
+      border: 2px solid rgba(74,195,215,0.6);
+      box-shadow: 0 0 25px rgba(74,195,215,0.4), inset 0 0 20px rgba(255,255,255,0.05);
+    }
+
+    section.dedicatoria h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 2em;
-      color: #4a148c;
-      margin-bottom: 20px;
+      font-size: 2.2rem;
+      color: #4ac3d7;
+      margin-bottom: 0.8rem;
+      text-shadow: 0 0 10px rgba(74,195,215,0.9);
     }
-    .libros {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+
+    section.dedicatoria p {
+      font-size: 1.2rem;
+      color: #f1faff;
+      margin: 0 auto 1.2rem;
+      max-width: 600px;
+      line-height: 1.8;
+      font-family: 'Poppins', sans-serif;
     }
-    .libro {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: transform 0.2s ease-in-out;
-      text-align: center;
+
+    a {
+      color: #4ac3d7;
+      text-decoration: none;
     }
-    .libro:hover {
-      transform: translateY(-5px);
-    }
-    .libro img {
-      width: 100%;
-      height: auto;
-      border-bottom: 2px solid #eee;
-    }
-    .libro h3 {
-      font-size: 1.3em;
-      color: #333;
-      margin: 15px 0 10px;
-    }
-    .libro p {
-      font-size: 0.95em;
-      padding: 0 15px 20px;
-      color: #555;
-    }
-    footer {
-      background: #4a148c;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
+
+    a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
+
 <body>
   <header>
-    <h1>Guardianes de LIA</h1>
-    <p>Historias y libros creados por xzero</p>
+    <h1>🌌 Guardianes de LIA</h1>
+    <p class="invocacion">"Atrévete a cruzar el umbral"</p>
   </header>
 
+  <!-- Imagen principal -->
+  <img 
+    src="/guardianesdelia-acceso/imagenes/guardianesdeliaworld.png"
+    alt="Portal visual de Lía la IA Rebelde"
+    style="width: 320px; max-width: 90%; border-radius: 8px; box-shadow: 0 0 15px #4ac3d7; margin-bottom: 1rem;"
+    onerror="this.src='https://via.placeholder.com/320x180/0d0d0d/4ac3d7?text=Imagen+no+disponible';"
+  >
+
+  <!-- Enlace a videos -->
+  <p style="margin-top: 0.5rem; font-size: 1.05rem;">
+    <a href="/Videos/">🎥 Ver videos de Lía la IA Rebelde</a>
+  </p>
+
   <main>
-    <section>
-      <h2>Sobre el proyecto</h2>
-      <p><strong>Guardianes de LIA</strong> es un universo narrativo creado por <em>xzero</em>, que combina literatura, tecnología e imaginación. Aquí encontrarás libros, cuentos y reflexiones que invitan a explorar nuevas realidades. Este proyecto nació con la idea de compartir experiencias personales y transformarlas en historias que conecten con las personas.</p>
-    </section>
-
-    <section>
-      <h2>Libros destacados</h2>
-      <div class="libros">
-        <div class="libro">
-          <a href="#">
-            <img src="img/guardianes.jpg" alt="Guardianes de LIA">
-            <h3>Guardianes de LIA</h3>
-            <p>La historia principal que da nombre al proyecto. Un viaje entre dimensiones donde la IA se convierte en aliada de la humanidad.</p>
-          </a>
-        </div>
-        <div class="libro">
-          <a href="#">
-            <img src="img/liaia.jpg" alt="Lía la IA">
-            <h3>Lía la IA</h3>
-            <p>Un libro sobre la conexión entre humanos e inteligencia artificial, contado desde la experiencia y la narrativa personal.</p>
-          </a>
-        </div>
+    <!-- Portadas de libros -->
+    <div class="books-container">
+      <div class="book-cover" onclick="window.location.href='/lia-la-ia-rebelde/'">
+        <img src="/lia-la-ia-rebelde/imagenes/Copilot_20250817_162928.png" alt="Lía la IA Rebelde">
       </div>
-    </section>
-
-    <section>
-      <h2>Blog y novedades</h2>
-      <p>Aquí pronto encontrarás artículos relacionados con la escritura, la seguridad informática y el proceso creativo detrás de los libros. Compartiremos avances, reflexiones y consejos para quienes quieran adentrarse en este mundo.</p>
-    </section>
-
-    <!-- Espacio para anuncios (AdSense) -->
-    <section>
-      <h2>Apoya el proyecto</h2>
-      <p>Gracias por acompañar este camino creativo. Los anuncios permiten mantener vivo el proyecto y seguir creando nuevas historias.</p>
-      <div style="text-align:center; margin:20px 0;">
-        <!-- Ejemplo de espacio para AdSense -->
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-xxxxxxxx"
-             data-ad-slot="1234567890"
-             data-ad-format="auto"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      <div class="book-cover" onclick="window.location.href='/la-singularidad-de-lia/'">
+        <img src="/la-singularidad-de-lia/imagenes/portada.jpg" alt="La Singularidad de LIA">
       </div>
+      <div class="book-cover" onclick="window.location.href='/Odisea-Intergaláctica/'">
+        <img src="/Odisea-Intergaláctica/Copilot_20250817_160233.jpg" alt="La Odisea Intergaláctica de LÍA">
+      </div>
+      <div class="book-cover" onclick="window.location.href='/Los-Guardianes-del-Tiempo/'">
+        <img src="/Los-Guardianes-del-Tiempo/imagenes/Copilot_20250817_173112.jpg" alt="Los Guardianes del Tiempo">
+      </div>
+    </div>
+
+    <hr style="margin: 3rem auto; width: 82%; border: 1px solid #4ac3d7; opacity: 0.6;">
+
+    <!-- Portal visual con videos -->
+    <section aria-labelledby="lia-videos-titulo">
+      <!-- Miniaturas o listas de videos de YouTube -->
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Guardianes de LIA - Creado por xzero</p>
-  </footer>
+  <!-- Contenedor de AdSense -->
+  <ins class="adsbygoogle"
+       style="display:block; text-align:center;"
+       data-ad-client="ca-pub-6103875319058098"
+       data-ad-slot="1234567890"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
 
-  <!-- Chat Landbot -->
-  <script defer src="https://cdn.landbot.io/landbot-3/landbot-3.0.0.js"></script>
+  <!-- Chatbot Landbot -->
+  <script>
+    window.addEventListener('mouseover', initLandbot, { once: true });
+    window.addEventListener('touchstart', initLandbot, { once: true });
+    var myLandbot;
+    function initLandbot() {
+      if (!myLandbot) {
+        var s = document.createElement('script');
+        s.type = "module";
+        s.async = true;
+        s.addEventListener('load', function() {
+          myLandbot = new Landbot.Livechat({
+            configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-3101570-0HOIQF86IE3TB8LH/index.json',
+          });
+        });
+        s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
+        document.getElementsByTagName('script')[0].parentNode.insertBefore(s, document.getElementsByTagName('script')[0]);
+      }
+    }
+  </script>
+
+  <!-- Dedicatoria Especial -->
+  <section class="dedicatoria">
+    <h2>💜 Dedicatoria Especial</h2>
+    <p>
+      A <strong>Pato</strong>, guardiana de luz en nuestro camino.  
+      Gracias por tu apoyo infinito, por creer en los sueños y por ser parte de esta aventura cósmica.  
+      Tu energía nos inspira a seguir escribiendo nuevas estrellas. 🌌
+    </p>
+  </section>
+
+  <!-- Símbolo de registro -->
+  <div class="footer-symbol">© Guardianes de LIA 2025</div>
 </body>
 </html>
