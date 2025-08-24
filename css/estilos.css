@@ -1,24 +1,37 @@
-/* ====== ESTILOS BASE ====== */
+/* Halo dorado animado detrás del título */
+.titulo-animado::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 140%;
+  height: 140%;
+  background: radial-gradient(circle, rgba(255,215,0,0.3) 0%, transparent 70%);
+  transform: translate(-50%, -50%) scale(1);
+  z-index: -1;
+  border-radius: 50%;
+  animation: halo-pulso 4s ease-in-out infinite;
+}
+
+@keyframes halo-pulso {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+}
 
 body {
   margin: 0;
   font-family: 'Open Sans', sans-serif;
-
-  /* Fondo compuesto: gradiente animado + mural central */
+  /* Fondo compuesto: gradiente + imagen */
   background:
     linear-gradient(-45deg, rgba(13,13,13,0.55), rgba(26,26,26,0.55), rgba(0,0,0,0.55), rgba(13,13,13,0.55)),
-    url('imagenes/fondo/fondo-evolucion-lia.png') center top no-repeat;
-
-  background-size: 400% 400%, 100% auto;
-  background-attachment: scroll;
+    url('imagenes/fondo/fondo-evolucion-lia.png') no-repeat center top;
+  background-size: 400% 400%, 100% auto; /* gradiente animado + imagen a lo largo */
+  background-attachment: scroll; /* la imagen se mueve con el contenido */
   background-repeat: no-repeat;
   animation: fondo 20s ease infinite;
-
   color: #f5f5f5;
   line-height: 1.6;
 }
-
-
 
 @keyframes fondo {
   0% { background-position: 0% 50%; }
