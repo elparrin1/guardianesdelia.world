@@ -102,13 +102,66 @@
   </p>
 </header>
 
-<iframe
-  src="https://chat.deepseek.com/"
-  width="100%"
-  height="600"
-  style="border: none; border-radius: 12px;"
-  allow="fullscreen">
-</iframe>
+<!-- Contenedor de la burbuja y el chat -->
+<div id="lia-chat-container">
+  <!-- Burbuja flotante -->
+  <button id="lia-chat-bubble" style="
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6e48aa, #9d50bb);
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 10000;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  ">💬</button>
+
+  <!-- Ventana de chat (inicialmente oculta) -->
+  <div id="lia-chat-window" style="
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 350px;
+    height: 450px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    z-index: 10000;
+    flex-direction: column;
+    overflow: hidden;
+  ">
+    <iframe 
+      src="https://chat.deepseek.com/" 
+      width="100%" 
+      height="100%" 
+      style="border: none;"
+    ></iframe>
+  </div>
+</div>
+
+<script>
+  const bubble = document.getElementById('lia-chat-bubble');
+  const window = document.getElementById('lia-chat-window');
+
+  bubble.addEventListener('click', () => {
+    if (window.style.display === 'none') {
+      window.style.display = 'flex';
+      bubble.textContent = '✕';
+    } else {
+      window.style.display = 'none';
+      bubble.textContent = '💬';
+    }
+  });
+</script>
 
 
 <!-- Aquí sigue el resto de tu contenido -->
