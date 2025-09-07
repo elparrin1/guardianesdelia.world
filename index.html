@@ -107,6 +107,61 @@
         text-align: center;
       }
     }
+
+   /* 🎯 Caja ciberpunk para "Explora la saga" */
+.caja-saga {
+  background: linear-gradient(135deg, rgba(0,255,255,0.08), rgba(255,0,255,0.08));
+  border: 2px solid #0ff;
+  box-shadow: 0 0 15px rgba(0,255,255,0.6), 0 0 30px rgba(255,0,255,0.4);
+  padding: 15px;
+  margin: 40px auto 30px;
+  max-width: 800px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.caja-saga h2 {
+  font-size: 2rem;
+  color: #0ff;
+  text-shadow: 0 0 5px #0ff, 0 0 10px #f0f, 0 0 20px #0ff;
+  margin: 0;
+}
+
+/* 🎯 Títulos de libros más llamativos */
+.libro h3 a {
+  font-size: 1.4rem;
+  color: #ffd700;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.libro h3 a:hover {
+  color: #0ff;
+  border-bottom: 2px solid #0ff;
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+}
+
+/* 🎯 Descripción de libros */
+.libro p {
+  margin-top: 8px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #ddd;
+}
+
+@media (min-width: 769px) {
+  .libro p {
+    text-align: left;
+  }
+}
+
+@media (max-width: 768px) {
+  .libro p {
+    text-align: center;
+  }
+}
+ 
  
   </style>
 </head>
@@ -143,7 +198,10 @@
 
 
 <main>
+  <div class="caja-saga">
   <h2>Explora la saga</h2>
+</div>
+
 
   <!-- lia la ia rebelde -->
   <div class="libro">
