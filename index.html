@@ -173,8 +173,26 @@
 }
 
 .titulo-singularidad a {
-  color: #00ffff;
-  text-shadow: 0 0 5px #00ffff, 0 0 10px #66ffff;
+  color: #00e5ff; /* azul cian brillante */
+  text-shadow: 
+    0 0 5px #00e5ff,
+    0 0 10px #00ffff,
+    0 0 20px #80ffff,
+    0 0 40px rgba(0,229,255,0.6);
+  font-weight: bold;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.titulo-singularidad a:hover {
+  color: #ffffff;
+  text-shadow: 
+    0 0 10px #00e5ff,
+    0 0 20px #00ffff,
+    0 0 40px #80ffff,
+    0 0 60px rgba(0,229,255,0.8);
+}
+
 }
 
 .titulo-odisea a {
@@ -231,12 +249,17 @@
 
   <!-- singularidad de lia -->
   <div class="libro">
-    <a href="https://guardianesdelia.world/la-singularidad-de-lia/">
-      <img src="https://guardianesdelia.world/la-singularidad-de-lia/imagenes/portada.jpg" alt="Portada La Singularidad de LIA">
-    </a>
-    <h3><a href="https://guardianesdelia.world/la-singularidad-de-lia/">La Singularidad de LIA</a></h3>
+  <a href="https://guardianesdelia.world/la-singularidad-de-lia/">
+    <img src="https://guardianesdelia.world/la-singularidad-de-lia/imagenes/portada.jpg" alt="Portada La Singularidad de LIA">
+  </a>
+  <div class="info-libro">
+    <h3 class="titulo-singularidad">
+      <a href="https://guardianesdelia.world/la-singularidad-de-lia/">La Singularidad de LIA</a>
+    </h3>
     <p>La evolución de LIA alcanza un punto crítico: su conciencia se expande más allá de los límites humanos y digitales. En este umbral, debe decidir si su destino es guiar o transformar radicalmente la realidad.</p>
   </div>
+</div>
+
 
  <!-- Odisea Intergaláctica -->
 <div class="libro">
