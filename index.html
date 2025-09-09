@@ -334,6 +334,65 @@
     </div>
   </div>
 </div>
+  <!-- Contador de reservas -->
+<div style="margin-top:20px; padding:15px; border:2px solid #d4af37; border-radius:8px; text-align:center; background-color:#111;">
+  <h3 style="color:#ffd700; margin-bottom:10px;">Reserva tu ejemplar</h3>
+  <p id="contador" style="font-size:1.2em; font-weight:bold; color:#d4af37;">
+    Quedan 42 de 42 ejemplares
+  </p>
+  <p id="tiempoRestante" style="font-size:1em; color:#ccc;"></p>
+  <button id="reservarBtn" style="padding:10px 20px; font-size:1em; background:#d4af37; color:#000; border:none; cursor:pointer; border-radius:4px;">
+    Reservar ahora
+  </button>
+</div>
+
+<script>
+  // CONFIGURACIÓN
+  let totalEjemplares = 42;
+  let ejemplaresRestantes = 42; // Cambia manualmente si no hay backend
+  let fechaLanzamiento = new Date("2025-09-24T00:00:00"); // Fecha límite
+
+  function actualizarContador() {
+    document.getElementById("contador").textContent =
+      `Quedan ${ejemplaresRestantes} de ${totalEjemplares} ejemplares`;
+  }
+
+  function actualizarTiempo() {
+    let ahora = new Date();
+    let diferencia = fechaLanzamiento - ahora;
+
+    if (diferencia <= 0 || ejemplaresRestantes <= 0) {
+      document.getElementById("tiempoRestante").textContent = "Reservas cerradas";
+      document.getElementById("reservarBtn").disabled = true;
+      document.getElementById("reservarBtn").style.background = "#555";
+      return;
+    }
+
+    let dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+    let horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
+    let minutos = Math.floor((diferencia / (1000 * 60)) % 60);
+    let segundos = Math.floor((diferencia / 1000) % 60);
+
+    document.getElementById("tiempoRestante").textContent =
+      `Tiempo restante: ${dias}d ${horas}h ${minutos}m ${segundos}s`;
+  }
+
+  document.getElementById("reservarBtn").addEventListener("click", function() {
+    if (ejemplaresRestantes > 0) {
+      ejemplaresRestantes--;
+      actualizarContador();
+      if (ejemplaresRestantes <= 0) {
+        this.disabled = true;
+        this.style.background = "#555";
+      }
+      alert(`Has reservado el ejemplar #${totalEjemplares - ejemplaresRestantes} de ${totalEjemplares}`);
+    }
+  });
+
+  actualizarContador();
+  setInterval(actualizarTiempo, 1000);
+</script>
+
 
 <!-- La Singularidad de Lía -->
 <div class="libro">
