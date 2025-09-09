@@ -375,17 +375,23 @@
       `Tiempo restante: ${dias}d ${horas}h ${minutos}m ${segundos}s`;
   }
 
-  // Bajar contador al hacer clic en el enlace
+  // Bajar contador y desactivar botón tras clic
   document.getElementById("reservarBtn").addEventListener("click", function() {
     if (ejemplaresRestantes > 0) {
       ejemplaresRestantes--;
       actualizarContador();
-      if (ejemplaresRestantes <= 0) {
-        this.style.pointerEvents = "none";
-        this.style.background = "#555";
-      }
-      // El mailto se abrirá automáticamente
+      // Desactivar para evitar múltiples clics seguidos
+      this.style.pointerEvents = "none";
+      this.style.background = "#555";
+      setTimeout(() => {
+        // Reactivar si aún hay stock y no pasó la fecha
+        if (ejemplaresRestantes > 0 && new Date() < fechaLanzamiento) {
+          this.style.pointerEvents = "auto";
+          this.style.background = "#d4af37";
+        }
+      }, 3000); // 3 segundos de espera
     }
+    // No bloqueamos el mailto, se abrirá automáticamente
   });
 
   actualizarContador();
